@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DX 교수설계가이드 – JSON 템플릿 레퍼런스</title>
+<style>
+  :root {
+    --blue:   #2563eb;
+    --blue-l: #eff6ff;
+    --blue-m: #bfdbfe;
+    --green:  #059669;
+    --green-l:#ecfdf5;
+    --orange: #d97706;
+    --orange-l:#fffbeb;
+    --purple: #7c3aed;
+    --purple-l:#f5f3ff;
+    --red:    #dc2626;
+    --red-l:  #fef2f2;
+    --gray:   #6b7280;
+    --gray-l: #f9fafb;
+    --border: #e5e7eb;
+    --text:   #111827;
+    --mono:   'Courier New', Courier, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #f1f5f9;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #7c3aed 100%);
+    color: #fff;
+    padding: 60px 40px 50px;
+    text-align: center;
+  }
+  .cover h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .cover .sub { font-size: 15px; opacity: .85; margin-bottom: 24px; }
+  .cover .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .cover .badge {
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.35);
+    padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: #fff; max-width: 900px; margin: 24px auto; border-radius: 12px;
+    padding: 28px 32px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .toc h2 { font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 14px; border-bottom: 2px solid var(--blue-m); padding-bottom: 8px; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
+  .toc-item { font-size: 13px; padding: 3px 0; }
+  .toc-item a { color: var(--blue); text-decoration: none; }
+  .toc-item a:hover { text-decoration: underline; }
+  .toc-num { color: var(--gray); font-size: 11px; margin-right: 4px; font-family: var(--mono); }
+
+  /* ── Page ── */
+  .page {
+    max-width: 900px; margin: 0 auto 24px; background: #fff;
+    border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden;
+  }
+  .page-header {
+    padding: 18px 28px 14px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .page-header .icon { font-size: 22px; }
+  .page-header h2 { font-size: 17px; font-weight: 700; }
+  .page-header .tab-badge {
+    margin-left: auto; font-size: 11px; font-weight: 700;
+    background: var(--blue); color: #fff;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .page-body { padding: 22px 28px; }
+
+  /* ── Section ── */
+  .sec { margin-bottom: 28px; }
+  .sec-title {
+    font-size: 13px; font-weight: 700; color: var(--blue);
+    border-bottom: 2px solid var(--blue-m); padding-bottom: 6px; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── Field Row ── */
+  .field-row {
+    display: grid; grid-template-columns: 220px 1fr; gap: 0;
+    border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 8px; overflow: hidden;
+  }
+  .field-row:hover { box-shadow: 0 0 0 2px var(--blue-m); }
+  .field-label {
+    background: var(--gray-l); padding: 10px 14px;
+    border-right: 1px solid var(--border);
+  }
+  .field-label .label-ko { font-size: 13px; font-weight: 600; color: #374151; }
+  .field-label .label-var {
+    font-family: var(--mono); font-size: 11px; color: var(--purple);
+    background: var(--purple-l); padding: 2px 6px; border-radius: 4px;
+    display: inline-block; margin-top: 3px;
+  }
+  .field-value {
+    padding: 10px 14px; background: #fff;
+  }
+  .field-value .val-type {
+    font-size: 11px; font-weight: 700; color: var(--green);
+    background: var(--green-l); padding: 1px 7px; border-radius: 10px;
+    display: inline-block; margin-bottom: 4px;
+  }
+  .field-value .val-example {
+    font-size: 12px; color: #374151;
+  }
+  .field-value .val-note {
+    font-size: 11px; color: var(--gray); margin-top: 3px;
+  }
+
+  /* ── Array Block ── */
+  .arr-block {
+    border: 1.5px solid var(--orange); border-radius: 10px;
+    overflow: hidden; margin-bottom: 14px;
+  }
+  .arr-header {
+    background: var(--orange-l); padding: 9px 14px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid #fde68a;
+  }
+  .arr-header .arr-name {
+    font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--orange);
+  }
+  .arr-header .arr-ko { font-size: 12px; color: #78350f; }
+  .arr-header .arr-badge {
+    margin-left: auto; font-size: 10px; font-weight: 700;
+    background: var(--orange); color: #fff; padding: 2px 8px; border-radius: 10px;
+  }
+  .arr-body { padding: 14px; background: #fffdf7; }
+
+  /* Array item fields */
+  .arr-field {
+    display: grid; grid-template-columns: 200px 1fr;
+    border: 1px solid #fde68a; border-radius: 6px;
+    margin-bottom: 6px; overflow: hidden;
+  }
+  .arr-field .af-label {
+    background: #fef9ee; padding: 8px 12px;
+    border-right: 1px solid #fde68a;
+  }
+  .af-label .af-ko { font-size: 12px; font-weight: 600; color: #374151; }
+  .af-label .af-var {
+    font-family: var(--mono); font-size: 10px; color: var(--orange);
+    background: #fff7ed; padding: 1px 5px; border-radius: 3px;
+    display: inline-block; margin-top: 2px;
+  }
+  .arr-field .af-value {
+    padding: 8px 12px; background: #fff;
+    font-size: 12px; color: #4b5563;
+  }
+  .af-value .af-type {
+    font-size: 10px; font-weight: 700; color: var(--green);
+    background: var(--green-l); padding: 1px 6px; border-radius: 8px;
+    margin-right: 5px;
+  }
+
+  /* ── Nested ── */
+  .nested-block {
+    border: 1px solid var(--blue-m); border-radius: 8px;
+    overflow: hidden; margin: 10px 0 6px;
+  }
+  .nested-header {
+    background: var(--blue-l); padding: 7px 12px;
+    font-size: 12px; font-weight: 700; color: var(--blue);
+    border-bottom: 1px solid var(--blue-m);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nested-body { padding: 10px 12px; background: #fff; }
+  .nested-field {
+    display: grid; grid-template-columns: 180px 1fr;
+    border: 1px solid var(--border); border-radius: 5px;
+    margin-bottom: 5px; overflow: hidden;
+  }
+  .nf-label {
+    background: var(--gray-l); padding: 7px 10px;
+    border-right: 1px solid var(--border);
+  }
+  .nf-label .nf-ko { font-size: 11.5px; font-weight: 600; color: #374151; }
+  .nf-label .nf-var {
+    font-family: var(--mono); font-size: 10px; color: var(--purple);
+    background: var(--purple-l); padding: 1px 5px; border-radius: 3px;
+    display: inline-block; margin-top: 2px;
+  }
+  .nf-value { padding: 7px 10px; font-size: 11.5px; color: #4b5563; }
+
+  /* ── Weeks ── */
+  .week-grid {
+    display: grid; grid-template-columns: 42px 1fr 1fr 1fr 1fr 1fr;
+    gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+    font-size: 12px;
+  }
+  .wg-head {
+    background: #1e3a8a; color: #fff; font-weight: 700;
+    padding: 8px 6px; text-align: center; font-size: 11px;
+  }
+  .wg-cell {
+    padding: 7px 8px; border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border); color: #374151;
+  }
+  .wg-cell:last-child { border-right: none; }
+  .wg-num {
+    background: var(--blue-l); text-align: center; font-weight: 700;
+    color: var(--blue);
+  }
+  .wg-num.midterm { background: #fef3c7; color: #d97706; }
+  .wg-num.final   { background: #fee2e2; color: var(--red); }
+  .wg-var { font-family: var(--mono); font-size: 10px; color: var(--purple); display: block; margin-top: 3px; }
+
+  /* ── JSON Preview ── */
+  .json-block {
+    background: #1e2535; color: #e2e8f0; border-radius: 10px;
+    padding: 20px 22px; font-family: var(--mono); font-size: 12px;
+    line-height: 1.8; overflow-x: auto; margin-bottom: 14px;
+    position: relative;
+  }
+  .json-key   { color: #93c5fd; }
+  .json-str   { color: #86efac; }
+  .json-num   { color: #fbbf24; }
+  .json-bool  { color: #f472b6; }
+  .json-null  { color: #94a3b8; }
+  .json-arr   { color: #fb923c; }
+  .json-comment { color: #64748b; font-style: italic; }
+  .copy-btn {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,.12); border: none; color: #cbd5e1;
+    padding: 4px 12px; border-radius: 5px; font-size: 11px; cursor: pointer;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,.22); }
+
+  /* ── Smart Options ── */
+  .smart-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;
+  }
+  .smart-card {
+    border-radius: 8px; padding: 12px 14px; border: 1.5px solid;
+  }
+  .smart-card .sc-letter { font-size: 20px; font-weight: 800; display: block; margin-bottom: 4px; }
+  .smart-card .sc-name   { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .smart-card .sc-items  { font-size: 11.5px; line-height: 1.7; }
+  .sc-S { border-color: #2563eb; background: #eff6ff; color: #1e40af; }
+  .sc-M { border-color: #059669; background: #ecfdf5; color: #065f46; }
+  .sc-A { border-color: #d97706; background: #fffbeb; color: #78350f; }
+  .sc-R { border-color: #7c3aed; background: #f5f3ff; color: #4c1d95; }
+  .sc-T { border-color: #dc2626; background: #fef2f2; color: #7f1d1d; }
+
+  /* ── Info box ── */
+  .info-box {
+    background: var(--blue-l); border: 1px solid var(--blue-m);
+    border-left: 4px solid var(--blue); border-radius: 8px;
+    padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #1e3a8a;
+  }
+  .warn-box {
+    background: #fffbeb; border: 1px solid #fde68a;
+    border-left: 4px solid var(--orange); border-radius: 8px;
+    padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #78350f;
+  }
+
+  /* ── Footer ── */
+  footer {
+    max-width: 900px; margin: 0 auto 40px;
+    text-align: center; color: var(--gray); font-size: 12px; padding: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .page-body { padding: 16px; }
+    .field-row, .arr-field, .nested-field { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .smart-grid { grid-template-columns: 1fr; }
+    .week-grid { grid-template-columns: 36px 1fr 1fr; }
+    .week-grid .wg-cell:nth-child(n+4) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ COVER ══════════════════════════════ -->
+<div class="cover">
+  <h1>📋 DX 교수설계가이드 – JSON 템플릿 레퍼런스</h1>
+  <p class="sub">모든 입력 필드의 변수명(key)과 예시값·타입을 정리한 공식 템플릿 문서</p>
+  <div class="badges">
+    <span class="badge">JSON v1.0</span>
+    <span class="badge">Tab 0~6 전체 필드</span>
+    <span class="badge">배열·중첩 구조 포함</span>
+    <span class="badge">15주차 계획</span>
+    <span class="badge">SMART 교육방법</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ TOC ══════════════════════════════ -->
+<div class="toc">
+  <h2>📑 목차</h2>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">01</span><a href="#s01">메타정보 (_meta)</a></div>
+    <div class="toc-item"><span class="toc-num">07</span><a href="#s07">디지털 도구 배열 (digital_tools[])</a></div>
+    <div class="toc-item"><span class="toc-num">02</span><a href="#s02">기본정보 – Tab 0</a></div>
+    <div class="toc-item"><span class="toc-num">08</span><a href="#s08">주차별 계획 배열 (weeks[])</a></div>
+    <div class="toc-item"><span class="toc-num">03</span><a href="#s03">교과목 개요 – Tab 1</a></div>
+    <div class="toc-item"><span class="toc-num">09</span><a href="#s09">학습활동 운영 배열 (activity_guides[])</a></div>
+    <div class="toc-item"><span class="toc-num">04</span><a href="#s04">수업 설계 – Tab 2 (단순 필드)</a></div>
+    <div class="toc-item"><span class="toc-num">10</span><a href="#s10">평가 비율 – Tab 6</a></div>
+    <div class="toc-item"><span class="toc-num">05</span><a href="#s05">SMART 교육방법 배열 (smart_methods[])</a></div>
+    <div class="toc-item"><span class="toc-num">11</span><a href="#s11">부록 배열 (appendix_sections[])</a></div>
+    <div class="toc-item"><span class="toc-num">06</span><a href="#s06">교육방법 가이드 배열 (method_guides[])</a></div>
+    <div class="toc-item"><span class="toc-num">12</span><a href="#s12">전체 JSON 구조 미리보기</a></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S01: _meta ══════════════════════════════ -->
+<div class="page" id="s01">
+  <div class="page-header">
+    <span class="icon">🏷️</span>
+    <h2>01. 메타정보 – <code>_meta</code></h2>
+    <span class="tab-badge">JSON 전용 (UI 미표시)</span>
+  </div>
+  <div class="page-body">
+    <div class="info-box">ℹ️ <strong>_meta</strong>는 JSON 파일 자체의 버전·생성일 등을 기록하는 메타 객체입니다. 툴에서 자동 생성되며 importJSON 시 무시됩니다.</div>
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">버전</div><code class="label-var">_meta.version</code></div>
+      <div class="field-value"><span class="val-type">string</span><div class="val-example">"1.0"</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">설명</div><code class="label-var">_meta.description</code></div>
+      <div class="field-value"><span class="val-type">string</span><div class="val-example">"DX 기반 교수설계가이드 – 저장 데이터"</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">저장 일시</div><code class="label-var">_meta.saved_at</code></div>
+      <div class="field-value"><span class="val-type">string (ISO8601)</span><div class="val-example">"2025-03-01T09:00:00.000Z"</div><div class="val-note">exportJSON 시 자동 기록</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">생성 도구</div><code class="label-var">_meta.tool</code></div>
+      <div class="field-value"><span class="val-type">string</span><div class="val-example">"DX 교수설계가이드 작성 도구"</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S02: Tab 0 기본정보 ══════════════════════════════ -->
+<div class="page" id="s02">
+  <div class="page-header">
+    <span class="icon">📋</span>
+    <h2>02. 기본정보</h2>
+    <span class="tab-badge">Tab 0 – 기본정보</span>
+  </div>
+  <div class="page-body">
+    <div class="sec">
+      <div class="sec-title">📌 교과목 기본 정보</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">교과목명 (한글)</div><code class="label-var">course_name</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) AI 프로그래밍 기초</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">교과목명 (영문)</div><code class="label-var">course_name_en</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) Fundamentals of AI Programming</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">발행일</div><code class="label-var">publish_date</code></div>
+        <div class="field-value"><span class="val-type">string (date)</span><div class="val-example">"2025-03-01"</div><div class="val-note">YYYY-MM-DD 형식</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">학과명</div><code class="label-var">department</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) AI소프트웨어학과</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">핵심 키워드</div><code class="label-var">keywords</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) AI, Python, DX, 코딩</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">대상 학년</div><code class="label-var">year</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 1학년</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">학기</div><code class="label-var">semester</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 2025-1</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">담당교수</div><code class="label-var">professor_name</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 홍길동</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">주교재</div><code class="label-var">textbook</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) Python 프로그래밍 기초 (저자, 출판사, 년도)</div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📚 교과목 명세</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">이수구분</div><code class="label-var">course_type</code></div>
+        <div class="field-value"><span class="val-type">string (select)</span><div class="val-example">"전공선택" | "전공필수" | "교양선택" | "교양필수"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">학점</div><code class="label-var">credits</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"3"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">이론 시수</div><code class="label-var">theory_hours</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"2"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">실습 시수</div><code class="label-var">practice_hours</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"1"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">NCS 직무분류</div><code class="label-var">ncs_job</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 정보통신 &gt; 정보기술개발</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">핵심 역량</div><code class="label-var">core_competency</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 문제해결력, 디지털 리터러시</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S03: Tab 1 교과목 개요 ══════════════════════════════ -->
+<div class="page" id="s03">
+  <div class="page-header">
+    <span class="icon">🎯</span>
+    <h2>03. 교과목 개요</h2>
+    <span class="tab-badge">Tab 1 – 교과목 개요</span>
+  </div>
+  <div class="page-body">
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">교과목 특성 설명</div><code class="label-var">course_description</code></div>
+      <div class="field-value"><span class="val-type">string (textarea)</span><div class="val-example">예) 본 교과목은 AI 기반 프로그래밍 역량을 DX 맥락에서 함양하는 것을 목표로 한다...</div><div class="val-note">HTML 허용</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">선수 과목</div><code class="label-var">prerequisite</code></div>
+      <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 컴퓨터 기초, 수학 기초</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">후속 연계 과목</div><code class="label-var">follow_up</code></div>
+      <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 머신러닝 심화, 딥러닝 실습</div></div>
+    </div>
+
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">learning_goals</span>
+        <span class="arr-ko">학습목표 목록</span>
+        <span class="arr-badge">string[]</span>
+      </div>
+      <div class="arr-body">
+        <div class="info-box" style="margin-bottom:10px">각 항목은 단순 문자열입니다. 내부적으로 <code>val</code> 필드로 수집됩니다.</div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">학습목표 항목</div><code class="af-var">learning_goals[i]</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 파이썬 기초 문법을 활용하여 AI 프로그램을 작성할 수 있다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S04: Tab 2 수업설계 단순필드 ══════════════════════════════ -->
+<div class="page" id="s04">
+  <div class="page-header">
+    <span class="icon">🧠</span>
+    <h2>04. 수업 설계 – 단순 필드</h2>
+    <span class="tab-badge">Tab 2 – 수업 설계</span>
+  </div>
+  <div class="page-body">
+    <div class="field-row">
+      <div class="field-label"><div class="label-ko">교육방법 통합 운영 요약</div><code class="label-var">integration_summary</code></div>
+      <div class="field-value"><span class="val-type">string (textarea)</span><div class="val-example">예) 본 교과목은 플립드러닝 + PBL 혼합 방식으로 운영하며...</div><div class="val-note">HTML 허용</div></div>
+    </div>
+    <div class="warn-box">⚠️ SMART 교육방법(<code>smart_methods[]</code>)과 교육방법 가이드(<code>method_guides[]</code>)는 아래 섹션 05, 06에서 별도 배열로 설명합니다.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S05: smart_methods[] ══════════════════════════════ -->
+<div class="page" id="s05">
+  <div class="page-header">
+    <span class="icon">⭐</span>
+    <h2>05. SMART 교육방법 배열</h2>
+    <span class="tab-badge">smart_methods[]</span>
+  </div>
+  <div class="page-body">
+    <div class="info-box">ℹ️ <code>method_name</code>은 아래 SMART 분류 중 하나를 선택합니다. 툴에서는 드롭다운으로 제공됩니다.</div>
+
+    <div class="smart-grid">
+      <div class="smart-card sc-S">
+        <span class="sc-letter">S</span>
+        <div class="sc-name">Sync (동기화 학습)</div>
+        <div class="sc-items">블렌디드러닝 · 플립드러닝 · 소셜러닝</div>
+      </div>
+      <div class="smart-card sc-M">
+        <span class="sc-letter">M</span>
+        <div class="sc-name">Mirroring (현장 반영)</div>
+        <div class="sc-items">캡스톤디자인 · 산업체협업교육 · 사례기반학습 · 현장학습</div>
+      </div>
+      <div class="smart-card sc-A">
+        <span class="sc-letter">A</span>
+        <div class="sc-name">Affiliation (협업)</div>
+        <div class="sc-items">협동학습 · 팀기반학습(TBL) · 하브루타학습 · 토론학습</div>
+      </div>
+      <div class="smart-card sc-R">
+        <span class="sc-letter">R</span>
+        <div class="sc-name">Reinforcement (강화)</div>
+        <div class="sc-items">문제중심학습(PBL) · 자기주도학습 · 실천학습(액션러닝) · 게임기반학습 · 포트폴리오</div>
+      </div>
+      <div class="smart-card sc-T" style="grid-column:1/-1">
+        <span class="sc-letter">T</span>
+        <div class="sc-name">Tied-up (융합)</div>
+        <div class="sc-items">팀티칭 · 시뮬레이션기반학습(VR) · 융합교육</div>
+      </div>
+    </div>
+
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">smart_methods</span>
+        <span class="arr-ko">SMART 교육방법 목록</span>
+        <span class="arr-badge">object[]</span>
+      </div>
+      <div class="arr-body">
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">교육방법명</div><code class="af-var">method_name</code></div>
+          <div class="af-value"><span class="af-type">string (select)</span>SMART 분류 값 중 선택 — 예) "플립드러닝"</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">구체적 실행 전략</div><code class="af-var">description</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>예) 수업 전 영상 강의 시청 → 수업 중 실습·토론 심화<br><span style="color:#6b7280;font-size:11px">HTML 허용</span></div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">활용 도구 및 시기</div><code class="af-var">tools</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) Replit, LMS – 1~7주차</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S06: method_guides[] ══════════════════════════════ -->
+<div class="page" id="s06">
+  <div class="page-header">
+    <span class="icon">📖</span>
+    <h2>06. 교육방법 가이드 배열 (중첩 구조)</h2>
+    <span class="tab-badge">method_guides[]</span>
+  </div>
+  <div class="page-body">
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">method_guides</span>
+        <span class="arr-ko">교육방법 상세 가이드</span>
+        <span class="arr-badge">object[] (중첩)</span>
+      </div>
+      <div class="arr-body">
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">교육방법명</div><code class="af-var">method_name</code></div>
+          <div class="af-value"><span class="af-type">string (select)</span>SMART 분류 값 중 선택</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">개요</div><code class="af-var">overview</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>예) 역전 학습 모델, 수업 전 영상·수업 중 적용<br><span style="color:#6b7280;font-size:11px">HTML 허용</span></div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">적용 사례</div><code class="af-var">examples</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>예) 1~7주차 파이썬 기초 수업에 적용<br><span style="color:#6b7280;font-size:11px">HTML 허용</span></div>
+        </div>
+
+        <!-- 중첩: operation_steps -->
+        <div class="nested-block">
+          <div class="nested-header">📋 운영 단계 배열 — <code>operation_steps[]</code></div>
+          <div class="nested-body">
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">단계명</div><code class="nf-var">step_name</code></div>
+              <div class="nf-value">예) 도입 / 사전학습 / 실습 / 정리</div>
+            </div>
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">활동 내용</div><code class="nf-var">activities</code></div>
+              <div class="nf-value">예) 사전학습 퀴즈 확인, 오개념 수정</div>
+            </div>
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">교수자 역할</div><code class="nf-var">instructor_role</code></div>
+              <div class="nf-value">예) 피드백 제공, 순회 지도</div>
+            </div>
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">디지털 도구</div><code class="nf-var">tools</code></div>
+              <div class="nf-value">예) Slido, LMS, Google Colab</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 중첩: support_framework -->
+        <div class="nested-block">
+          <div class="nested-header">🛠️ 지원 체계 배열 — <code>support_framework[]</code></div>
+          <div class="nested-body">
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">지원 요소</div><code class="nf-var">element</code></div>
+              <div class="nf-value">예) 테크놀로지 지원 / 학습 격차 지원</div>
+            </div>
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">구체적 적용 방법</div><code class="nf-var">methods</code></div>
+              <div class="nf-value">예) 클라우드 환경 제공, 보충 자료 LMS 탑재</div>
+            </div>
+            <div class="nested-field">
+              <div class="nf-label"><div class="nf-ko">디지털 도구</div><code class="nf-var">tools</code></div>
+              <div class="nf-value">예) Google Colab, Zoom</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S07: digital_tools[] ══════════════════════════════ -->
+<div class="page" id="s07">
+  <div class="page-header">
+    <span class="icon">🔧</span>
+    <h2>07. 디지털 도구 배열</h2>
+    <span class="tab-badge">Tab 3 – 디지털 도구</span>
+  </div>
+  <div class="page-body">
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">digital_tools</span>
+        <span class="arr-ko">필수 디지털 도구 목록</span>
+        <span class="arr-badge">object[]</span>
+      </div>
+      <div class="arr-body">
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">카테고리</div><code class="af-var">category</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 실습 환경 / 협업 도구 / LMS</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">카드 테두리 색상</div><code class="af-var">color</code></div>
+          <div class="af-value"><span class="af-type">string (hex color)</span>예) "#0066cc" — 미리보기 카드 테두리 색상</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">도구명</div><code class="af-var">name</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) Google Colab, Replit, GitHub</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">특징</div><code class="af-var">description</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 클라우드 기반 파이썬 개발 환경, 무료 GPU 제공</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">활용법</div><code class="af-var">usage</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>예) &lt;ul&gt;&lt;li&gt;팀원과 실시간 공동 코딩&lt;/li&gt;&lt;/ul&gt;<br><span style="color:#6b7280;font-size:11px">HTML 허용</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S08: weeks[] ══════════════════════════════ -->
+<div class="page" id="s08">
+  <div class="page-header">
+    <span class="icon">📅</span>
+    <h2>08. 주차별 계획 배열</h2>
+    <span class="tab-badge">Tab 4 – 주차별 계획</span>
+  </div>
+  <div class="page-body">
+    <div class="info-box">ℹ️ <code>weeks</code>는 15개 고정 객체 배열입니다. <code>weekNum</code>은 1~15이며, UI에서는 각 주차가 아코디언으로 표시됩니다.<br>JSON에서 직접 수정하거나, UI Tab4에서 아코디언을 열어 입력합니다.</div>
+
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">weeks</span>
+        <span class="arr-ko">주차별 수업 운영 계획</span>
+        <span class="arr-badge">object[15] 고정</span>
+      </div>
+      <div class="arr-body">
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">주차 번호</div><code class="af-var">weekNum</code></div>
+          <div class="af-value"><span class="af-type">number</span>1 ~ 15 (고정값, 변경 불필요)</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">주차 주제</div><code class="af-var">topic</code><br><code class="af-var" style="font-size:9.5px">→ week_N_topic</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 파이썬 기초 – 변수·자료형·연산자<br><span style="color:#6b7280;font-size:11px">UI 내부 키: week_1_topic … week_15_topic</span></div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">학습목표</div><code class="af-var">goal</code><br><code class="af-var" style="font-size:9.5px">→ week_N_goal</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 기본 자료형과 연산자를 코드로 표현할 수 있다</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">학습 내용</div><code class="af-var">content</code><br><code class="af-var" style="font-size:9.5px">→ week_N_content</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) int·float·str·bool, 입출력 함수, 기초 연산자 실습</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">활용 도구</div><code class="af-var">tools</code><br><code class="af-var" style="font-size:9.5px">→ week_N_tools</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) Google Colab, Replit</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">평가방법</div><code class="af-var">assessment</code><br><code class="af-var" style="font-size:9.5px">→ week_N_assessment</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 실습 과제 #2 / 중간고사 (30점)</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">중간고사 여부</div><code class="af-var">is_midterm</code></div>
+          <div class="af-value"><span class="af-type">boolean</span>8주차만 <code>true</code> — 자동 설정</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">기말고사 여부</div><code class="af-var">is_final</code></div>
+          <div class="af-value"><span class="af-type">boolean</span>15주차만 <code>true</code> — 자동 설정</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 주차 키 조견표 -->
+    <div style="font-size:12px;font-weight:700;color:#1e3a8a;margin:16px 0 8px">📊 주차별 UI 키 조견표 (week_N_field)</div>
+    <div class="week-grid">
+      <div class="wg-head">주차</div>
+      <div class="wg-head">topic</div>
+      <div class="wg-head">goal</div>
+      <div class="wg-head">content</div>
+      <div class="wg-head">tools</div>
+      <div class="wg-head">assessment</div>
+      <!-- rows 1-15 -->
+      <script>
+        const labels = ['강의 소개·환경 구축','파이썬 기초','제어 구조','함수·모듈','자료구조','파일 I/O','NumPy·Pandas','중간고사','데이터 시각화','머신러닝 기초','분류 알고리즘','딥러닝 입문','NLP 기초','팀 프로젝트 준비','기말고사·발표'];
+        for(let i=1;i<=15;i++){
+          const cls = i===8?'midterm':i===15?'final':'';
+          document.write(`
+            <div class="wg-cell wg-num ${cls}">${i}주<br><span class="wg-var">[${i}]</span></div>
+            <div class="wg-cell"><code>week_${i}_topic</code></div>
+            <div class="wg-cell"><code>week_${i}_goal</code></div>
+            <div class="wg-cell"><code>week_${i}_content</code></div>
+            <div class="wg-cell"><code>week_${i}_tools</code></div>
+            <div class="wg-cell"><code>week_${i}_assessment</code></div>
+          `);
+        }
+      </script>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S09: activity_guides[] ══════════════════════════════ -->
+<div class="page" id="s09">
+  <div class="page-header">
+    <span class="icon">🎭</span>
+    <h2>09. 학습활동 운영 배열</h2>
+    <span class="tab-badge">Tab 5 – 학습활동</span>
+  </div>
+  <div class="page-body">
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">activity_guides</span>
+        <span class="arr-ko">학습활동 운영 방법 목록</span>
+        <span class="arr-badge">object[]</span>
+      </div>
+      <div class="arr-body">
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">교육방법명</div><code class="af-var">method_name</code></div>
+          <div class="af-value"><span class="af-type">string (select)</span>SMART 분류 값 중 선택</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">단계</div><code class="af-var">step</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 팀 실습 활동 / 사전학습 단계</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">활동 내용</div><code class="af-var">content</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>HTML 허용 — 예) &lt;ul&gt;&lt;li&gt;데이터셋 탐색&lt;/li&gt;&lt;/ul&gt;</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">활용 도구</div><code class="af-var">tools</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) Google Colab, GitHub</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">주차별 적용</div><code class="af-var">weekly_tasks</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>HTML 허용 — 예) &lt;ul&gt;&lt;li&gt;3주: 변수 실습&lt;/li&gt;&lt;/ul&gt;</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">학습 지원</div><code class="af-var">support_items</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>HTML 허용 — 예) 코딩 오류 해결 가이드 제공</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">추가 정보</div><code class="af-var">additional_info</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>HTML 허용 — 예) GitHub Repository 생성 필수</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" style="margin-top:20px">
+      <div class="sec-title">🤝 AI 협업 가이드 단순 필드</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">AI 활용 협업 가이드</div><code class="label-var">collaboration_guide</code></div>
+        <div class="field-value"><span class="val-type">string (textarea)</span><div class="val-example">예) AI 도구는 보조 수단으로 활용하며 최종 코드는 학습자가 직접 수정...</div><div class="val-note">HTML 허용</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">AI 윤리 가이드라인</div><code class="label-var">ethics_warning</code></div>
+        <div class="field-value"><span class="val-type">string (textarea)</span><div class="val-example">예) AI 생성 코드의 저작권, 편향성, 개인정보 침해 문제 인식...</div><div class="val-note">HTML 허용</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S10: 평가 비율 ══════════════════════════════ -->
+<div class="page" id="s10">
+  <div class="page-header">
+    <span class="icon">📊</span>
+    <h2>10. 평가 비율 및 평가 정보</h2>
+    <span class="tab-badge">Tab 6 – 평가 설계</span>
+  </div>
+  <div class="page-body">
+    <div class="warn-box">⚠️ 네 항목의 합계가 반드시 100이어야 합니다. 값은 숫자형 문자열로 저장됩니다.</div>
+
+    <div class="sec">
+      <div class="sec-title">📌 출석</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">출석 비율 (%)</div><code class="label-var">attendance_rate</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"15" — 0~100 정수</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">출석 평가 도구</div><code class="label-var">attendance_tool</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) LMS 출결 관리 시스템</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">출석 평가 내용</div><code class="label-var">attendance_description</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 매 수업 출결 확인, 3회 이상 결석 시 F 처리</div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📌 중간고사</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">중간고사 비율 (%)</div><code class="label-var">midterm_rate</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"30"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">중간 평가 도구</div><code class="label-var">midterm_tool</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) LMS 시험 플랫폼</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">중간 평가 내용</div><code class="label-var">midterm_description</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 8주차 온라인 실기 + 이론</div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📌 기말고사</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">기말고사 비율 (%)</div><code class="label-var">final_rate</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"30"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">기말 평가 도구</div><code class="label-var">final_tool</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) LMS 시험 플랫폼</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">기말 평가 내용</div><code class="label-var">final_description</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 프로젝트 발표 + 코드 제출</div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📌 과제 / 프로젝트</div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">과제 비율 (%)</div><code class="label-var">assignment_rate</code></div>
+        <div class="field-value"><span class="val-type">string (number)</span><div class="val-example">"25"</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">과제 평가 도구</div><code class="label-var">assignment_tool</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) GitHub, LMS 과제 제출</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label"><div class="label-ko">과제 평가 내용</div><code class="label-var">assignment_description</code></div>
+        <div class="field-value"><span class="val-type">string</span><div class="val-example">예) 주차별 실습 과제 및 프로젝트 산출물</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S11: appendix_sections[] ══════════════════════════════ -->
+<div class="page" id="s11">
+  <div class="page-header">
+    <span class="icon">📎</span>
+    <h2>11. 부록 배열</h2>
+    <span class="tab-badge">Tab 6 – 평가 설계 하단</span>
+  </div>
+  <div class="page-body">
+    <div class="arr-block">
+      <div class="arr-header">
+        <span class="arr-name">appendix_sections</span>
+        <span class="arr-ko">참고자료 및 부록 목록</span>
+        <span class="arr-badge">object[]</span>
+      </div>
+      <div class="arr-body">
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">섹션 제목</div><code class="af-var">section_title</code></div>
+          <div class="af-value"><span class="af-type">string</span>예) 참고문헌 / 활용 도구 목록 / 평가 루브릭</div>
+        </div>
+        <div class="arr-field">
+          <div class="af-label"><div class="af-ko">섹션 내용</div><code class="af-var">section_content</code></div>
+          <div class="af-value"><span class="af-type">string (textarea)</span>HTML 허용 — &lt;ul&gt;, &lt;table&gt;, &lt;ol&gt; 등 마크업 사용 가능</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ S12: JSON 전체 구조 미리보기 ══════════════════════════════ -->
+<div class="page" id="s12">
+  <div class="page-header">
+    <span class="icon">🗂️</span>
+    <h2>12. 전체 JSON 구조 미리보기</h2>
+    <span class="tab-badge">Schema Overview</span>
+  </div>
+  <div class="page-body">
+    <div class="json-block" id="schema-block">
+      <button class="copy-btn" onclick="copySchema()">📋 복사</button>
+<span class="json-comment">// DX 교수설계가이드 – JSON 전체 스키마</span>
+{
+  <span class="json-key">"_meta"</span>: {
+    <span class="json-key">"version"</span>:     <span class="json-str">"1.0"</span>,
+    <span class="json-key">"description"</span>: <span class="json-str">"DX 기반 교수설계가이드 – 저장 데이터"</span>,
+    <span class="json-key">"saved_at"</span>:    <span class="json-str">"2025-03-01T09:00:00.000Z"</span>,
+    <span class="json-key">"tool"</span>:        <span class="json-str">"DX 교수설계가이드 작성 도구"</span>
+  },
+
+  <span class="json-comment">// ── Tab 0: 기본정보 ─────────────────────────</span>
+  <span class="json-key">"course_name"</span>:      <span class="json-str">"AI 프로그래밍 기초"</span>,
+  <span class="json-key">"course_name_en"</span>:   <span class="json-str">"Fundamentals of AI Programming"</span>,
+  <span class="json-key">"publish_date"</span>:     <span class="json-str">"2025-03-01"</span>,
+  <span class="json-key">"department"</span>:       <span class="json-str">"AI소프트웨어학과"</span>,
+  <span class="json-key">"keywords"</span>:         <span class="json-str">"AI, Python, DX, 코딩"</span>,
+  <span class="json-key">"year"</span>:             <span class="json-str">"1학년"</span>,
+  <span class="json-key">"semester"</span>:         <span class="json-str">"2025-1"</span>,
+  <span class="json-key">"professor_name"</span>:   <span class="json-str">"홍길동"</span>,
+  <span class="json-key">"textbook"</span>:         <span class="json-str">"Python 프로그래밍 기초"</span>,
+  <span class="json-key">"course_type"</span>:      <span class="json-str">"전공필수"</span>,
+  <span class="json-key">"credits"</span>:          <span class="json-str">"3"</span>,
+  <span class="json-key">"theory_hours"</span>:     <span class="json-str">"2"</span>,
+  <span class="json-key">"practice_hours"</span>:   <span class="json-str">"1"</span>,
+  <span class="json-key">"ncs_job"</span>:           <span class="json-str">"정보통신 &gt; 정보기술개발"</span>,
+  <span class="json-key">"core_competency"</span>:  <span class="json-str">"문제해결력, 디지털 리터러시"</span>,
+
+  <span class="json-comment">// ── Tab 1: 교과목 개요 ─────────────────────</span>
+  <span class="json-key">"course_description"</span>: <span class="json-str">"본 교과목은..."</span>,
+  <span class="json-key">"prerequisite"</span>:       <span class="json-str">"컴퓨터 기초"</span>,
+  <span class="json-key">"follow_up"</span>:          <span class="json-str">"머신러닝 심화"</span>,
+  <span class="json-key">"learning_goals"</span>: <span class="json-arr">[</span>
+    <span class="json-str">"파이썬 기초 문법을 활용하여 AI 프로그램을 작성할 수 있다."</span>,
+    <span class="json-str">"머신러닝 알고리즘을 이해하고 데이터에 적용할 수 있다."</span>
+  <span class="json-arr">]</span>,
+
+  <span class="json-comment">// ── Tab 2: 수업 설계 ───────────────────────</span>
+  <span class="json-key">"integration_summary"</span>: <span class="json-str">"플립드러닝 + PBL 혼합 운영..."</span>,
+  <span class="json-key">"smart_methods"</span>: <span class="json-arr">[</span>
+    {
+      <span class="json-key">"method_name"</span>:  <span class="json-str">"플립드러닝"</span>,
+      <span class="json-key">"description"</span>: <span class="json-str">"수업 전 영상 시청 → 수업 중 실습..."</span>,
+      <span class="json-key">"tools"</span>:       <span class="json-str">"LMS, Replit – 1~7주차"</span>
+    }
+  <span class="json-arr">]</span>,
+  <span class="json-key">"method_guides"</span>: <span class="json-arr">[</span>
+    {
+      <span class="json-key">"method_name"</span>: <span class="json-str">"플립드러닝"</span>,
+      <span class="json-key">"overview"</span>:    <span class="json-str">"역전 학습 모델..."</span>,
+      <span class="json-key">"examples"</span>:   <span class="json-str">"1~7주차 적용..."</span>,
+      <span class="json-key">"operation_steps"</span>: <span class="json-arr">[</span>
+        {
+          <span class="json-key">"step_name"</span>:       <span class="json-str">"도입 (10분)"</span>,
+          <span class="json-key">"activities"</span>:     <span class="json-str">"퀴즈 결과 공유"</span>,
+          <span class="json-key">"instructor_role"</span>: <span class="json-str">"피드백 제공"</span>,
+          <span class="json-key">"tools"</span>:          <span class="json-str">"Slido"</span>
+        }
+      <span class="json-arr">]</span>,
+      <span class="json-key">"support_framework"</span>: <span class="json-arr">[</span>
+        {
+          <span class="json-key">"element"</span>: <span class="json-str">"테크놀로지 지원"</span>,
+          <span class="json-key">"methods"</span>: <span class="json-str">"클라우드 환경 제공"</span>,
+          <span class="json-key">"tools"</span>:   <span class="json-str">"Google Colab"</span>
+        }
+      <span class="json-arr">]</span>
+    }
+  <span class="json-arr">]</span>,
+
+  <span class="json-comment">// ── Tab 3: 디지털 도구 ─────────────────────</span>
+  <span class="json-key">"digital_tools"</span>: <span class="json-arr">[</span>
+    {
+      <span class="json-key">"category"</span>:    <span class="json-str">"실습 환경"</span>,
+      <span class="json-key">"color"</span>:       <span class="json-str">"#0066cc"</span>,
+      <span class="json-key">"name"</span>:        <span class="json-str">"Google Colab"</span>,
+      <span class="json-key">"description"</span>: <span class="json-str">"클라우드 파이썬 환경"</span>,
+      <span class="json-key">"usage"</span>:       <span class="json-str">"&lt;ul&gt;&lt;li&gt;노트북 형태 코딩&lt;/li&gt;&lt;/ul&gt;"</span>
+    }
+  <span class="json-arr">]</span>,
+
+  <span class="json-comment">// ── Tab 4: 주차별 계획 ─────────────────────</span>
+  <span class="json-key">"weeks"</span>: <span class="json-arr">[</span>
+    {
+      <span class="json-key">"weekNum"</span>:    <span class="json-num">1</span>,
+      <span class="json-key">"topic"</span>:      <span class="json-str">"강의 소개 및 환경 구축"</span>,
+      <span class="json-key">"goal"</span>:       <span class="json-str">"개발 환경 설치 및 첫 파이썬 코드 실행"</span>,
+      <span class="json-key">"content"</span>:    <span class="json-str">"Google Colab·Replit 환경 설정, Hello World"</span>,
+      <span class="json-key">"tools"</span>:      <span class="json-str">"Google Colab, Replit"</span>,
+      <span class="json-key">"assessment"</span>: <span class="json-str">"환경 설정 확인 퀴즈"</span>,
+      <span class="json-key">"is_midterm"</span>: <span class="json-bool">false</span>,
+      <span class="json-key">"is_final"</span>:   <span class="json-bool">false</span>
+    },
+    <span class="json-comment">// ... 2주~7주 생략 ...</span>
+    {
+      <span class="json-key">"weekNum"</span>:    <span class="json-num">8</span>,
+      <span class="json-key">"topic"</span>:      <span class="json-str">"중간고사"</span>,
+      <span class="json-key">"is_midterm"</span>: <span class="json-bool">true</span>,
+      <span class="json-key">"is_final"</span>:   <span class="json-bool">false</span>
+    },
+    <span class="json-comment">// ... 9주~14주 생략 ...</span>
+    {
+      <span class="json-key">"weekNum"</span>:    <span class="json-num">15</span>,
+      <span class="json-key">"topic"</span>:      <span class="json-str">"기말고사 및 최종 발표"</span>,
+      <span class="json-key">"is_midterm"</span>: <span class="json-bool">false</span>,
+      <span class="json-key">"is_final"</span>:   <span class="json-bool">true</span>
+    }
+  <span class="json-arr">]</span>,
+
+  <span class="json-comment">// ── Tab 5: 학습활동 ────────────────────────</span>
+  <span class="json-key">"activity_guides"</span>: <span class="json-arr">[</span>
+    {
+      <span class="json-key">"method_name"</span>:    <span class="json-str">"플립드러닝"</span>,
+      <span class="json-key">"step"</span>:           <span class="json-str">"팀 실습 활동"</span>,
+      <span class="json-key">"content"</span>:        <span class="json-str">"&lt;ul&gt;&lt;li&gt;데이터셋 탐색&lt;/li&gt;&lt;/ul&gt;"</span>,
+      <span class="json-key">"tools"</span>:          <span class="json-str">"Google Colab, GitHub"</span>,
+      <span class="json-key">"weekly_tasks"</span>:   <span class="json-str">"&lt;ul&gt;&lt;li&gt;3주: 변수 실습&lt;/li&gt;&lt;/ul&gt;"</span>,
+      <span class="json-key">"support_items"</span>:  <span class="json-str">"코딩 오류 해결 가이드 제공"</span>,
+      <span class="json-key">"additional_info"</span>:<span class="json-str">"GitHub Repository 생성 필수"</span>
+    }
+  <span class="json-arr">]</span>,
+  <span class="json-key">"collaboration_guide"</span>: <span class="json-str">"AI 도구는 보조 수단으로..."</span>,
+  <span class="json-key">"ethics_warning"</span>:      <span class="json-str">"AI 생성 코드의 저작권 인식..."</span>,
+
+  <span class="json-comment">// ── Tab 6: 평가 설계 ───────────────────────</span>
+  <span class="json-key">"attendance_rate"</span>:        <span class="json-str">"15"</span>,
+  <span class="json-key">"attendance_tool"</span>:        <span class="json-str">"LMS 출결 관리"</span>,
+  <span class="json-key">"attendance_description"</span>: <span class="json-str">"매 수업 출결 확인"</span>,
+  <span class="json-key">"midterm_rate"</span>:           <span class="json-str">"30"</span>,
+  <span class="json-key">"midterm_tool"</span>:           <span class="json-str">"LMS 시험 플랫폼"</span>,
+  <span class="json-key">"midterm_description"</span>:    <span class="json-str">"8주차 중간고사"</span>,
+  <span class="json-key">"final_rate"</span>:             <span class="json-str">"30"</span>,
+  <span class="json-key">"final_tool"</span>:             <span class="json-str">"LMS 시험 플랫폼"</span>,
+  <span class="json-key">"final_description"</span>:      <span class="json-str">"프로젝트 발표 + 코드 제출"</span>,
+  <span class="json-key">"assignment_rate"</span>:        <span class="json-str">"25"</span>,
+  <span class="json-key">"assignment_tool"</span>:        <span class="json-str">"GitHub, LMS"</span>,
+  <span class="json-key">"assignment_description"</span>: <span class="json-str">"주차별 실습 과제"</span>,
+
+  <span class="json-comment">// ── Tab 6 하단: 부록 ───────────────────────</span>
+  <span class="json-key">"appendix_sections"</span>: <span class="json-arr">[</span>
+    {
+      <span class="json-key">"section_title"</span>:   <span class="json-str">"참고문헌"</span>,
+      <span class="json-key">"section_content"</span>: <span class="json-str">"&lt;ul&gt;&lt;li&gt;Géron, A. (2022)...&lt;/li&gt;&lt;/ul&gt;"</span>
+    }
+  <span class="json-arr">]</span>
+}
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <p>📄 DX 교수설계가이드 JSON 템플릿 레퍼런스 v1.0 &nbsp;|&nbsp; 총 필드 수: 단순 29개 + 배열 6종 + 중첩 2종</p>
+  <p style="margin-top:6px; color:#94a3b8">⬆️ JSON 불러오기 버튼으로 template.json을 import하면 모든 필드가 자동으로 채워집니다.</p>
+</footer>
+
+<script>
+function copySchema() {
+  const block = document.getElementById('schema-block');
+  const text = block.innerText.replace(/📋 복사\n?/, '');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = block.querySelector('.copy-btn');
+    btn.textContent = '✅ 복사됨';
+    setTimeout(() => btn.textContent = '📋 복사', 2000);
+  });
+}
+</script>
+</body>
+</html>

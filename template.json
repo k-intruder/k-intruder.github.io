@@ -1,0 +1,194 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "DX 기반 교수설계가이드 – 데이터 템플릿",
+    "created_at": "2025-01-01T00:00:00Z",
+    "tool": "DX 교수설계가이드 작성 도구"
+  },
+
+  "course_name": "AI 프로그래밍 기초",
+  "course_name_en": "Fundamentals of AI Programming",
+  "department": "컴퓨터공학과",
+  "professor_name": "홍길동",
+  "semester": "2025-1",
+  "year": "1학년",
+  "credits": "3",
+  "theory_hours": "2",
+  "practice_hours": "2",
+  "course_type": "전공필수",
+  "keywords": "AI, 파이썬, 머신러닝, DX, 디지털전환",
+  "ncs_job": "정보통신 > 소프트웨어 개발",
+  "prerequisite": "컴퓨터 기초, 수학 기초",
+  "textbook": "파이썬으로 배우는 AI 프로그래밍 (저자명, 출판사, 년도)",
+  "core_competency": "디지털 리터러시, 문제해결능력, 협업역량, 창의적 사고",
+  "course_description": "본 교과목은 인공지능(AI) 기반의 프로그래밍 역량을 디지털 전환(DX) 맥락에서 함양하는 것을 목표로 한다. 파이썬 기초부터 머신러닝 알고리즘 구현, 실습 프로젝트까지 단계적으로 학습한다.",
+  "integration_summary": "본 교과목은 프로그래밍 기초 → AI 알고리즘 → DX 프로젝트 순으로 역량을 확장하며, 현장 문제해결 중심의 통합 학습을 지향한다.",
+  "follow_up": "머신러닝 심화, 딥러닝 실습, AI 프로젝트 캡스톤",
+  "publish_date": "2025-03-01",
+  "collaboration_guide": "AI 도구(ChatGPT, Copilot 등)는 보조 수단으로 활용하며, 최종 코드는 학습자가 직접 이해하고 수정할 수 있어야 한다. AI 생성 코드를 그대로 제출하는 행위는 학문 윤리 위반으로 처리된다.",
+  "ethics_warning": "AI 생성 코드의 저작권, 편향성, 개인정보 침해 문제를 인식하고, 윤리적 AI 활용 원칙을 준수한다.",
+
+  "attendance_rate": "15",
+  "attendance_tool": "LMS 출결 관리 시스템",
+  "attendance_description": "매 수업 출결 확인, 3회 이상 결석 시 F 처리",
+  "midterm_rate": "30",
+  "midterm_tool": "LMS 시험 플랫폼",
+  "midterm_description": "8주차 중간고사 (온라인 실기 + 이론)",
+  "final_rate": "30",
+  "final_tool": "LMS 시험 플랫폼",
+  "final_description": "15주차 기말고사 (프로젝트 발표 + 코드 제출)",
+  "assignment_rate": "25",
+  "assignment_tool": "GitHub, LMS 과제 제출",
+  "assignment_description": "주차별 실습 과제 및 프로젝트 중간 산출물 제출",
+
+  "learning_goals": [
+    "파이썬 기초 문법 및 라이브러리를 활용하여 AI 프로그램을 작성할 수 있다.",
+    "머신러닝 알고리즘의 원리를 이해하고 데이터에 적용할 수 있다.",
+    "DX 기반 문제해결 프레임워크를 활용하여 실습 프로젝트를 수행할 수 있다.",
+    "팀 협업 도구와 디지털 환경을 활용하여 협력적 학습을 실천할 수 있다."
+  ],
+
+  "smart_methods": [
+    {
+      "method_name": "플립드러닝",
+      "description": "수업 전 영상 강의 시청 → 수업 중 실습·토론 심화. LMS에 10~15분 강의 영상 업로드, 퀴즈로 사전학습 확인 후 실습 진행.",
+      "tools": "LMS, YouTube, Replit – 1~7주차"
+    },
+    {
+      "method_name": "문제중심학습(PBL)",
+      "description": "실제 산업 현장의 데이터 문제를 팀별로 정의·분석·해결. 매 2주마다 중간 발표를 통해 피드백을 반영하며 개선.",
+      "tools": "GitHub, Google Colab, Notion – 9~14주차"
+    },
+    {
+      "method_name": "팀기반학습(TBL)",
+      "description": "4~5인 팀 구성, 개인 준비도 확인(RAT) → 팀 문제 해결 → 교수자 피드백 사이클로 운영.",
+      "tools": "Slack, Miro, GitHub – 전 학기"
+    }
+  ],
+
+  "method_guides": [
+    {
+      "method_name": "플립드러닝",
+      "overview": "수업 전 디지털 콘텐츠 학습, 수업 중 적용·심화 활동으로 구성된 역전 학습 모델",
+      "operation_steps": [
+        {
+          "step_name": "사전학습 (수업 전)",
+          "activities": "LMS 영상 강의(10~15분) 시청, 퀴즈 제출",
+          "instructor_role": "콘텐츠 제작 및 LMS 업로드, 퀴즈 설계",
+          "tools": "LMS, YouTube Studio"
+        },
+        {
+          "step_name": "도입 (10분)",
+          "activities": "사전학습 확인 퀴즈 결과 공유, Q&A",
+          "instructor_role": "피드백 제공, 오개념 수정",
+          "tools": "Slido, LMS"
+        },
+        {
+          "step_name": "실습 및 심화 (60분)",
+          "activities": "팀별 코딩 실습, 문제 해결 활동",
+          "instructor_role": "순회 지도, 개별 피드백",
+          "tools": "Replit, Google Colab"
+        },
+        {
+          "step_name": "정리 및 성찰 (10분)",
+          "activities": "학습 내용 요약 정리, 다음 주 예고",
+          "instructor_role": "핵심 정리, 과제 안내",
+          "tools": "LMS 학습일지"
+        }
+      ],
+      "support_framework": [
+        {
+          "element": "테크놀로지 지원",
+          "methods": "노트북 미지참 학생을 위한 클라우드 환경 제공",
+          "tools": "Google Colab, Replit"
+        },
+        {
+          "element": "학습 격차 지원",
+          "methods": "보충 자료 LMS 탑재, 멘토링 시간 운영",
+          "tools": "LMS, Zoom"
+        }
+      ],
+      "examples": "1~7주차 파이썬 기초 문법 수업에 적용. 매주 강의 영상 + 실습 문제 세트 제공"
+    }
+  ],
+
+  "digital_tools": [
+    {
+      "category": "실습 환경",
+      "color": "#0066cc",
+      "name": "Google Colab",
+      "description": "클라우드 기반 파이썬 개발 환경, 무료 GPU 제공",
+      "usage": "<ul><li>노트북 파일(.ipynb) 형태로 코드 작성 및 실행</li><li>구글 드라이브 연동으로 파일 저장 및 공유</li><li>라이브러리 자동 설치 지원</li></ul>"
+    },
+    {
+      "category": "실습 환경",
+      "color": "#00aa44",
+      "name": "Replit",
+      "description": "브라우저 기반 협업 코딩 환경",
+      "usage": "<ul><li>팀원과 실시간 공동 코딩 가능</li><li>별도 설치 없이 즉시 실행 환경 제공</li><li>교수자가 과제 템플릿 배포 가능</li></ul>"
+    },
+    {
+      "category": "협업 도구",
+      "color": "#cc6600",
+      "name": "GitHub",
+      "description": "버전 관리 및 프로젝트 협업 플랫폼",
+      "usage": "<ul><li>팀 프로젝트 코드 관리 (Repository)</li><li>Issue & PR 기반 협업 실습</li><li>포트폴리오 구축</li></ul>"
+    },
+    {
+      "category": "LMS",
+      "color": "#6600cc",
+      "name": "Canvas LMS",
+      "description": "수업 운영 및 학습 관리 시스템",
+      "usage": "<ul><li>강의 영상, 자료 배포</li><li>과제 제출 및 성적 관리</li><li>출결 확인, 공지사항 전달</li></ul>"
+    }
+  ],
+
+  "activity_guides": [
+    {
+      "method_name": "플립드러닝",
+      "step": "팀 실습 활동",
+      "content": "<ul><li>주제별 데이터셋 탐색 및 전처리</li><li>팀원 역할 분담 후 코딩 실습</li><li>결과 공유 및 상호 피드백</li></ul>",
+      "tools": "Google Colab, GitHub",
+      "weekly_tasks": "<ul><li>3주: 파이썬 기초 실습 (변수·자료형)</li><li>4주: 조건문·반복문 팀 과제</li><li>5주: 함수 설계 및 테스트</li></ul>",
+      "support_items": "<ul><li>코딩 오류 해결 가이드 PDF 제공</li><li>AI 튜터링 도구(Copilot) 윤리적 활용 안내</li></ul>",
+      "additional_info": "팀별 GitHub Repository 생성 필수. README 작성법 별도 안내."
+    }
+  ],
+
+  "weeks": [
+    { "weekNum": 1,  "topic": "강의 소개 및 개발 환경 구축",          "goal": "개발 환경 설치 및 첫 파이썬 코드 실행",         "content": "수업 소개, Google Colab·Replit 환경 설정, Hello World",                    "tools": "Google Colab, Replit",  "assessment": "환경 설정 확인 퀴즈",        "is_midterm": false, "is_final": false },
+    { "weekNum": 2,  "topic": "파이썬 기초 – 변수·자료형·연산자",     "goal": "기본 자료형과 연산자를 코드로 표현",             "content": "int·float·str·bool, 입출력 함수, 기초 연산자 실습",                     "tools": "Replit",               "assessment": "실습 과제 #1",               "is_midterm": false, "is_final": false },
+    { "weekNum": 3,  "topic": "제어 구조 – 조건문·반복문",            "goal": "조건·반복 구조를 활용한 문제 해결",             "content": "if·elif·else, for·while, break·continue 실습",                        "tools": "Replit",               "assessment": "팀 실습 과제 제출",          "is_midterm": false, "is_final": false },
+    { "weekNum": 4,  "topic": "함수와 모듈",                           "goal": "함수 정의 및 표준 라이브러리 활용",             "content": "def·return·lambda, math·random 모듈, 코드 재사용 원칙",               "tools": "Replit, GitHub",        "assessment": "함수 설계 과제",             "is_midterm": false, "is_final": false },
+    { "weekNum": 5,  "topic": "자료구조 – 리스트·딕셔너리·집합",      "goal": "자료구조를 이용한 데이터 관리",                 "content": "list·dict·set·tuple, comprehension, 실데이터 처리 실습",              "tools": "Google Colab",         "assessment": "데이터 처리 실습 과제",      "is_midterm": false, "is_final": false },
+    { "weekNum": 6,  "topic": "파일 I/O와 예외 처리",                 "goal": "파일 읽기·쓰기와 에러 핸들링",                 "content": "open·read·write, CSV 파싱, try·except·finally",                      "tools": "Google Colab, GitHub", "assessment": "CSV 데이터 처리 과제",       "is_midterm": false, "is_final": false },
+    { "weekNum": 7,  "topic": "데이터 분석 기초 – NumPy·Pandas",      "goal": "배열·데이터프레임으로 데이터 탐색",             "content": "ndarray 연산, DataFrame CRUD, 기술통계, 결측치 처리",                  "tools": "Google Colab",         "assessment": "데이터 탐색 보고서",         "is_midterm": false, "is_final": false },
+    { "weekNum": 8,  "topic": "중간고사",                              "goal": "1~7주차 학습 내용 종합 평가",                   "content": "온라인 이론 시험 + 실기 코딩 테스트",                                  "tools": "LMS, Google Colab",    "assessment": "중간고사 (30점)",            "is_midterm": true,  "is_final": false },
+    { "weekNum": 9,  "topic": "데이터 시각화 – Matplotlib·Seaborn",   "goal": "데이터를 다양한 차트로 시각화",                 "content": "line·bar·scatter·heatmap, 서브플롯, 인사이트 도출",                   "tools": "Google Colab",         "assessment": "시각화 대시보드 과제",       "is_midterm": false, "is_final": false },
+    { "weekNum": 10, "topic": "머신러닝 기초 – scikit-learn",         "goal": "지도학습 모델 학습 및 평가",                    "content": "LinearRegression·KNN·Decision Tree, train/test split, accuracy",       "tools": "Google Colab",         "assessment": "ML 실습 보고서",             "is_midterm": false, "is_final": false },
+    { "weekNum": 11, "topic": "분류 알고리즘 심화",                    "goal": "앙상블 기법 이해 및 적용",                      "content": "Random Forest·SVM·XGBoost, 하이퍼파라미터 튜닝, confusion matrix",     "tools": "Google Colab",         "assessment": "모델 비교 분석 과제",        "is_midterm": false, "is_final": false },
+    { "weekNum": 12, "topic": "딥러닝 입문 – TensorFlow·Keras",       "goal": "신경망 기본 구조 이해 및 구현",                 "content": "Dense Layer, 활성함수, 손실함수, MNIST 분류 실습",                    "tools": "Google Colab (GPU)",   "assessment": "신경망 실습 과제",           "is_midterm": false, "is_final": false },
+    { "weekNum": 13, "topic": "자연어처리(NLP) 기초",                  "goal": "텍스트 데이터 전처리 및 분류",                  "content": "토크나이징, TF-IDF, 감성분석, 간단한 챗봇 구현",                     "tools": "Google Colab, HuggingFace", "assessment": "NLP 미니 프로젝트",     "is_midterm": false, "is_final": false },
+    { "weekNum": 14, "topic": "팀 프로젝트 발표 준비",                 "goal": "최종 프로젝트 완성 및 발표 자료 준비",          "content": "팀별 프로젝트 최종 점검, 발표 리허설, 상호 피드백",                   "tools": "GitHub, Canva, Notion", "assessment": "발표 자료 제출",            "is_midterm": false, "is_final": false },
+    { "weekNum": 15, "topic": "기말고사 및 최종 발표",                  "goal": "학기 전체 학습 성과 종합 평가",                 "content": "팀 프로젝트 발표 + 기말 필기·실기 고사, 학습 성찰 활동",             "tools": "LMS, Google Colab",    "assessment": "기말고사 (30점) + 발표 평가", "is_midterm": false, "is_final": true  }
+  ],
+
+  "appendix_sections": [
+    {
+      "section_title": "참고문헌",
+      "section_content": "<ul><li>Géron, A. (2022). <em>Hands-On Machine Learning</em> (3rd ed.). O'Reilly.</li><li>박해선 (2023). <em>혼자 공부하는 머신러닝+딥러닝</em>. 한빛미디어.</li><li>교육부 (2023). <em>디지털 기반 교육혁신 방안</em>. 교육부 정책자료.</li></ul>"
+    },
+    {
+      "section_title": "활용 도구 목록",
+      "section_content": "<table><tr><th>도구</th><th>용도</th><th>URL</th></tr><tr><td>Google Colab</td><td>파이썬 실습</td><td>colab.research.google.com</td></tr><tr><td>Replit</td><td>협업 코딩</td><td>replit.com</td></tr><tr><td>GitHub</td><td>버전 관리</td><td>github.com</td></tr><tr><td>HuggingFace</td><td>NLP 모델</td><td>huggingface.co</td></tr></table>"
+    },
+    {
+      "section_title": "수업 평가 루브릭",
+      "section_content": "<table><tr><th>항목</th><th>A (우수)</th><th>B (보통)</th><th>C (미흡)</th></tr><tr><td>코드 완성도</td><td>요구사항 100% 충족, 최적화</td><td>요구사항 80% 충족</td><td>요구사항 50% 미만</td></tr><tr><td>협업 기여도</td><td>팀 내 리더십 발휘, 적극 기여</td><td>부여된 역할 수행</td><td>소극적 참여</td></tr><tr><td>발표 품질</td><td>명확한 설명, 시각화 우수</td><td>내용 전달 양호</td><td>내용 이해 부족</td></tr></table>"
+    },
+    {
+      "section_title": "AI 활용 가이드라인",
+      "section_content": "<ol><li><strong>허용 범위</strong>: 코드 이해 보조, 오류 디버깅 힌트, 개념 설명 참고</li><li><strong>금지 행위</strong>: AI 생성 코드 그대로 제출, 보고서 AI 대필</li><li><strong>의무 사항</strong>: AI 활용 시 사용 내역 명시 (도구명, 프롬프트 요약)</li><li><strong>저작권</strong>: AI 생성 결과물의 저작권 귀속 불분명 – 항상 직접 수정·재작성 필요</li></ol>"
+    }
+  ]
+}

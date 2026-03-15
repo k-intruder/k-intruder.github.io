@@ -1,69 +1,53 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>교수설계가이드 작성 툴</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+<!-- preview.hbs.html ─────────────────────────────────────────────────
+     실시간 미리보기 & HTML 내보내기에 사용되는 Handlebars 템플릿
+     preview.js의 AppState.compiled 로 컴파일됩니다.
 
-<body>
+     ┌─────────────────────────────────────────────────────────┐
+     │  주요 변수 ({{변수명}} 형식)                              │
+     ├─────────────────────────────────────────────────────────┤
+     │  course_name        교과목명(한국어)                      │
+     │  course_name_en     교과목명(영어)                        │
+     │  department         학과명                                │
+     │  professor_name     교수자명                              │
+     │  semester           학기                                  │
+     │  year               연도                                  │
+     │  credits            학점                                  │
+     │  theory_hours       이론 시수                             │
+     │  practice_hours     실습 시수                             │
+     │  course_type        교과 유형                             │
+     │  publish_date       발행일                                │
+     │  keywords           핵심 키워드                           │
+     │  ncs_job            NCS 직무분류                          │
+     │  core_competency    핵심역량                              │
+     │  course_description 교과목 개요                           │
+     │  prerequisite       선수과목                              │
+     │  follow_up          후속과목                              │
+     │  textbook           교재                                  │
+     │  integration_summary 교육방법 통합 요약                   │
+     │  collaboration_guide AI 협업 가이드                       │
+     │  ethics_warning     AI 윤리 주의사항                      │
+     ├─────────────────────────────────────────────────────────┤
+     │  배열 변수:                                               │
+     │  learning_goals[]       학습목표 (string[])               │
+     │  smart_methods[]        SMART 교육방법                    │
+     │  method_guides[]        교육방법 가이드                   │
+     │  digital_tools[]        디지털 도구                       │
+     │  activity_guides[]      학습활동 가이드                   │
+     │  appendix_sections[]    부록 섹션                         │
+     ├─────────────────────────────────────────────────────────┤
+     │  주차별 변수 (N = 1~15):                                  │
+     │  week_N_topic       주차 주제                             │
+     │  week_N_goal        학습목표                              │
+     │  week_N_content     수업 내용                             │
+     │  week_N_tools       활용 도구                             │
+     │  week_N_assessment  평가 방법                             │
+     ├─────────────────────────────────────────────────────────┤
+     │  평가 비율:                                               │
+     │  attendance_rate / midterm_rate                          │
+     │  final_rate / assignment_rate                            │
+     └─────────────────────────────────────────────────────────┘
+──────────────────────────────────────────────────────────────────── -->
 
-<!-- ── Toolbar ── -->
-<div id="toolbar">
-  <h1>📄 교수설계가이드 작성 툴</h1>
-  <span id="save-status" class="save-status">● 저장됨</span>
-  <button class="tb-btn tb-btn-save" onclick="App.saveNow()">💾 저장</button>
-  <button class="tb-btn tb-btn-reset" onclick="App.resetAll()">🗑️ 초기화</button>
-  <button class="tb-btn tb-btn-json-dl" onclick="App.exportJSON()" title="현재 데이터를 JSON 파일로 저장">⬇️ JSON 저장</button>
-  <button class="tb-btn tb-btn-json-ul" onclick="App.importJSON()" title="JSON 파일을 불러와 폼에 채움">⬆️ JSON 불러오기</button>
-  <input type="file" id="json-file-input" accept=".json" style="display:none" onchange="App._onJsonFileSelected(event)">
-  <div class="export-wrap">
-    <button class="tb-btn tb-btn-export" onclick="App.toggleExportMenu()">📤 내보내기 ▾</button>
-    <div id="export-menu">
-      <button onclick="App.exportPDF()">🖨️ &nbsp;PDF로 내보내기</button>
-      <hr>
-      <button onclick="App.exportHTML()">📄 &nbsp;HTML로 다운로드</button>
-      <button onclick="App.exportDOCX()">📝 &nbsp;DOCX로 다운로드</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── Main ── -->
-<div id="main">
-  <!-- Left Panel -->
-  <div id="left-panel">
-    <div id="tabs">
-      <button class="tab-btn active" onclick="App.showTab(0,this)">📋 기본정보</button>
-      <button class="tab-btn" onclick="App.showTab(1,this)">🎯 교과목 개요</button>
-      <button class="tab-btn" onclick="App.showTab(2,this)">🧠 수업 설계</button>
-      <button class="tab-btn" onclick="App.showTab(3,this)">🔧 디지털 도구</button>
-      <button class="tab-btn" onclick="App.showTab(4,this)">📅 주차별 계획</button>
-      <button class="tab-btn" onclick="App.showTab(5,this)">🎭 학습활동</button>
-      <button class="tab-btn" onclick="App.showTab(6,this)">📊 평가 설계</button>
-    </div>
-    <div id="form-area"></div>
-  </div>
-
-  <!-- Right Panel -->
-  <div id="right-panel">
-    <button id="preview-toggle-btn" onclick="App.togglePreview()">▲ 미리보기 접기</button>
-    <div id="preview-toolbar">
-      <span>🔍 실시간 미리보기</span>
-      <span id="preview-status">대기 중</span>
-    </div>
-    <iframe id="preview-iframe" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
-  </div>
-</div>
-
-<div id="toast-container"></div>
-
-<!-- ════════════════════════════════════════════════════════════════════
-     Handlebars 미리보기 템플릿
-     (원본: template/preview.hbs.html)
-     실시간 미리보기 & 내보내기 HTML 생성에 사용됩니다.
-═════════════════════════════════════════════════════════════════════ -->
-<script type="text/x-handlebars-template" id="doc-template">
 <!DOCTYPE html>
 <html lang="ko"><head>
 <meta charset="UTF-8">
@@ -412,45 +396,3 @@ tr:nth-child(even){background-color:#fbfbfb;}
   <div class="footer"></div>
 </div>
 </body></html>
-</script>
-
-<!-- ════════════════════════════════════════════════════════════════════
-     외부 라이브러리
-═════════════════════════════════════════════════════════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
-
-<!-- ════════════════════════════════════════════════════════════════════
-     App 모듈 (기능별 분리)
-     ─ 로드 순서: state → helpers → collect → preview → storage
-                  → tabs → form-fields → tab-builders → export → app
-═════════════════════════════════════════════════════════════════════ -->
-<script src="js/state.js"></script>         <!-- 공유 상태 (AppState) -->
-<script src="js/helpers.js"></script>       <!-- Handlebars 헬퍼 & 컴파일 -->
-<script src="js/collect.js"></script>       <!-- DOM → 데이터 수집 -->
-<script src="js/preview.js"></script>       <!-- ★ 실시간 미리보기 렌더링 -->
-<script src="js/storage.js"></script>       <!-- LocalStorage + Toast 알림 -->
-<script src="js/tabs.js"></script>          <!-- 탭 내비게이션 + 필드 복원 -->
-<script src="js/form-fields.js"></script>   <!-- 입력 필드 & 배열 헬퍼 -->
-<script src="js/tab-builders.js"></script>  <!-- buildTab0~6 -->
-<script src="js/export.js"></script>        <!-- PDF / HTML / DOCX 내보내기 -->
-<script src="js/app.js"></script>           <!-- 초기화 + 이벤트 + 모바일 + JSON I/O -->
-
-<!-- ── App 공개 API 조립 & 부트 ── -->
-<script>
-const App = (function() {
-  'use strict';
-  return {
-    init, showTab, toggleAccordion, updateRateTotal,
-    saveNow, resetAll,
-    toggleExportMenu, exportPDF, exportHTML, exportDOCX,
-    exportJSON, importJSON, _onJsonFileSelected,
-    togglePreview,
-    _addItem, _addNestedStep, _addNestedSupport, _onChange
-  };
-})();
-
-document.addEventListener('DOMContentLoaded', () => App.init());
-</script>
-
-</body>
-</html>
