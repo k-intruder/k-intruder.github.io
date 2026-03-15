@@ -75,24 +75,21 @@
       const badge = i===8 ? '<span class="accordion-badge midterm">중간평가</span>' :
                     i===15 ? '<span class="accordion-badge final">기말평가</span>' :
                     '<span class="accordion-badge">일반</span>';
-      html += `<div class="accordion-item">
-        <div class="accordion-header" onclick="App.toggleAccordion(this)">
-          <span>${i}주차 ${badge}</span>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-body">
-          ${field('주제','`week_${i}_topic`','input',{ph:`${i}주차 주제`})}
-          ${field('학습목표','`week_${i}_goal`','textarea',{rows:2})}
-          ${field('학습 내용','`week_${i}_content`','textarea',{rows:3})}
-          ${field('활용 도구','`week_${i}_tools`','input')}
-          ${field('평가방법','`week_${i}_assessment`','input')}
-        </div></div>`;
+      // ★ field()에 실제 평가된 문자열 전달 (template literal 직접 사용)
+      html += '<div class="accordion-item">'
+        + '<div class="accordion-header" onclick="App.toggleAccordion(this)">'
+        + '<span>' + i + '주차 ' + badge + '</span>'
+        + '<span class="accordion-arrow">▼</span>'
+        + '</div>'
+        + '<div class="accordion-body">'
+        + field('주제',          'week_'+i+'_topic',      'input',    {ph: i+'주차 주제'})
+        + field('학습목표',      'week_'+i+'_goal',       'textarea', {rows:2})
+        + field('학습 내용',     'week_'+i+'_content',    'textarea', {rows:3})
+        + field('활용 도구',     'week_'+i+'_tools',      'input')
+        + field('평가방법',      'week_'+i+'_assessment', 'input')
+        + '</div></div>';
     }
     area.innerHTML = html;
-    // fix: replace template literal keys in data-field
-    area.querySelectorAll('[data-field]').forEach(el => {
-      el.dataset.field = el.dataset.field.replace(/`/g,'');
-    });
   }
 
   function buildTab5(area) {

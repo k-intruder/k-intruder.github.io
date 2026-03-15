@@ -146,11 +146,15 @@
         // localStorage에 저장
         localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({ data: importedData, savedAt: new Date().toISOString() }));
         AppState.data = importedData;
-        // 현재 탭 재빌드 + 필드 복원
+        // ★ 탭 0(기본정보)으로 이동 후 현재 탭 복원
+        // → 모든 탭의 데이터가 localStorage에 저장되었으므로 탭 전환 시 자동 복원
+        const tab0Btn = document.querySelectorAll('.tab-btn')[0];
+        if (tab0Btn) showTab(0, tab0Btn);
+        // 현재 활성 탭도 복원 (탭0이 아니었다면)
         const activeBtnIdx = [...document.querySelectorAll('.tab-btn')].findIndex(b => b.classList.contains('active'));
         const idx = activeBtnIdx >= 0 ? activeBtnIdx : 0;
         const activeBtn = document.querySelectorAll('.tab-btn')[idx];
-        showTab(idx, activeBtn);
+        if (idx !== 0) showTab(idx, activeBtn);
         renderPreview();
         toast(`✅ "${file.name}" 불러오기 완료!`, 'success', 3000);
       } catch(err) {

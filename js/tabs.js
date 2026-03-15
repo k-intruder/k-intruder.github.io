@@ -26,7 +26,19 @@
   // ── Restore fields from saved data ────────────────────────────────
   function restoreFieldsFromData(d) {
     if (!d) return;
-    // simple fields
+    // ★ weeks 배열 → week_N_xxx 평탄화 (buildTab4의 data-field 복원용)
+    if (d.weeks && Array.isArray(d.weeks)) {
+      d.weeks.forEach(w => {
+        const n = w.weekNum;
+        if (!n) return;
+        if (d['week_'+n+'_topic']      === undefined) d['week_'+n+'_topic']      = w.topic      || '';
+        if (d['week_'+n+'_goal']       === undefined) d['week_'+n+'_goal']       = w.goal       || '';
+        if (d['week_'+n+'_content']    === undefined) d['week_'+n+'_content']    = w.content    || '';
+        if (d['week_'+n+'_tools']      === undefined) d['week_'+n+'_tools']      = w.tools      || '';
+        if (d['week_'+n+'_assessment'] === undefined) d['week_'+n+'_assessment'] = w.assessment || '';
+      });
+    }
+    // simple fields (week_N_xxx 포함)
     document.querySelectorAll('[data-field]').forEach(el => {
       if (d[el.dataset.field] !== undefined) el.value = d[el.dataset.field];
     });
