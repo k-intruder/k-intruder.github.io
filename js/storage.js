@@ -7,7 +7,7 @@
 // ── LocalStorage ───────────────────────────────────────────────────
   function saveData() {
     try {
-      const snapshot = collect();
+      const snapshot = getMergedData(); // ★ 전체 탭 데이터 병합 저장
       localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({data: snapshot, savedAt: new Date().toISOString()}));
     } catch(e) { setSaveStatus('error'); }
   }

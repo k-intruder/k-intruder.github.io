@@ -146,15 +146,15 @@
         // localStorage에 저장
         localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({ data: importedData, savedAt: new Date().toISOString() }));
         AppState.data = importedData;
-        // ★ 탭 0(기본정보)으로 이동 후 현재 탭 복원
-        // → 모든 탭의 데이터가 localStorage에 저장되었으므로 탭 전환 시 자동 복원
-        const tab0Btn = document.querySelectorAll('.tab-btn')[0];
+        // ★ showTab(0) 호출 전에 미리 prevTab 을 기록
+        //   (showTab 이 active 클래스를 바꾸므로 호출 후에는 항상 0 이 나옴)
+        const _allBtns  = [...document.querySelectorAll('.tab-btn')];
+        const _prevIdx  = _allBtns.findIndex(b => b.classList.contains('active'));
+        const _prevTab  = _prevIdx >= 0 ? _prevIdx : 0;
+        const tab0Btn = _allBtns[0];
         if (tab0Btn) showTab(0, tab0Btn);
-        // 현재 활성 탭도 복원 (탭0이 아니었다면)
-        const activeBtnIdx = [...document.querySelectorAll('.tab-btn')].findIndex(b => b.classList.contains('active'));
-        const idx = activeBtnIdx >= 0 ? activeBtnIdx : 0;
-        const activeBtn = document.querySelectorAll('.tab-btn')[idx];
-        if (idx !== 0) showTab(idx, activeBtn);
+        // import 전에 다른 탭이 열려 있었으면 해당 탭도 재빌드
+        if (_prevTab !== 0 && _allBtns[_prevTab]) showTab(_prevTab, _allBtns[_prevTab]);
         renderPreview();
         toast(`✅ "${file.name}" 불러오기 완료!`, 'success', 3000);
       } catch(err) {

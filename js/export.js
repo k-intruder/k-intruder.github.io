@@ -12,7 +12,7 @@
 // ── Export functions ───────────────────────────────────────────────
   function getRenderedHtml() {
     if (!AppState.compiled) return '';
-    try { return AppState.compiled(collect()); } catch(e) { return ''; }
+    try { return AppState.compiled(getMergedData()); } catch(e) { return ''; }
   }
 
   function exportPDF() {
@@ -45,7 +45,7 @@
     }
     if (typeof docx === 'undefined') { toast('DOCX 라이브러리 로드 실패','error'); return; }
     try {
-      const d = collect();
+      const d = getMergedData();
       const {Document,Paragraph,TextRun,Table,TableRow,TableCell,
               HeadingLevel,AlignmentType,WidthType,Packer,ShadingType,convertInchesToTwip} = docx;
 

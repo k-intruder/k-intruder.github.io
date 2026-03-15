@@ -32,7 +32,8 @@
         is_final:   i === 15
       });
     }
-    AppState.data = d;
+    // ★ collect()는 순수 읽기 함수 – AppState.data를 절대 덮어쓰지 않음
+    //    (덮어쓰면 JSON import 후 다른 탭 데이터가 사라짐)
     return d;
   }
 
@@ -81,3 +82,34 @@
       return obj;
     });
   }
+
+  // ── getMergedData ─────────────────────────────────────────────────
+  // ★ export/preview 공용: AppState.data(저장됨) + 현재 DOM 병합
+  //   현재 탭에 없는 필드는 AppState.data 값을 유지
+  //   배열은 DOM에 값이 없으면 AppState.data 배열을 우선
+  function getMergedData() {
+    const saved  = AppState.data || {};
+    const domData = collect();                   // 현재 탭 DOM 값
+    const arrays = ['learning_goals','smart_methods','method_guides','digital_tools','activity_guides','appendix_sections','weeks'];
+    const merged = Object.assign({}, saved);     // 저장 데이터 베이스
+
+    // simple fields: DOM 값이 실제로 있으면 덮어쓰기
+    Object.keys(domData).forEach(k => {
+      if (arrays.includes(k)) return;            // 배열은 아래서 처리
+      const v = domData[k];
+      if (v !== undefined && v !== '') merged[k] = v;
+    });
+
+    // arrays: DOM에 실제 항목이 있으면 사용, 없으면 AppState.data 유지
+    arrays.forEach(arr => {
+      const domArr = domData[arr];
+      if (domArr && domArr.length > 0) {
+        merged[arr] = domArr;
+      } else if (saved[arr] && saved[arr].length > 0) {
+        merged[arr] = saved[arr];                // 저장 배열 유지
+      }
+    });
+
+    return merged;
+  }
+

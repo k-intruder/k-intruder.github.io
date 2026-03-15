@@ -14,7 +14,7 @@
 // ── Render Preview ─────────────────────────────────────────────────
   function renderPreview() {
     if (!AppState.compiled) return;
-    const d = collect();
+    const d = getMergedData(); // ★ AppState.data + 현재 탭 DOM 병합
     try {
       const html = AppState.compiled(d);
       const iframe = document.getElementById('preview-iframe');
