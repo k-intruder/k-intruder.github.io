@@ -5,9 +5,11 @@
 // ──────────────────────────────────────────────────────────────────────
 
 // ── Tab Forms ──────────────────────────────────────────────────────
-  const TABS = [
-    buildTab0, buildTab1, buildTab2, buildTab3, buildTab4, buildTab5, buildTab6
-  ];
+  // TABS: tab-builders.js가 먼저 로드된 후 참조 (lazy getter)
+  function getTAB(idx) {
+    const TABS = [buildTab0, buildTab1, buildTab2, buildTab3, buildTab4, buildTab5, buildTab6];
+    return TABS[idx];
+  }
 
   function showTab(idx, btn) {
     AppState.currentTab = idx;
@@ -15,7 +17,7 @@
     btn.classList.add('active');
     const area = document.getElementById('form-area');
     area.innerHTML = '';
-    TABS[idx](area);
+    getTAB(idx)(area);
     restoreFieldsFromData(AppState.data);
     area.addEventListener('input', scheduleRender);
     area.addEventListener('change', scheduleRender);

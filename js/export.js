@@ -12,7 +12,7 @@
 // ── Export functions ───────────────────────────────────────────────
   function getRenderedHtml() {
     if (!AppState.compiled) return '';
-    try { return compiled(collect()); } catch(e) { return ''; }
+    try { return AppState.compiled(collect()); } catch(e) { return ''; }
   }
 
   function exportPDF() {
@@ -29,7 +29,7 @@
   function exportHTML() {
     hideExportMenu();
     const html = getRenderedHtml();
-    const name = (data.course_name||'교수설계가이드')+'_교수설계가이드.html';
+    const name = (AppState.data.course_name||'교수설계가이드')+'_교수설계가이드.html';
     const blob = new Blob([html],{type:'text/html;charset=utf-8'});
     const a = Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:name});
     document.body.appendChild(a); a.click(); document.body.removeChild(a);

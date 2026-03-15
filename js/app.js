@@ -66,7 +66,7 @@
     // build first tab
     const area = document.getElementById('form-area');
     buildTab0(area);
-    restoreFieldsFromData(data);
+    restoreFieldsFromData(AppState.data);
     area.addEventListener('input', scheduleRender);
     area.addEventListener('change', scheduleRender);
     // ★ 즉시 렌더링

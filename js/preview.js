@@ -21,7 +21,7 @@
       const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
       AppState.blobUrl = URL.createObjectURL(blob);
       const iframe = document.getElementById('preview-iframe');
-      iframe.src = blobUrl;
+      iframe.src = AppState.blobUrl;
       setPreviewStatus('ok', '✅ 렌더링 완료');
     } catch(e) {
       console.error('Render error:', e);

@@ -32,7 +32,7 @@
         is_final:   i === 15
       });
     }
-    data = d;
+    AppState.data = d;
     return d;
   }
 
