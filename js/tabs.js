@@ -6,7 +6,7 @@
 
 // ── Tab Forms ──────────────────────────────────────────────────────
 function getTAB(idx) {
-  const TABS = [buildTab0, buildTab1, buildTab2, buildTab3, buildTab4, buildTab5, buildTab6];
+  const TABS = [buildTab0, buildTab1, buildTab2, buildTab3, buildTab4, buildTab5, buildTab6, buildTab7, buildTab8, buildTab9, buildTab10];
   return TABS[idx];
 }
 
@@ -108,4 +108,6 @@ function restoreFieldsFromData(d) {
       d.activity_guides.forEach(obj => addActivityGuide(wrap, obj));
     }
   }
+
+  if (typeof updateRateTotal === 'function') updateRateTotal();
 }

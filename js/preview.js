@@ -5,13 +5,17 @@
 
 function getPreviewSectionIdByTab(tabIndex) {
   const map = {
-    0: 's1', // 기본정보
-    1: 's2', // 교과목 개요
-    2: 's4', // 수업 설계
-    3: 's5', // 디지털 도구
-    4: 's6', // 주차별 계획
-    5: 's7', // 학습활동
-    6: 's8'  // 평가 설계
+    0: 's1',
+    1: 's2',
+    2: 's3',
+    3: 's4',
+    4: 's5',
+    5: 's6',
+    6: 's7',
+    7: 's8',
+    8: 's9',
+    9: 's10',
+    10: 's11'
   };
   return map[tabIndex] || 's1';
 }
@@ -145,13 +149,16 @@ function highlightPreviewAnchor(anchorId) {
 
 function getPreviewAnchorByField(fieldName) {
   const map = {
+    development_purpose: 's1',
+    development_background_intro: 's1',
+    development_goal_summary: 's1',
     course_name: 'anchor-course-spec',
     course_name_en: 'anchor-course-spec',
     publish_date: 'anchor-course-spec',
     department: 'anchor-course-spec',
     year: 'anchor-course-spec',
     semester: 'anchor-course-spec',
-    professor_name: 'anchor-course-spec',
+    // professor_name: 'anchor-course-spec',
     textbook: 'anchor-course-spec',
     course_type: 'anchor-course-spec',
     credits: 'anchor-course-spec',
@@ -163,9 +170,11 @@ function getPreviewAnchorByField(fieldName) {
     course_description: 'anchor-course-desc',
     prerequisite: 'anchor-prerequisite',
     follow_up: 'anchor-prerequisite',
+    ai_dx_understanding: 's3',
     integration_summary: 'anchor-design-direction',
-    collaboration_guide: 'anchor-collaboration-guide',
-    ethics_warning: 'anchor-collaboration-guide',
+    instructor_guide: 's9',
+    collaboration_guide: 's9',
+    ethics_warning: 's10',
     attendance_rate: 'anchor-evaluation-system',
     attendance_tool: 'anchor-evaluation-system',
     attendance_description: 'anchor-evaluation-system',

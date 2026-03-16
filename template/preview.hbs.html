@@ -139,47 +139,13 @@ tr:nth-child(even){background-color:#fbfbfb;}
       <tr><td><strong>교과목명</strong></td><td>{{course_name}} ({{course_name_en}})</td></tr>
       <tr><td><strong>학과</strong></td><td>{{department}}</td></tr>
       <tr><td><strong>학기 / 학년</strong></td><td>{{semester}} / {{year}}</td></tr>
-      <tr><td><strong>담당교수</strong></td><td>{{professor_name}}</td></tr>
+      <!-- <!-- <tr><td><strong>담당교수</strong></td><td>{{professor_name}}</td></tr> --> -->
       <tr><td><strong>주교재</strong></td><td>{{textbook}}</td></tr>
     </tbody>
   </table>
   <div class="footer"></div>
 </div>
-<div class="page" id="s2">
-  <h1>2. 교과목 개요</h1>
-  <h2>2.1 교과목 명세</h2>
-  <table style="border:2px solid var(--primary-color)">
-    <tbody>
-      <tr><th style="width:30%">교과목명</th><td>{{course_name}} ({{course_name_en}})</td></tr>
-      <tr><th>이수구분 / 학점</th><td>{{course_type}} / {{credits}} (이론 {{theory_hours}} / 실습 {{practice_hours}})</td></tr>
-      <tr><th>대상 학년</th><td>{{year}}</td></tr>
-      <tr><th>NCS 직무분류</th><td>{{ncs_job}}</td></tr>
-      <tr><th>핵심 역량</th><td>{{core_competency}}</td></tr>
-    </tbody>
-  </table>
-  <h2>2.2 DX 기반 수업의 차별점</h2>
-  <table><thead><tr><th>구분</th><th>전통적 수업</th><th>DX 기반 수업</th></tr></thead><tbody>
-    <tr><td><strong>학습 환경</strong></td><td>오프라인 강의실 중심</td><td>온·오프라인 블렌디드 환경</td></tr>
-    <tr><td><strong>교수 방식</strong></td><td>교수자 중심 강의식</td><td>학습자 중심 참여·탐구형</td></tr>
-    <tr><td><strong>도구 활용</strong></td><td>교재·판서 중심</td><td>AI·Cloud·협업 도구 통합 활용</td></tr>
-    <tr><td><strong>피드백</strong></td><td>시험·과제 결과 중심</td><td>실시간·즉각적 AI 피드백</td></tr>
-    <tr><td><strong>평가</strong></td><td>결과 중심 총괄평가</td><td>과정 중심 포트폴리오 평가</td></tr>
-    <tr><td><strong>협업</strong></td><td>개인 학습 위주</td><td>디지털 협업 도구 활용 팀 프로젝트</td></tr>
-    <tr><td><strong>콘텐츠</strong></td><td>정형화된 교재 중심</td><td>실시간 업데이트되는 오픈 자원 활용</td></tr>
-  </tbody></table>
-  <div class="box box-tip" style="margin-top:8px">⭐ DX 기반 수업은 <strong>SMART 교육방법</strong>(Sync·Mirroring·Affiliation·Reinforcement·Tied-up)을 토대로 학습자가 능동적으로 지식을 구성하고, 디지털 도구로 역량을 강화하는 교육 패러다임입니다.</div>
-  <h2>2.3 교과목 특성</h2>
-  <p>{{course_description}}</p>
-  <h2>2.4 교과목 학습목표</h2>
-  <ol style="background-color:#f9f9f9;padding:20px">
-    {{#each learning_goals}}<li style="margin-bottom:10px">{{this}}</li>{{/each}}
-  </ol>
-  <h2>2.5 선수 과목 및 연계성</h2>
-  <p style="background-color:#f9f9f9;padding:15px">
-    <strong>[선수 과목]:</strong> {{prerequisite}}<br>
-    <strong>[후속 연계 과목]:</strong> {{follow_up}}
-  </p>
-  <div class="footer"></div>
+<div class="page" id="s2"> <h1>2. 교과목 개요</h1> <h2 id="anchor-course-spec">2.1 교과목명</h2> <table style="border:2px solid var(--primary-color)"> <tbody> <tr><th style="width:30%">교과목명</th><td>{{course_name}} ({{course_name_en}})</td></tr> <tr><th>이수구분 / 학점</th><td>{{course_type}} / {{credits}} (이론 {{theory_hours}} / 실습 {{practice_hours}})</td></tr> <tr><th>대상 학년</th><td>{{year}}</td></tr> <tr><th>NCS 직무분류</th><td>{{ncs_job}}</td></tr> <tr><th>핵심 역량</th><td>{{core_competency}}</td></tr> </tbody> </table> <span id="anchor-course-diff"></span> <h2 id="anchor-course-desc">2.2 교과목 특성</h2> <p>{{course_description}}</p> <h2 id="anchor-learning-goals">2.3 교과목 학습목표</h2> <ol style="background-color:#f9f9f9;padding:20px"> {{#each learning_goals}}<li style="margin-bottom:10px">{{this}}</li>{{/each}} </ol> <div id="anchor-prerequisite" class="box box-info" style="margin-top:10px"><strong>선수 과목 및 연계성</strong><br><strong>[선수 과목]:</strong> {{prerequisite}}<br><strong>[후속 연계 과목]:</strong> {{follow_up}}</div> <div class="footer"></div>
 </div>
 <div class="page" id="s3">
   <h1>3. 디지털 전환(DX) 기반 교육의 이해</h1>

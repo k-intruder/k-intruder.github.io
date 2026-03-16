@@ -74,7 +74,7 @@
       // S1
       children.push(h('1. 교수학습지침서 개요',HeadingLevel.HEADING_1),
         h('1.3 적용 교과목',HeadingLevel.HEADING_2),
-        iTable([['교과목명',`${d.course_name||''} (${d.course_name_en||''})`],['학과',d.department||''],['학기/학년',`${d.semester||''} / ${d.year||''}`],['담당교수',d.professor_name||''],['주교재',d.textbook||'']]),br());
+        iTable([['교과목명',`${d.course_name||''} (${d.course_name_en||''})`],['학과',d.department||''],['학기/학년',`${d.semester||''} / ${d.year||''}`],['주교재',d.textbook||'']]),br());
       // S2
       children.push(h('2. 교과목 개요',HeadingLevel.HEADING_1),h('2.1 교과목 명세',HeadingLevel.HEADING_2),
         iTable([['교과목명',`${d.course_name||''} (${d.course_name_en||''})`],['이수구분/학점',`${d.course_type||''} / ${d.credits||''} (이론${d.theory_hours||''} / 실습${d.practice_hours||''})`],['대상학년',d.year||''],['NCS직무',d.ncs_job||''],['핵심역량',d.core_competency||'']]),
@@ -115,7 +115,7 @@
       }
 
       const doc=new Document({
-        creator:d.professor_name||'',title:`${d.course_name||''} 교수설계가이드`,
+        creator:'',title:`${d.course_name||''} 교수설계가이드`,
         sections:[{properties:{page:{margin:{top:convertInchesToTwip(1),right:convertInchesToTwip(1),bottom:convertInchesToTwip(1),left:convertInchesToTwip(1)}}},children}]
       });
       const blob=await Packer.toBlob(doc);

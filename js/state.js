@@ -20,6 +20,7 @@
     previewScrollY       : 0,
     isResetting          : false,
     selectedTemplate     : 'default',
+    templateSources      : {},
   };
 
   // 편의 접근자 (전역 노출)
@@ -64,5 +65,8 @@
 
     get selectedTemplate()     { return window._AppState.selectedTemplate; },
     set selectedTemplate(v)    { window._AppState.selectedTemplate = v; },
+
+    get templateSources()      { return window._AppState.templateSources; },
+    set templateSources(v)     { window._AppState.templateSources = v; },
   };
 })();
