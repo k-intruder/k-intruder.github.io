@@ -163,7 +163,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
 </div>
 <div class="page" id="s2">
   <h1>2. 교과목 개요</h1>
-  <h2>2.1 교과목 명세</h2>
+  <h2 id="anchor-course-spec">2.1 교과목 명세</h2>
   <table style="border:2px solid var(--primary-color)">
     <tbody>
       <tr><th style="width:30%">교과목명</th><td>{{course_name}} ({{course_name_en}})</td></tr>
@@ -173,7 +173,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
       <tr><th>핵심 역량</th><td>{{core_competency}}</td></tr>
     </tbody>
   </table>
-  <h2>2.2 DX 기반 수업의 차별점</h2>
+  <h2 id="anchor-course-diff">2.2 DX 기반 수업의 차별점</h2>
   <table><thead><tr><th>구분</th><th>전통적 수업</th><th>DX 기반 수업</th></tr></thead><tbody>
     <tr><td><strong>학습 환경</strong></td><td>오프라인 강의실 중심</td><td>온·오프라인 블렌디드 환경</td></tr>
     <tr><td><strong>교수 방식</strong></td><td>교수자 중심 강의식</td><td>학습자 중심 참여·탐구형</td></tr>
@@ -184,13 +184,13 @@ tr:nth-child(even){background-color:#fbfbfb;}
     <tr><td><strong>콘텐츠</strong></td><td>정형화된 교재 중심</td><td>실시간 업데이트되는 오픈 자원 활용</td></tr>
   </tbody></table>
   <div class="box box-tip" style="margin-top:8px">⭐ DX 기반 수업은 <strong>SMART 교육방법</strong>(Sync·Mirroring·Affiliation·Reinforcement·Tied-up)을 토대로 학습자가 능동적으로 지식을 구성하고, 디지털 도구로 역량을 강화하는 교육 패러다임입니다.</div>
-  <h2>2.3 교과목 특성</h2>
+  <h2 id="anchor-course-desc">2.3 교과목 특성</h2>
   <p>{{course_description}}</p>
-  <h2>2.4 교과목 학습목표</h2>
+  <h2 id="anchor-learning-goals">2.4 교과목 학습목표</h2>
   <ol style="background-color:#f9f9f9;padding:20px">
     {{#each learning_goals}}<li style="margin-bottom:10px">{{this}}</li>{{/each}}
   </ol>
-  <h2>2.5 선수 과목 및 연계성</h2>
+  <h2 id="anchor-prerequisite">2.5 선수 과목 및 연계성</h2>
   <p style="background-color:#f9f9f9;padding:15px">
     <strong>[선수 과목]:</strong> {{prerequisite}}<br>
     <strong>[후속 연계 과목]:</strong> {{follow_up}}
@@ -224,7 +224,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
 </div>
 <div class="page" id="s4">
   <h1>4. DX 기반 수업 설계</h1>
-  <h2>4.1 수업 설계 방향</h2>
+  <h2 id="anchor-design-direction">4.1 수업 설계 방향</h2>
   <p>본 교과목은 <strong>경민대학교 SMART 교육방법론</strong>과 <strong>ADDIE 설계 모델</strong>을 결합하여, 학습자 중심의 DX 기반 수업을 구현합니다.</p>
   <table><thead><tr><th style="width:15%">설계 원칙</th><th style="width:40%">내용</th><th style="width:45%">실천 방안</th></tr></thead><tbody>
     <tr><td><strong>학습자 중심</strong></td><td>교수자 강의에서 학습자의 능동적 탐구·구성으로 전환</td><td>플립드러닝, 팀기반학습, 프로젝트 수업 적용</td></tr>
@@ -240,13 +240,13 @@ tr:nth-child(even){background-color:#fbfbfb;}
     <li><strong>R (Reinforcement):</strong> 문제중심학습(PBL), 자기주도학습, 실천학습(액션러닝), 게임기반학습, 포트폴리오</li>
     <li><strong>T (Tied-up):</strong> 팀티칭, 시뮬레이션기반학습(VR), 융합교육</li>
   </ul></div>
-  <h2>4.2 SMART 교육방법 적용</h2>
+  <h2 id="anchor-smart-methods">4.2 SMART 교육방법 적용</h2>
   <table>
     <thead><tr><th style="width:25%">적용 교육방법</th><th style="width:35%">구체적 실행 전략</th><th style="width:40%">활용 도구 및 시기</th></tr></thead>
     <tbody>{{#each smart_methods}}<tr><td><strong>{{method_name}}</strong></td><td>{{{description}}}</td><td>{{tools}}</td></tr>{{/each}}</tbody>
   </table>
   <div class="box box-tip">⭐ <strong>선택된 교육방법의 통합 운영</strong><br>{{integration_summary}}</div>
-  <h2>4.3 DX 기반 학습활동 설계</h2>
+  <h2 id="anchor-activity-design">4.3 DX 기반 학습활동 설계</h2>
   <p>DX 기반 수업에서는 온·오프라인 환경을 유기적으로 연계하며, 학습자가 디지털 도구를 통해 능동적으로 지식을 탐구·구성하도록 설계합니다.</p>
   <table><thead><tr><th style="width:20%">활동 유형</th><th style="width:35%">활동 내용</th><th style="width:25%">활용 도구</th><th style="width:20%">적용 시기</th></tr></thead><tbody>
     <tr><td><strong>📹 사전 학습</strong></td><td>강의 영상·자료를 사전 시청하고 핵심 개념을 정리 (플립드러닝)</td><td>LMS, YouTube, Notion</td><td>수업 전 주차</td></tr>
@@ -257,7 +257,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
     <tr><td><strong>🎤 발표·공유</strong></td><td>프로젝트 결과물 발표 및 상호 피드백</td><td>Canva, Padlet, Zoom</td><td>기말 주차</td></tr>
   </tbody></table>
   <div class="box box-tip" style="margin-top:8px">⭐ <strong>온·오프라인 연계 설계 팁</strong>: 오프라인 수업에서 고차원 사고(분석·종합·평가)를, 온라인에서 기초 지식 습득·반복 연습을 담당하도록 역할을 분리하면 효과적입니다.</div>
-  <h2>4.4 교육방법 적용 가이드</h2>
+  <h2 id="anchor-method-guides">4.4 교육방법 적용 가이드</h2>
   {{#each method_guides}}
   <h3>4.4.{{add @index 1}} {{method_name}}</h3>
   <p>{{{overview}}}</p>
@@ -282,7 +282,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
 </div>
 <div class="page" id="s5">
   <h1>5. 디지털 도구 활용 수업 운영</h1>
-  <h2>5.1 필수 디지털 도구 선정</h2>
+  <h2 id="anchor-digital-tools">5.1 필수 디지털 도구 선정</h2>
   {{#each digital_tools}}
   <h3>5.1.{{add @index 1}} {{category}}</h3>
   <table style="border-left:5px solid {{color}}"><tbody>
@@ -294,7 +294,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
   <div class="footer"></div>
 </div>
 <div class="page" id="s6">
-  <h1>6. 주차별 수업 운영 계획</h1>
+  <h1 id="anchor-weekly-plan">6. 주차별 수업 운영 계획</h1>
   <p>강의계획서를 바탕으로 디지털 도구 활용을 극대화한 주차별 운영 계획입니다.</p>
   {{#each weeks}}
   <h3>📌 {{weekNum}}주차{{#if is_midterm}} (중간평가){{/if}}{{#if is_final}} (기말평가){{/if}}: {{topic}}</h3>
@@ -308,7 +308,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
   <div class="footer"></div>
 </div>
 <div class="page" id="s7">
-  <h1>7. 학습활동 운영 방법</h1>
+  <h1 id="anchor-activity-guides">7. 학습활동 운영 방법</h1>
   {{#each activity_guides}}
   <h3>7.{{add @index 1}} {{method_name}}</h3>
   <table><tbody>
@@ -318,13 +318,13 @@ tr:nth-child(even){background-color:#fbfbfb;}
   {{#if weekly_tasks}}<h4>주차별 적용</h4>{{{weekly_tasks}}}{{/if}}
   {{#if support_items}}<h4>학습 지원</h4>{{{support_items}}}{{/if}}
   {{/each}}
-  {{#if collaboration_guide}}<h2>AI 활용 협업 가이드</h2>{{{collaboration_guide}}}{{/if}}
+  {{#if collaboration_guide}}<h2 id="anchor-collaboration-guide">AI 활용 협업 가이드</h2>{{{collaboration_guide}}}{{/if}}
   {{#if ethics_warning}}<div class="box box-warn">⚠️ <strong>AI 활용 윤리 가이드라인</strong><br>{{{ethics_warning}}}</div>{{/if}}
   <div class="footer"></div>
 </div>
 <div class="page" id="s8">
-  <h1>8. 학습평가 및 환류 계획 설계</h1>
-  <h2>8.1 평가 체계</h2>
+  <h1 id="anchor-evaluation">8. 학습평가 및 환류 계획 설계</h1>
+  <h2 id="anchor-evaluation-system">8.1 평가 체계</h2>
   <table>
     <thead><tr><th>평가 항목</th><th>비율(%)</th><th>평가 내용</th><th>평가 도구</th></tr></thead>
     <tbody>
@@ -400,7 +400,7 @@ tr:nth-child(even){background-color:#fbfbfb;}
   <div class="footer"></div>
 </div>
 <div class="page" id="s11">
-  <h1>11. 참고자료 및 부록</h1>
+  <h1 id="anchor-appendix">11. 참고자료 및 부록</h1>
   {{#each appendix_sections}}
   <h2>11.{{add @index 1}} {{section_title}}</h2>
   {{{section_content}}}

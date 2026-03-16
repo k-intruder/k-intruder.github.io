@@ -1,60 +1,289 @@
 // preview.js – 실시간 미리보기 렌더링
 // ──────────────────────────────────────────────────────────────────────
 // 공개 함수: renderPreview(), scheduleRender(), setPreviewStatus()
-//
-// ★ 실시간 미리보기 동작 흐름:
-//   사용자 입력
-//     → scheduleRender() [300ms 디바운스]
-//       → collect()      [DOM 데이터 수집]
-//         → AppState.compiled(d)  [Handlebars 렌더링]
-//           → Blob URL   [iframe src 갱신]
-//             → 미리보기 화면 업데이트
 // ──────────────────────────────────────────────────────────────────────
 
-// ── Render Preview ─────────────────────────────────────────────────
-  function renderPreview() {
-    if (!AppState.compiled) return;
-    const d = getMergedData(); // ★ AppState.data + 현재 탭 DOM 병합
-    try {
-      const html = AppState.compiled(d);
-      const iframe = document.getElementById('preview-iframe');
-      // ★ srcdoc 사용: src 변경 없이 내용만 교체 → 스크롤 위치 유지
-      // (Blob URL 방식은 매번 iframe reload를 일으켜 첫 페이지로 이동)
-      if (iframe.contentDocument) {
-        const scrollY = iframe.contentDocument.documentElement
-                          ? (iframe.contentDocument.scrollingElement || iframe.contentDocument.documentElement).scrollTop
-                          : 0;
-        iframe.srcdoc = html;
-        // 렌더 후 스크롤 위치 복원
-        iframe.addEventListener('load', function onLoad() {
-          iframe.removeEventListener('load', onLoad);
-          try {
-            const sc = iframe.contentDocument.scrollingElement || iframe.contentDocument.documentElement;
-            if (sc) sc.scrollTop = scrollY;
-          } catch(e) {}
-        }, { once: true });
+function getPreviewSectionIdByTab(tabIndex) {
+  const map = {
+    0: 's1', // 기본정보
+    1: 's2', // 교과목 개요
+    2: 's4', // 수업 설계
+    3: 's5', // 디지털 도구
+    4: 's6', // 주차별 계획
+    5: 's7', // 학습활동
+    6: 's8'  // 평가 설계
+  };
+  return map[tabIndex] || 's1';
+}
+
+function getPreviewIframeRefs() {
+  const iframe = document.getElementById('preview-iframe');
+  if (!iframe || !iframe.contentWindow || !iframe.contentDocument) return null;
+  return { iframe, win: iframe.contentWindow, doc: iframe.contentDocument };
+}
+
+function detectCurrentPreviewSection() {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return null;
+
+  try {
+    const { win, doc } = refs;
+    const sections = [...doc.querySelectorAll('.page[id^="s"]')];
+    if (!sections.length) return null;
+
+    const scrollY = win.scrollY || 0;
+    let current = sections[0];
+
+    for (const sec of sections) {
+      const top = sec.offsetTop || 0;
+      if (top <= scrollY + 24) {
+        current = sec;
       } else {
-        iframe.srcdoc = html;
+        break;
       }
-      // Blob URL cleanup (더 이상 사용 안 하지만 기존 것 정리)
-      if (AppState.blobUrl) { URL.revokeObjectURL(AppState.blobUrl); AppState.blobUrl = null; }
-      setPreviewStatus('ok', '✅ 렌더링 완료');
-    } catch(e) {
-      console.error('Render error:', e);
-      setPreviewStatus('err', '❌ 렌더링 오류');
+    }
+
+    return current ? current.id : null;
+  } catch (e) {
+    console.warn('detectCurrentPreviewSection error:', e);
+    return null;
+  }
+}
+
+function saveCurrentPreviewPosition() {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return;
+
+  try {
+    const { win } = refs;
+    AppState.previewScrollY = win.scrollY || 0;
+    AppState.previewCurrentSection = detectCurrentPreviewSection() || AppState.previewCurrentSection || 's1';
+  } catch (e) {
+    console.warn('saveCurrentPreviewPosition error:', e);
+  }
+}
+
+function scrollPreviewToTopValue(top, smooth = false) {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return;
+
+  try {
+    refs.win.scrollTo({
+      top: Math.max(0, top || 0),
+      behavior: smooth ? 'smooth' : 'auto'
+    });
+  } catch (e) {
+    console.warn('scrollPreviewToTopValue error:', e);
+  }
+}
+
+function scrollPreviewToSection(sectionId, smooth = true) {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return;
+
+  try {
+    const { doc, win } = refs;
+    const target = doc.getElementById(sectionId);
+    if (!target) return;
+
+    const top = target.offsetTop || 0;
+    win.scrollTo({
+      top,
+      behavior: smooth ? 'smooth' : 'auto'
+    });
+
+    AppState.previewCurrentSection = sectionId;
+    AppState.previewScrollY = top;
+  } catch (e) {
+    console.warn('scrollPreviewToSection error:', e);
+  }
+}
+
+function ensurePreviewHighlightStyle() {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return;
+
+  const { doc } = refs;
+  if (doc.getElementById('preview-highlight-style')) return;
+
+  const style = doc.createElement('style');
+  style.id = 'preview-highlight-style';
+  style.textContent = `
+    .preview-focus-highlight {
+      outline: 3px solid #f59e0b;
+      outline-offset: 6px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(245,158,11,0.18), rgba(245,158,11,0.04));
+      transition: all 0.18s ease;
+      box-shadow: 0 0 0 6px rgba(245,158,11,0.08);
+    }
+  `;
+  doc.head.appendChild(style);
+}
+
+function clearPreviewHighlights() {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return;
+
+  refs.doc.querySelectorAll('.preview-focus-highlight').forEach(el => {
+    el.classList.remove('preview-focus-highlight');
+  });
+}
+
+function highlightPreviewAnchor(anchorId) {
+  const refs = getPreviewIframeRefs();
+  if (!refs) return;
+
+  ensurePreviewHighlightStyle();
+  clearPreviewHighlights();
+
+  const target = refs.doc.getElementById(anchorId);
+  if (!target) return;
+
+  target.classList.add('preview-focus-highlight');
+}
+
+function getPreviewAnchorByField(fieldName) {
+  const map = {
+    course_name: 'anchor-course-spec',
+    course_name_en: 'anchor-course-spec',
+    publish_date: 'anchor-course-spec',
+    department: 'anchor-course-spec',
+    year: 'anchor-course-spec',
+    semester: 'anchor-course-spec',
+    professor_name: 'anchor-course-spec',
+    textbook: 'anchor-course-spec',
+    course_type: 'anchor-course-spec',
+    credits: 'anchor-course-spec',
+    theory_hours: 'anchor-course-spec',
+    practice_hours: 'anchor-course-spec',
+    ncs_job: 'anchor-course-spec',
+    core_competency: 'anchor-course-spec',
+    keywords: 'anchor-course-diff',
+    course_description: 'anchor-course-desc',
+    prerequisite: 'anchor-prerequisite',
+    follow_up: 'anchor-prerequisite',
+    integration_summary: 'anchor-design-direction',
+    collaboration_guide: 'anchor-collaboration-guide',
+    ethics_warning: 'anchor-collaboration-guide',
+    attendance_rate: 'anchor-evaluation-system',
+    attendance_tool: 'anchor-evaluation-system',
+    attendance_description: 'anchor-evaluation-system',
+    midterm_rate: 'anchor-evaluation-system',
+    midterm_tool: 'anchor-evaluation-system',
+    midterm_description: 'anchor-evaluation-system',
+    final_rate: 'anchor-evaluation-system',
+    final_tool: 'anchor-evaluation-system',
+    final_description: 'anchor-evaluation-system',
+    assignment_rate: 'anchor-evaluation-system',
+    assignment_tool: 'anchor-evaluation-system',
+    assignment_description: 'anchor-evaluation-system',
+  };
+
+  if (fieldName && /^week_\d+_/.test(fieldName)) return 'anchor-weekly-plan';
+  return map[fieldName] || null;
+}
+
+function getPreviewAnchorByArray(arrName) {
+  const map = {
+    learning_goals: 'anchor-learning-goals',
+    smart_methods: 'anchor-smart-methods',
+    method_guides: 'anchor-method-guides',
+    digital_tools: 'anchor-digital-tools',
+    activity_guides: 'anchor-activity-guides',
+    appendix_sections: 'anchor-appendix',
+  };
+  return map[arrName] || null;
+}
+
+function highlightPreviewByInputTarget(el) {
+  if (!el) return;
+
+  const fieldName = el.dataset?.field;
+  if (fieldName) {
+    const anchorId = getPreviewAnchorByField(fieldName);
+    if (anchorId) {
+      highlightPreviewAnchor(anchorId);
+      return;
     }
   }
 
-  function setPreviewStatus(cls, msg) {
-    const el = document.getElementById('preview-status');
-    el.className = cls;
-    el.textContent = msg;
+  const arrayRoot = el.closest('[data-arr]');
+  if (arrayRoot) {
+    const arrName = arrayRoot.dataset.arr;
+    const anchorId = getPreviewAnchorByArray(arrName);
+    if (anchorId) highlightPreviewAnchor(anchorId);
   }
+}
 
-  function scheduleRender() {
-    clearTimeout(AppState.renderTimer);
-    AppState.renderTimer = setTimeout(renderPreview, 300);
-    setSaveStatus('saving');
-    clearTimeout(AppState.saveTimer);
-    AppState.saveTimer = setTimeout(() => { saveData(); setSaveStatus('saved'); }, 600);
+function renderPreview() {
+  if (!AppState.compiled) return;
+
+  const d = getMergedData();
+  saveCurrentPreviewPosition();
+
+  const beforeSection = AppState.previewCurrentSection || 's1';
+  const beforeScrollY = AppState.previewScrollY || 0;
+  const targetSection = AppState.previewScrollTarget || getPreviewSectionIdByTab(AppState.currentTab);
+
+  try {
+    const html = AppState.compiled(d);
+    const iframe = document.getElementById('preview-iframe');
+
+    iframe.srcdoc = html;
+
+    iframe.addEventListener('load', function onLoad() {
+      iframe.removeEventListener('load', onLoad);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          try {
+            ensurePreviewHighlightStyle();
+
+            if (!AppState.previewAutoScroll) return;
+
+            if (beforeSection === targetSection) {
+              scrollPreviewToTopValue(beforeScrollY, false);
+              AppState.previewCurrentSection = beforeSection;
+              AppState.previewScrollY = beforeScrollY;
+            } else {
+              scrollPreviewToSection(targetSection, true);
+            }
+          } catch (e) {
+            console.warn('Preview load restore error:', e);
+          }
+        });
+      });
+    }, { once: true });
+
+    if (AppState.blobUrl) {
+      URL.revokeObjectURL(AppState.blobUrl);
+      AppState.blobUrl = null;
+    }
+
+    setPreviewStatus('ok', '✅ 렌더링 완료');
+  } catch (e) {
+    console.error('Render error:', e);
+    setPreviewStatus('err', '❌ 렌더링 오류');
   }
+}
+
+function setPreviewStatus(cls, msg) {
+  const el = document.getElementById('preview-status');
+  if (!el) return;
+  el.className = cls;
+  el.textContent = msg;
+}
+
+function scheduleRender() {
+  clearTimeout(AppState.renderTimer);
+  AppState.previewScrollTarget = getPreviewSectionIdByTab(AppState.currentTab);
+  AppState.renderTimer = setTimeout(renderPreview, 250);
+
+  setSaveStatus('saving');
+  clearTimeout(AppState.saveTimer);
+  AppState.saveTimer = setTimeout(() => {
+    saveData();
+    setSaveStatus('saved');
+  }, 500);
+}
