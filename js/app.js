@@ -94,8 +94,7 @@
 
   // ── JSON Export ───────────────────────────────────────────────────
   function exportJSON() {
-    const d = collect();
-    // _meta 추가
+    const d = getMergedData();    // _meta 추가
     const output = {
       _meta: {
         version: '1.0',

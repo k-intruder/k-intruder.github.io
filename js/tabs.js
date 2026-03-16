@@ -11,17 +11,23 @@
     return TABS[idx];
   }
 
-  function showTab(idx, btn) {
-    AppState.currentTab = idx;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const area = document.getElementById('form-area');
-    area.innerHTML = '';
-    getTAB(idx)(area);
-    restoreFieldsFromData(AppState.data);
-    area.addEventListener('input', scheduleRender);
-    area.addEventListener('change', scheduleRender);
-  }
+function showTab(idx, btn) {
+  AppState.data = getMergedData();
+  saveData();
+
+  AppState.currentTab = idx;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const area = document.getElementById('form-area');
+  area.innerHTML = '';
+
+  getTAB(idx)(area);
+  restoreFieldsFromData(AppState.data);
+
+  area.addEventListener('input', scheduleRender);
+  area.addEventListener('change', scheduleRender);
+}
 
   // ── Restore fields from saved data ────────────────────────────────
   function restoreFieldsFromData(d) {

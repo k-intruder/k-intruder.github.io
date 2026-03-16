@@ -5,13 +5,18 @@
 // ──────────────────────────────────────────────────────────────────────
 
 // ── LocalStorage ───────────────────────────────────────────────────
-  function saveData() {
-    try {
-      const snapshot = getMergedData(); // ★ 전체 탭 데이터 병합 저장
-      localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({data: snapshot, savedAt: new Date().toISOString()}));
-    } catch(e) { setSaveStatus('error'); }
+function saveData() {
+  try {
+    const snapshot = getMergedData();
+    AppState.data = snapshot; // 추가
+    localStorage.setItem(
+      AppState.STORAGE_KEY,
+      JSON.stringify({ data: snapshot, savedAt: new Date().toISOString() })
+    );
+  } catch(e) {
+    setSaveStatus('error');
   }
-
+}
   function loadData() {
     try {
       const raw = localStorage.getItem(AppState.STORAGE_KEY);
