@@ -43,6 +43,10 @@ function init() {
   const saved = loadData();
   if (saved && saved.data) {
     AppState.data = saved.data;
+    AppState.selectedTemplate = saved.template || saved.data?.selected_template || 'default';
+    const selector = document.getElementById('template-selector');
+    if (selector) selector.value = AppState.selectedTemplate;
+    compileTemplate();
     const t = new Date(saved.savedAt);
     toast(`📂 저장된 데이터 복원 (${t.toLocaleString('ko-KR')})`, 'info', 3500);
   }
@@ -95,7 +99,8 @@ function exportJSON() {
       version: '1.0',
       description: 'DX 기반 교수설계가이드 – 저장 데이터',
       saved_at: new Date().toISOString(),
-      tool: 'DX 교수설계가이드 작성 도구'
+      tool: 'DX 교수설계가이드 작성 도구',
+      template: AppState.selectedTemplate || 'default'
     },
     ...d
   };
@@ -135,7 +140,12 @@ function _onJsonFileSelected(event) {
           importedData[`week_${n}_assessment`] = w.assessment || '';
         });
       }
-      localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({ data: importedData, savedAt: new Date().toISOString() }));
+      AppState.selectedTemplate = _meta?.template || importedData.selected_template || AppState.selectedTemplate || 'default';
+      const selector = document.getElementById('template-selector');
+      if (selector) selector.value = AppState.selectedTemplate;
+      compileTemplate();
+
+      localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({ data: importedData, savedAt: new Date().toISOString(), template: AppState.selectedTemplate }));
       AppState.data = importedData;
 
       const allBtns = [...document.querySelectorAll('.tab-btn')];
@@ -152,6 +162,16 @@ function _onJsonFileSelected(event) {
     }
   };
   reader.readAsText(file, 'utf-8');
+}
+
+
+function changeTemplate(templateName) {
+  const nextTemplate = templateName === 'ncsblue' ? 'ncsblue' : 'default';
+  AppState.selectedTemplate = nextTemplate;
+  compileTemplate();
+  saveData();
+  renderPreview();
+  toast(`템플릿 변경: ${nextTemplate === 'ncsblue' ? '2023,2024년' : '2025년'}`, 'info', 1800);
 }
 
 function togglePreview() {

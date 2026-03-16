@@ -16,6 +16,8 @@ body{font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-seri
 .tb-btn-reset{background:#4b5563;color:#fff;}
 .tb-btn-reset:hover{background:#374151;}
 .save-status{font-size:11px;padding:4px 10px;border-radius:12px;background:#1e3a5f;color:#93c5fd;white-space:nowrap;}
+.template-switch{font-size:11px;color:#cbd5e1;font-weight:700;white-space:nowrap;}
+.tb-select{height:32px;padding:0 10px;border:1px solid #334155;border-radius:6px;background:#0f172a;color:#e2e8f0;font-size:12px;font-weight:600;}
 .export-wrap{position:relative;}
 .tb-btn-export{background:#059669;color:#fff;}
 .tb-btn-export:hover{background:#047857;}
@@ -119,6 +121,8 @@ body{font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-seri
   #toolbar{padding:6px 10px;gap:5px;min-height:auto;}
   #toolbar h1{font-size:13px;width:100%;margin-right:0;margin-bottom:2px;flex-basis:100%;}
   .tb-btn{padding:6px 10px;font-size:11px;}
+  .tb-select{height:30px;font-size:11px;padding:0 8px;}
+  .template-switch{font-size:10px;}
   /* JSON 불러오기 label 단축 */
   .tb-btn-json-ul::after{content:'불러오기';}
   .save-status{font-size:10px;padding:3px 8px;}

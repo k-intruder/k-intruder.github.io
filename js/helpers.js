@@ -13,7 +13,9 @@
   // ── Template compile ───────────────────────────────────────────────
   function compileTemplate() {
     try {
-      const src = document.getElementById('doc-template').innerHTML;
+      const templateId = AppState.selectedTemplate === 'ncsblue' ? 'doc-template-ncsblue' : 'doc-template';
+      const sourceEl = document.getElementById(templateId) || document.getElementById('doc-template');
+      const src = sourceEl.innerHTML;
       AppState.compiled = Handlebars.compile(src);
       return true;
     } catch(e) {

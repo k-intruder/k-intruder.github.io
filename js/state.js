@@ -19,6 +19,7 @@
     previewCurrentSection: null,
     previewScrollY       : 0,
     isResetting          : false,
+    selectedTemplate     : 'default',
   };
 
   // 편의 접근자 (전역 노출)
@@ -60,5 +61,8 @@
 
     get isResetting()          { return window._AppState.isResetting; },
     set isResetting(v)         { window._AppState.isResetting = v; },
+
+    get selectedTemplate()     { return window._AppState.selectedTemplate; },
+    set selectedTemplate(v)    { window._AppState.selectedTemplate = v; },
   };
 })();

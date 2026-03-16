@@ -7,7 +7,7 @@ function saveData() {
     AppState.data = snapshot;
     localStorage.setItem(
       AppState.STORAGE_KEY,
-      JSON.stringify({ data: snapshot, savedAt: new Date().toISOString() })
+      JSON.stringify({ data: snapshot, savedAt: new Date().toISOString(), template: AppState.selectedTemplate || 'default' })
     );
   } catch(e) {
     setSaveStatus('error');
