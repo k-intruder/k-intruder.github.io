@@ -12,7 +12,11 @@
 // ── Export functions ───────────────────────────────────────────────
   function getRenderedHtml() {
     if (!AppState.compiled) return '';
-    try { return AppState.compiled(getMergedData()); } catch(e) { return ''; }
+    try {
+      return postProcessRenderedHtml(AppState.compiled(getMergedData()));
+    } catch(e) {
+      return '';
+    }
   }
 
   function exportPDF() {

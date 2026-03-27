@@ -7,6 +7,13 @@ function toggleExportMenu() {
 }
 function hideExportMenu() { document.getElementById('export-menu').style.display='none'; }
 
+function updateTemplateDisplay() {
+  const el = document.getElementById('template-current-label');
+  if (!el) return;
+  el.textContent = `현재: ${getTemplateLabel()}`;
+  el.setAttribute('data-template', normalizeTemplateKey(AppState.selectedTemplate));
+}
+
 document.addEventListener('click', e => { if (!e.target.closest('.export-wrap')) hideExportMenu(); });
 
 function _addItem(name) {
@@ -33,72 +40,70 @@ function _addNestedSupport(btn) {
 }
 function _onChange() { scheduleRender(); }
 
-function updateTabLabels() {
-  const labelsByTemplate = {
-    default: [
-      '1. 교수설계가이드 개요',
-      '2. 교과목 개요',
-      '3. AI·DX 기반 교육의 이해',
-      '4. AI·DX 교과목 수업 설계',
-      '5. AI·DX 활용 학습 환경',
-      '6. 주차별 수업 운영 계획',
-      '7. AI 활용 교수학습활동 설계',
-      '8. 학습평가 및 환류 계획 설계',
-      '9. 교수자 수업 운영 가이드',
-      '10. AI 활용 수업 유의사항',
-      '11. 참고자료 및 부록'
-    ],
-    ncsblue: [
-      '1. 교수학습지침서 개요',
-      '2. 교과목 개요',
-      '3. 디지털 전환(DX) 기반 교육 설계',
-      '4. DX 기반 수업 설계',
-      '5. 디지털 도구 활용 수업 운영',
-      '6. 주차별 수업 운영 계획',
-      '7. 학습활동 운영 방법',
-      '8. 학습평가 및 환류 계획 설계',
-      '9. 교수자 운영 가이드',
-      '10. 수업 운영 시 유의사항',
-      '11. 참고자료 및 부록'
-    ]
-  };
+const TAB_LABELS_BY_TEMPLATE = {
+  default: [
+    '1. 교수설계가이드 개요',
+    '2. 교과목 개요',
+    '3. AI·DX 기반 교육의 이해',
+    '4. AI·DX 교과목 수업 설계',
+    '5. AI·DX 활용 학습 환경',
+    '6. 주차별 수업 운영 계획',
+    '7. AI 활용 교수학습활동 설계',
+    '8. 학습평가 및 환류 계획 설계',
+    '9. 교수자 수업 운영 가이드',
+    '10. AI 활용 수업 유의사항',
+    '11. 참고자료 및 부록'
+  ],
+  nondev: [
+    '1. 교수설계가이드 개요',
+    '2. 교과목 개요',
+    '3. AI·DX 기반 교육의 이해',
+    '4. AI·DX 교과목 수업 설계',
+    '5. AI·DX 활용 학습 환경',
+    '6. 주차별 수업 운영 계획',
+    '7. AI 활용 교수학습활동 설계',
+    '8. 학습평가 및 환류 계획 설계',
+    '9. 교수자 수업 운영 가이드',
+    '10. AI 활용 수업 유의사항',
+    '11. 참고자료 및 부록'
+  ],
+  ncsblue: [
+    '1. 교수학습지침서 개요',
+    '2. 교과목 개요',
+    '3. 디지털 전환(DX) 기반 교육 설계',
+    '4. DX 기반 수업 설계',
+    '5. 디지털 도구 활용 수업 운영',
+    '6. 주차별 수업 운영 계획',
+    '7. 학습활동 운영 방법',
+    '8. 학습평가 및 환류 계획 설계',
+    '9. 교수자 운영 가이드',
+    '10. 수업 운영 시 유의사항',
+    '11. 참고자료 및 부록'
+  ],
+  ncsblue_nondev: [
+    '1. 교수학습지침서 개요',
+    '2. 교과목 개요',
+    '3. 디지털 전환(DX) 기반 교육 설계',
+    '4. DX 기반 수업 설계',
+    '5. 디지털 도구 활용 수업 운영',
+    '6. 주차별 수업 운영 계획',
+    '7. 학습활동 운영 방법',
+    '8. 학습평가 및 환류 계획 설계',
+    '9. 교수자 운영 가이드',
+    '10. 수업 운영 시 유의사항',
+    '11. 참고자료 및 부록'
+  ]
+};
 
-  const labels = labelsByTemplate[AppState.selectedTemplate] || labelsByTemplate.default;
+function updateTabLabels() {
+  const labels = TAB_LABELS_BY_TEMPLATE[normalizeTemplateKey(AppState.selectedTemplate)] || TAB_LABELS_BY_TEMPLATE.default;
   document.querySelectorAll('#tabs .tab-btn').forEach((btn, idx) => {
     if (labels[idx]) btn.textContent = labels[idx];
   });
 }
 
 function forceTabLabels() {
-  const labelsByTemplate = {
-    default: [
-      '1. 교수설계가이드 개요',
-      '2. 교과목 개요',
-      '3. AI·DX 기반 교육의 이해',
-      '4. AI·DX 교과목 수업 설계',
-      '5. AI·DX 활용 학습 환경',
-      '6. 주차별 수업 운영 계획',
-      '7. AI 활용 교수학습활동 설계',
-      '8. 학습평가 및 환류 계획 설계',
-      '9. 교수자 수업 운영 가이드',
-      '10. AI 활용 수업 유의사항',
-      '11. 참고자료 및 부록'
-    ],
-    ncsblue: [
-      '1. 교수학습지침서 개요',
-      '2. 교과목 개요',
-      '3. 디지털 전환(DX) 기반 교육 설계',
-      '4. DX 기반 수업 설계',
-      '5. 디지털 도구 활용 수업 운영',
-      '6. 주차별 수업 운영 계획',
-      '7. 학습활동 운영 방법',
-      '8. 학습평가 및 환류 계획 설계',
-      '9. 교수자 운영 가이드',
-      '10. 수업 운영 시 유의사항',
-      '11. 참고자료 및 부록'
-    ]
-  };
-  const labels = labelsByTemplate[AppState.selectedTemplate] || labelsByTemplate.default;
+  const labels = TAB_LABELS_BY_TEMPLATE[normalizeTemplateKey(AppState.selectedTemplate)] || TAB_LABELS_BY_TEMPLATE.default;
   const tabWrap = document.getElementById('tabs');
   if (!tabWrap) return;
   const btns = tabWrap.querySelectorAll('.tab-btn');
@@ -121,18 +126,19 @@ async function init() {
   const saved = loadData();
   if (saved && saved.data) {
     AppState.data = saved.data;
-    AppState.selectedTemplate = saved.template || saved.data?.selected_template || 'default';
+    AppState.selectedTemplate = normalizeTemplateKey(saved.template || saved.data?.selected_template || 'default');
     const selector = document.getElementById('template-selector');
     if (selector) selector.value = AppState.selectedTemplate;
     updateTabLabels();
-  forceTabLabels();
     forceTabLabels();
+    updateTemplateDisplay();
     await compileTemplate();
     const t = new Date(saved.savedAt);
     toast(`📂 저장된 데이터 복원 (${t.toLocaleString('ko-KR')})`, 'info', 3500);
   }
 
   updateTabLabels();
+  updateTemplateDisplay();
 
   const area = document.getElementById('form-area');
   buildTab0(area);
@@ -223,11 +229,12 @@ function _onJsonFileSelected(event) {
           importedData[`week_${n}_assessment`] = w.assessment || '';
         });
       }
-      AppState.selectedTemplate = _meta?.template || importedData.selected_template || AppState.selectedTemplate || 'default';
+      AppState.selectedTemplate = normalizeTemplateKey(_meta?.template || importedData.selected_template || AppState.selectedTemplate || 'default');
       const selector = document.getElementById('template-selector');
       if (selector) selector.value = AppState.selectedTemplate;
       updateTabLabels();
-    forceTabLabels();
+      forceTabLabels();
+      updateTemplateDisplay();
       await compileTemplate();
 
       localStorage.setItem(AppState.STORAGE_KEY, JSON.stringify({ data: importedData, savedAt: new Date().toISOString(), template: AppState.selectedTemplate }));
@@ -237,7 +244,8 @@ function _onJsonFileSelected(event) {
       const prevIdx = allBtns.findIndex(b => b.classList.contains('active'));
       const prevTab = prevIdx >= 0 ? prevIdx : 0;
       updateTabLabels();
-    forceTabLabels();
+      forceTabLabels();
+      updateTemplateDisplay();
       const tab0Btn = allBtns[0];
       if (tab0Btn) showTab(0, tab0Btn);
       if (prevTab !== 0 && allBtns[prevTab]) showTab(prevTab, allBtns[prevTab]);
@@ -253,16 +261,17 @@ function _onJsonFileSelected(event) {
 
 
 async function changeTemplate(templateName) {
-  const nextTemplate = templateName === 'ncsblue' ? 'ncsblue' : 'default';
+  const nextTemplate = normalizeTemplateKey(templateName);
   AppState.selectedTemplate = nextTemplate;
   updateTabLabels();
   forceTabLabels();
+  updateTemplateDisplay();
   await compileTemplate();
   const activeBtn = document.querySelectorAll('.tab-btn')[AppState.currentTab] || document.querySelector('.tab-btn.active');
   if (activeBtn) showTab(AppState.currentTab || 0, activeBtn);
   saveData();
   renderPreview();
-  toast(`템플릿 변경: ${nextTemplate === 'ncsblue' ? '2023,2024년' : '2025년'}`, 'info', 1800);
+  toast(`템플릿 변경: ${getTemplateLabel(nextTemplate)}`, 'info', 1800);
 }
 
 function togglePreview() {

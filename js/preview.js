@@ -236,7 +236,7 @@ function renderPreview() {
   const targetSection = AppState.previewScrollTarget || getPreviewSectionIdByTab(AppState.currentTab);
 
   try {
-    const html = AppState.compiled(d);
+    const html = postProcessRenderedHtml(AppState.compiled(d));
     const iframe = document.getElementById('preview-iframe');
 
     iframe.srcdoc = html;

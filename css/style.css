@@ -18,6 +18,8 @@ body{font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-seri
 .save-status{font-size:11px;padding:4px 10px;border-radius:12px;background:#1e3a5f;color:#93c5fd;white-space:nowrap;}
 .template-switch{font-size:11px;color:#cbd5e1;font-weight:700;white-space:nowrap;}
 .tb-select{height:32px;padding:0 10px;border:1px solid #334155;border-radius:6px;background:#0f172a;color:#e2e8f0;font-size:12px;font-weight:600;}
+.template-current-label{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #334155;border-radius:999px;background:#0f172a;color:#bfdbfe;font-size:11px;font-weight:700;white-space:nowrap;}
+.template-current-label[data-template="ncsblue"]{color:#dbeafe;background:#1e293b;border-color:#64748b;}
 .export-wrap{position:relative;}
 .tb-btn-export{background:#059669;color:#fff;}
 .tb-btn-export:hover{background:#047857;}
@@ -123,6 +125,7 @@ body{font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-seri
   .tb-btn{padding:6px 10px;font-size:11px;}
   .tb-select{height:30px;font-size:11px;padding:0 8px;}
   .template-switch{font-size:10px;}
+  .template-current-label{font-size:10px;padding:4px 8px;}
   /* JSON 불러오기 label 단축 */
   .tb-btn-json-ul::after{content:'불러오기';}
   .save-status{font-size:10px;padding:3px 8px;}
