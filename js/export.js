@@ -10,6 +10,11 @@
 // ──────────────────────────────────────────────────────────────────────
 
 // ── Export functions ───────────────────────────────────────────────
+function getDocumentBaseLabel() {
+  const key = typeof normalizeTemplateKey === 'function' ? normalizeTemplateKey(AppState.selectedTemplate) : (AppState.selectedTemplate || 'default');
+  return (key === 'ncsblue' || key === 'ncsblue_nondev') ? '교수학습지침서' : '교수설계가이드';
+}
+
   function getRenderedHtml() {
     if (!AppState.compiled) return '';
     try {
@@ -33,7 +38,8 @@
   function exportHTML() {
     hideExportMenu();
     const html = getRenderedHtml();
-    const name = (AppState.data.course_name||'교수설계가이드')+'_교수설계가이드.html';
+    const label = getDocumentBaseLabel();
+    const name = (AppState.data.course_name||label)+'_'+label+'.html';
     const blob = new Blob([html],{type:'text/html;charset=utf-8'});
     const a = Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:name});
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
@@ -71,8 +77,8 @@
       // Cover
       children.push(
         new Paragraph({children:[new TextRun({text:d.course_name||'',bold:true,size:56,color:'0066CC'})],alignment:AlignmentType.CENTER,spacing:{before:2000,after:400}}),
-        new Paragraph({children:[new TextRun({text:'교수설계가이드',bold:true,size:48,color:'0066CC'})],alignment:AlignmentType.CENTER,spacing:{after:400}}),
-        new Paragraph({children:[new TextRun({text:'디지털 전환 기반 교육설계 매뉴얼',size:30,color:'555555'})],alignment:AlignmentType.CENTER,spacing:{after:1200}}),
+        new Paragraph({children:[new TextRun({text:getDocumentBaseLabel(),bold:true,size:48,color:'0066CC'})],alignment:AlignmentType.CENTER,spacing:{after:400}}),
+        new Paragraph({children:[new TextRun({text:(getDocumentBaseLabel()==='교수학습지침서' ? '디지털 전환 기반 교육설계 매뉴얼' : 'AI·DX 기반 교육설계 매뉴얼'),size:30,color:'555555'})],alignment:AlignmentType.CENTER,spacing:{after:1200}}),
         p(`발행일: ${d.publish_date||''}`),p(`적용 교과목: ${d.course_name||''} (${d.department||''})`),p(`핵심 키워드: ${d.keywords||''}`),br(),
       );
       // S1
@@ -118,12 +124,13 @@
         (d.appendix_sections||[]).forEach((s,i)=>{children.push(h(`11.${i+1} ${s.section_title||''}`,HeadingLevel.HEADING_2));children.push(p(strip(s.section_content||'')));}); 
       }
 
+      const docLabel = getDocumentBaseLabel();
       const doc=new Document({
-        creator:'',title:`${d.course_name||''} 교수설계가이드`,
+        creator:'',title:`${d.course_name||''} ${docLabel}`,
         sections:[{properties:{page:{margin:{top:convertInchesToTwip(1),right:convertInchesToTwip(1),bottom:convertInchesToTwip(1),left:convertInchesToTwip(1)}}},children}]
       });
       const blob=await Packer.toBlob(doc);
-      const name=(d.course_name||'교수설계가이드')+'_교수설계가이드.docx';
+      const name=(d.course_name||docLabel)+'_'+docLabel+'.docx';
       const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:name});
       document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);
       toast('📝 DOCX 파일 다운로드 완료!','success');

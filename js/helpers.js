@@ -5,10 +5,10 @@
 // ──────────────────────────────────────────────────────────────────────
 
 const TEMPLATE_FILES = {
-  default: 'template/preview-2025.hbs.html?v=20260327-v10',
-  nondev: 'template/preview-2025-nondev.hbs.html?v=20260327-v10',
-  ncsblue: 'template/preview-2023_2024.hbs.html?v=20260327-v10',
-  ncsblue_nondev: 'template/preview-2023_2024-nondev.hbs.html?v=20260327-v10'
+  default: 'template/preview-2025.hbs.html?v=20260327-v14',
+  nondev: 'template/preview-2025-nondev.hbs.html?v=20260327-v14',
+  ncsblue: 'template/preview-2023_2024.hbs.html?v=20260327-v14',
+  ncsblue_nondev: 'template/preview-2023_2024-nondev.hbs.html?v=20260327-v14'
 };
 
 const TEMPLATE_LABELS = {
@@ -51,6 +51,8 @@ function postProcessRenderedHtml(rawHtml) {
         .cover-page .cover-info{margin-bottom:8mm !important;}
         .continued-label{margin:0 0 10px;padding:0 0 8px;font-size:12.5pt;font-weight:700;line-height:1.35;color:var(--primary-color);border-bottom:1px dashed rgba(0,0,0,.18);}
         .toc-list a{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+        .toc-list ul{display:block;list-style:disc;margin:8px 0 10px 34px;padding-left:18px;}
+        .toc-list ul li{display:list-item;margin-bottom:2px;border-bottom:none;padding-bottom:0;font-size:10.5pt;font-weight:400;color:#5d767d;line-height:1.7;}
         .toc-link-title{flex:1;}
         .toc-page-no{min-width:24px;text-align:right;font-weight:700;color:var(--primary-color);}
         .footer{position:absolute;left:14mm;right:14mm;bottom:8mm;margin-top:0 !important;padding-top:6px;height:auto !important;text-align:center;font-weight:700;letter-spacing:.08em;background:#fff;z-index:2;}
