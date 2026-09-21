@@ -1,0 +1,6172 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "acquisition_datetime": "2026-04-06T23:46:49Z"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22055886485492,
+              36.01620566608744
+            ],
+            [
+              129.2211775762428,
+              36.01620566608744
+            ],
+            [
+              129.2211775762428,
+              36.0165935602254
+            ],
+            [
+              129.22055886485492,
+              36.0165935602254
+            ],
+            [
+              129.22055886485492,
+              36.01620566608744
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.6581,
+        "bbox_pixel": [
+          3655.8,
+          2323.1,
+          3711.6,
+          2366.0
+        ],
+        "size_short_m": 42.9,
+        "size_long_m": 55.85
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22126658064693,
+              36.00429464834503
+            ],
+            [
+              129.2218071572498,
+              36.00429464834503
+            ],
+            [
+              129.2218071572498,
+              36.00463254175628
+            ],
+            [
+              129.22126658064693,
+              36.00463254175628
+            ],
+            [
+              129.22126658064693,
+              36.00429464834503
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.508,
+        "bbox_pixel": [
+          3722.6,
+          3649.6,
+          3771.4,
+          3687.0
+        ],
+        "size_short_m": 37.37,
+        "size_long_m": 48.8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21992871054297,
+              36.01540850951586
+            ],
+            [
+              129.22041820728194,
+              36.01540850951586
+            ],
+            [
+              129.22041820728194,
+              36.01595080067007
+            ],
+            [
+              129.21992871054297,
+              36.01595080067007
+            ],
+            [
+              129.21992871054297,
+              36.01540850951586
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.4367,
+        "bbox_pixel": [
+          3599.2,
+          2394.5,
+          3643.4,
+          2454.6
+        ],
+        "size_short_m": 44.24,
+        "size_long_m": 60.05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22122134736486,
+              36.017036665133666
+            ],
+            [
+              129.2218954010439,
+              36.017036665133666
+            ],
+            [
+              129.2218954010439,
+              36.01752911685837
+            ],
+            [
+              129.22122134736486,
+              36.01752911685837
+            ],
+            [
+              129.22122134736486,
+              36.017036665133666
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.4113,
+        "bbox_pixel": [
+          3715.3,
+          2219.2,
+          3776.1,
+          2273.7
+        ],
+        "size_short_m": 54.48,
+        "size_long_m": 60.86
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.23940113447372,
+              35.99171050219191
+            ],
+            [
+              129.23997388812225,
+              35.99171050219191
+            ],
+            [
+              129.23997388812225,
+              35.99200294958076
+            ],
+            [
+              129.23940113447372,
+              35.99200294958076
+            ],
+            [
+              129.23940113447372,
+              35.99171050219191
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.4003,
+        "bbox_pixel": [
+          5360.4,
+          5046.5,
+          5412.1,
+          5078.9
+        ],
+        "size_short_m": 32.31,
+        "size_long_m": 51.71
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24480462457186,
+              35.982157498897124
+            ],
+            [
+              129.24515163090032,
+              35.982157498897124
+            ],
+            [
+              129.24515163090032,
+              35.9824836607935
+            ],
+            [
+              129.24480462457186,
+              35.9824836607935
+            ],
+            [
+              129.24480462457186,
+              35.982157498897124
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.3596,
+        "bbox_pixel": [
+          5850.1,
+          6101.2,
+          5881.4,
+          6137.3
+        ],
+        "size_short_m": 31.37,
+        "size_long_m": 36.1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20614599612927,
+              36.01484810780941
+            ],
+            [
+              129.20668195150324,
+              36.01484810780941
+            ],
+            [
+              129.20668195150324,
+              36.01525694148051
+            ],
+            [
+              129.20614599612927,
+              36.01525694148051
+            ],
+            [
+              129.20614599612927,
+              36.01484810780941
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.3594,
+        "bbox_pixel": [
+          2357.4,
+          2474.2,
+          2405.8,
+          2519.4
+        ],
+        "size_short_m": 45.24,
+        "size_long_m": 48.39
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.1963638226669,
+              36.00412682917399
+            ],
+            [
+              129.19682540267556,
+              36.00412682917399
+            ],
+            [
+              129.19682540267556,
+              36.004584802487685
+            ],
+            [
+              129.1963638226669,
+              36.004584802487685
+            ],
+            [
+              129.1963638226669,
+              36.00412682917399
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.3508,
+        "bbox_pixel": [
+          1478.3,
+          3659.7,
+          1520.0,
+          3710.4
+        ],
+        "size_short_m": 41.7,
+        "size_long_m": 50.71
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22043768012844,
+              36.01604384821077
+            ],
+            [
+              129.2209875552476,
+              36.01604384821077
+            ],
+            [
+              129.2209875552476,
+              36.016409787755286
+            ],
+            [
+              129.22043768012844,
+              36.016409787755286
+            ],
+            [
+              129.22043768012844,
+              36.01604384821077
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.3483,
+        "bbox_pixel": [
+          3644.9,
+          2343.5,
+          3694.6,
+          2384.0
+        ],
+        "size_short_m": 40.48,
+        "size_long_m": 49.64
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22076502374995,
+              36.013947670383786
+            ],
+            [
+              129.22126198585508,
+              36.013947670383786
+            ],
+            [
+              129.22126198585508,
+              36.0144414619208
+            ],
+            [
+              129.22076502374995,
+              36.0144414619208
+            ],
+            [
+              129.22076502374995,
+              36.013947670383786
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.3434,
+        "bbox_pixel": [
+          3674.9,
+          2561.7,
+          3719.8,
+          2616.4
+        ],
+        "size_short_m": 44.91,
+        "size_long_m": 54.67
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20872463394647,
+              35.99229489929421
+            ],
+            [
+              129.2089896000838,
+              35.99229489929421
+            ],
+            [
+              129.2089896000838,
+              35.99255849342823
+            ],
+            [
+              129.20872463394647,
+              35.99255849342823
+            ],
+            [
+              129.20872463394647,
+              35.99229489929421
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.3423,
+        "bbox_pixel": [
+          2595.1,
+          4991.3,
+          2619.1,
+          5020.5
+        ],
+        "size_short_m": 23.95,
+        "size_long_m": 29.19
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21041300442104,
+              36.01111843613554
+            ],
+            [
+              129.210892901436,
+              36.01111843613554
+            ],
+            [
+              129.210892901436,
+              36.01156701477124
+            ],
+            [
+              129.21041300442104,
+              36.01156701477124
+            ],
+            [
+              129.21041300442104,
+              36.01111843613554
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.3287,
+        "bbox_pixel": [
+          2742.8,
+          2882.6,
+          2786.1,
+          2932.3
+        ],
+        "size_short_m": 43.35,
+        "size_long_m": 49.66
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22145808795074,
+              35.97472747048495
+            ],
+            [
+              129.22184701726027,
+              35.97472747048495
+            ],
+            [
+              129.22184701726027,
+              35.97518083924136
+            ],
+            [
+              129.22145808795074,
+              35.97518083924136
+            ],
+            [
+              129.22145808795074,
+              35.97472747048495
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.3256,
+        "bbox_pixel": [
+          3747.3,
+          6916.2,
+          3782.4,
+          6966.4
+        ],
+        "size_short_m": 35.18,
+        "size_long_m": 50.21
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21871759341917,
+              36.02050103043124
+            ],
+            [
+              129.21918330045762,
+              36.02050103043124
+            ],
+            [
+              129.21918330045762,
+              36.02082305970959
+            ],
+            [
+              129.21871759341917,
+              36.02082305970959
+            ],
+            [
+              129.21871759341917,
+              36.02050103043124
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.3247,
+        "bbox_pixel": [
+          3488.8,
+          1854.3,
+          3530.9,
+          1890.0
+        ],
+        "size_short_m": 35.62,
+        "size_long_m": 42.04
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.1966021276712,
+              36.00411210205049
+            ],
+            [
+              129.19706690951932,
+              36.00411210205049
+            ],
+            [
+              129.19706690951932,
+              36.00457473312586
+            ],
+            [
+              129.1966021276712,
+              36.00457473312586
+            ],
+            [
+              129.1966021276712,
+              36.00411210205049
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.3227,
+        "bbox_pixel": [
+          1499.8,
+          3660.8,
+          1541.8,
+          3712.0
+        ],
+        "size_short_m": 41.99,
+        "size_long_m": 51.23
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20921508726812,
+              35.987329607268705
+            ],
+            [
+              129.20998474798878,
+              35.987329607268705
+            ],
+            [
+              129.20998474798878,
+              35.98789937347428
+            ],
+            [
+              129.20921508726812,
+              35.98789937347428
+            ],
+            [
+              129.20921508726812,
+              35.987329607268705
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2921,
+        "bbox_pixel": [
+          2640.5,
+          5507.9,
+          2710.0,
+          5571.0
+        ],
+        "size_short_m": 63.05,
+        "size_long_m": 69.51
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22863605146136,
+              36.02079634939493
+            ],
+            [
+              129.22937884738363,
+              36.02079634939493
+            ],
+            [
+              129.22937884738363,
+              36.021278230952845
+            ],
+            [
+              129.22863605146136,
+              36.021278230952845
+            ],
+            [
+              129.22863605146136,
+              36.02079634939493
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2904,
+        "bbox_pixel": [
+          4382.4,
+          1801.8,
+          4449.5,
+          1855.1
+        ],
+        "size_short_m": 53.29,
+        "size_long_m": 67.05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21840829412537,
+              35.98562107479873
+            ],
+            [
+              129.21864436512857,
+              35.98562107479873
+            ],
+            [
+              129.21864436512857,
+              35.98587301230848
+            ],
+            [
+              129.21840829412537,
+              35.98587301230848
+            ],
+            [
+              129.21840829412537,
+              35.98562107479873
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2897,
+        "bbox_pixel": [
+          3469.6,
+          5730.9,
+          3491.0,
+          5758.8
+        ],
+        "size_short_m": 21.34,
+        "size_long_m": 27.9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22477941298268,
+              36.027145303984824
+            ],
+            [
+              129.2250253813961,
+              36.027145303984824
+            ],
+            [
+              129.2250253813961,
+              36.02730750525946
+            ],
+            [
+              129.22477941298268,
+              36.02730750525946
+            ],
+            [
+              129.22477941298268,
+              36.027145303984824
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2882,
+        "bbox_pixel": [
+          4033.4,
+          1133.9,
+          4055.6,
+          1151.8
+        ],
+        "size_short_m": 17.94,
+        "size_long_m": 22.2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19938613249326,
+              36.01374355501481
+            ],
+            [
+              129.19996334846337,
+              36.01374355501481
+            ],
+            [
+              129.19996334846337,
+              36.01435976569559
+            ],
+            [
+              129.19938613249326,
+              36.01435976569559
+            ],
+            [
+              129.19938613249326,
+              36.01374355501481
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2838,
+        "bbox_pixel": [
+          1748.5,
+          2575.0,
+          1800.6,
+          2643.2
+        ],
+        "size_short_m": 52.15,
+        "size_long_m": 68.24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19643096225747,
+              35.99026476628418
+            ],
+            [
+              129.196724415623,
+              35.99026476628418
+            ],
+            [
+              129.196724415623,
+              35.990392802007214
+            ],
+            [
+              129.19643096225747,
+              35.990392802007214
+            ],
+            [
+              129.19643096225747,
+              35.99026476628418
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2771,
+        "bbox_pixel": [
+          1487.5,
+          5233.8,
+          1514.0,
+          5247.9
+        ],
+        "size_short_m": 14.15,
+        "size_long_m": 26.48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19703942097752,
+              36.01486851674445
+            ],
+            [
+              129.19755757476324,
+              36.01486851674445
+            ],
+            [
+              129.19755757476324,
+              36.01530010637931
+            ],
+            [
+              129.19703942097752,
+              36.01530010637931
+            ],
+            [
+              129.19703942097752,
+              36.01486851674445
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2712,
+        "bbox_pixel": [
+          1536.8,
+          2471.1,
+          1583.6,
+          2518.9
+        ],
+        "size_short_m": 46.79,
+        "size_long_m": 47.78
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.23144811718004,
+              35.999684933736816
+            ],
+            [
+              129.2320008345981,
+              35.999684933736816
+            ],
+            [
+              129.2320008345981,
+              36.00027052452231
+            ],
+            [
+              129.23144811718004,
+              36.00027052452231
+            ],
+            [
+              129.23144811718004,
+              35.999684933736816
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2707,
+        "bbox_pixel": [
+          4641.3,
+          4131.3,
+          4691.3,
+          4196.1
+        ],
+        "size_short_m": 49.97,
+        "size_long_m": 64.83
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21665689510007,
+              35.98629962355778
+            ],
+            [
+              129.2171657553359,
+              35.98629962355778
+            ],
+            [
+              129.2171657553359,
+              35.98663431921145
+            ],
+            [
+              129.21665689510007,
+              35.98663431921145
+            ],
+            [
+              129.21665689510007,
+              35.98629962355778
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2694,
+        "bbox_pixel": [
+          3311.6,
+          5646.8,
+          3357.5,
+          5683.8
+        ],
+        "size_short_m": 37.02,
+        "size_long_m": 45.95
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20378993308668,
+              36.01393017032885
+            ],
+            [
+              129.20412969399612,
+              36.01393017032885
+            ],
+            [
+              129.20412969399612,
+              36.01448719979277
+            ],
+            [
+              129.20378993308668,
+              36.01448719979277
+            ],
+            [
+              129.20378993308668,
+              36.01393017032885
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2669,
+        "bbox_pixel": [
+          2145.3,
+          2560.0,
+          2176.0,
+          2621.7
+        ],
+        "size_short_m": 30.75,
+        "size_long_m": 61.72
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2095657791646,
+              35.97747020085107
+            ],
+            [
+              129.20971465324658,
+              35.97747020085107
+            ],
+            [
+              129.20971465324658,
+              35.977717584852485
+            ],
+            [
+              129.2095657791646,
+              35.977717584852485
+            ],
+            [
+              129.2095657791646,
+              35.97747020085107
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2553,
+        "bbox_pixel": [
+          2674.5,
+          6637.2,
+          2688.0,
+          6664.6
+        ],
+        "size_short_m": 13.48,
+        "size_long_m": 27.41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22606404672058,
+              35.976681661321706
+            ],
+            [
+              129.22672079329885,
+              35.976681661321706
+            ],
+            [
+              129.22672079329885,
+              35.97734136850456
+            ],
+            [
+              129.22606404672058,
+              35.97734136850456
+            ],
+            [
+              129.22606404672058,
+              35.976681661321706
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2551,
+        "bbox_pixel": [
+          4162.0,
+          6675.6,
+          4221.3,
+          6748.6
+        ],
+        "size_short_m": 59.38,
+        "size_long_m": 73.03
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2500803631133,
+              35.97017347697067
+            ],
+            [
+              129.2504426766491,
+              35.97017347697067
+            ],
+            [
+              129.2504426766491,
+              35.97059383580728
+            ],
+            [
+              129.2500803631133,
+              35.97059383580728
+            ],
+            [
+              129.2500803631133,
+              35.97017347697067
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2497,
+        "bbox_pixel": [
+          6329.0,
+          7418.7,
+          6361.8,
+          7465.2
+        ],
+        "size_short_m": 32.79,
+        "size_long_m": 46.54
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21357806204975,
+              36.01787675117917
+            ],
+            [
+              129.21430890618672,
+              36.01787675117917
+            ],
+            [
+              129.21430890618672,
+              36.01860541626956
+            ],
+            [
+              129.21357806204975,
+              36.01860541626956
+            ],
+            [
+              129.21357806204975,
+              36.01787675117917
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2486,
+        "bbox_pixel": [
+          3026.3,
+          2101.3,
+          3092.3,
+          2182.0
+        ],
+        "size_short_m": 66.03,
+        "size_long_m": 80.68
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21377045785104,
+              36.017861928043146
+            ],
+            [
+              129.21425542646102,
+              36.017861928043146
+            ],
+            [
+              129.21425542646102,
+              36.018200681298566
+            ],
+            [
+              129.21377045785104,
+              36.018200681298566
+            ],
+            [
+              129.21377045785104,
+              36.017861928043146
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2396,
+        "bbox_pixel": [
+          3043.7,
+          2146.2,
+          3087.5,
+          2183.7
+        ],
+        "size_short_m": 37.48,
+        "size_long_m": 43.78
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2277435623821,
+              35.98624131596813
+            ],
+            [
+              129.22838064713952,
+              35.98624131596813
+            ],
+            [
+              129.22838064713952,
+              35.9866438428347
+            ],
+            [
+              129.2277435623821,
+              35.9866438428347
+            ],
+            [
+              129.2277435623821,
+              35.98624131596813
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2391,
+        "bbox_pixel": [
+          4311.0,
+          5643.5,
+          4368.5,
+          5688.0
+        ],
+        "size_short_m": 44.51,
+        "size_long_m": 57.53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22778680024553,
+              36.0278463533485
+            ],
+            [
+              129.22823487720316,
+              36.0278463533485
+            ],
+            [
+              129.22823487720316,
+              36.02828306686828
+            ],
+            [
+              129.22778680024553,
+              36.02828306686828
+            ],
+            [
+              129.22778680024553,
+              36.0278463533485
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 3,
+        "class_name": "excavator",
+        "class_name_ko": "굴삭기",
+        "parent_class_name": "engineering_vessel",
+        "parent_class_name_ko": "공학 차량",
+        "confidence": 0.2344,
+        "bbox_pixel": [
+          4304.1,
+          1025.0,
+          4344.5,
+          1073.4
+        ],
+        "size_short_m": 40.48,
+        "size_long_m": 48.34
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.25563450605776,
+              36.02324062204661
+            ],
+            [
+              129.25609894994116,
+              36.02324062204661
+            ],
+            [
+              129.25609894994116,
+              36.02355889285923
+            ],
+            [
+              129.25563450605776,
+              36.02355889285923
+            ],
+            [
+              129.25563450605776,
+              36.02324062204661
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2284,
+        "bbox_pixel": [
+          6814.4,
+          1542.8,
+          6856.3,
+          1578.0
+        ],
+        "size_short_m": 35.19,
+        "size_long_m": 41.94
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20886993498527,
+              35.99223930177155
+            ],
+            [
+              129.20922552965794,
+              35.99223930177155
+            ],
+            [
+              129.20922552965794,
+              35.99261796121775
+            ],
+            [
+              129.20886993498527,
+              35.99261796121775
+            ],
+            [
+              129.20886993498527,
+              35.99223930177155
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2282,
+        "bbox_pixel": [
+          2608.2,
+          4984.7,
+          2640.4,
+          5026.6
+        ],
+        "size_short_m": 32.14,
+        "size_long_m": 41.93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20858041918626,
+              36.02255711969049
+            ],
+            [
+              129.20882902196698,
+              36.02255711969049
+            ],
+            [
+              129.20882902196698,
+              36.02266565717317
+            ],
+            [
+              129.20858041918626,
+              36.02266565717317
+            ],
+            [
+              129.20858041918626,
+              36.02255711969049
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2262,
+        "bbox_pixel": [
+          2575.0,
+          1652.0,
+          2597.4,
+          1664.0
+        ],
+        "size_short_m": 11.99,
+        "size_long_m": 22.43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24875609909944,
+              36.003254677854066
+            ],
+            [
+              129.24913098584364,
+              36.003254677854066
+            ],
+            [
+              129.24913098584364,
+              36.003490197563366
+            ],
+            [
+              129.24875609909944,
+              36.003490197563366
+            ],
+            [
+              129.24875609909944,
+              36.003254677854066
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.2232,
+        "bbox_pixel": [
+          6200.3,
+          3770.3,
+          6234.2,
+          3796.4
+        ],
+        "size_short_m": 26.04,
+        "size_long_m": 33.85
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2149963212498,
+              35.9858999426629
+            ],
+            [
+              129.21541709074305,
+              35.9858999426629
+            ],
+            [
+              129.21541709074305,
+              35.98640717737355
+            ],
+            [
+              129.2149963212498,
+              35.98640717737355
+            ],
+            [
+              129.2149963212498,
+              35.9858999426629
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2218,
+        "bbox_pixel": [
+          3161.9,
+          5672.3,
+          3200.0,
+          5728.5
+        ],
+        "size_short_m": 38.05,
+        "size_long_m": 56.18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21685445386822,
+              36.016639743591014
+            ],
+            [
+              129.21736653765262,
+              36.016639743591014
+            ],
+            [
+              129.21736653765262,
+              36.01716502096147
+            ],
+            [
+              129.21685445386822,
+              36.01716502096147
+            ],
+            [
+              129.21685445386822,
+              36.016639743591014
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2203,
+        "bbox_pixel": [
+          3321.9,
+          2260.4,
+          3368.1,
+          2318.6
+        ],
+        "size_short_m": 46.27,
+        "size_long_m": 58.16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.271758326361,
+              36.00473997591533
+            ],
+            [
+              129.27213880706938,
+              36.00473997591533
+            ],
+            [
+              129.27213880706938,
+              36.00512017623514
+            ],
+            [
+              129.271758326361,
+              36.00512017623514
+            ],
+            [
+              129.271758326361,
+              36.00473997591533
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 3,
+        "class_name": "excavator",
+        "class_name_ko": "굴삭기",
+        "parent_class_name": "engineering_vessel",
+        "parent_class_name_ko": "공학 차량",
+        "confidence": 0.2152,
+        "bbox_pixel": [
+          8272.9,
+          3584.0,
+          8307.3,
+          3626.1
+        ],
+        "size_short_m": 34.41,
+        "size_long_m": 42.07
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24873910413382,
+              36.003361752814165
+            ],
+            [
+              129.2490192849088,
+              36.003361752814165
+            ],
+            [
+              129.2490192849088,
+              36.00354884091385
+            ],
+            [
+              129.24873910413382,
+              36.00354884091385
+            ],
+            [
+              129.24873910413382,
+              36.003361752814165
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2123,
+        "bbox_pixel": [
+          6198.8,
+          3763.8,
+          6224.1,
+          3784.5
+        ],
+        "size_short_m": 20.69,
+        "size_long_m": 25.3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.25637651351119,
+              36.00317785932604
+            ],
+            [
+              129.25668902940797,
+              36.00317785932604
+            ],
+            [
+              129.25668902940797,
+              36.003532502327516
+            ],
+            [
+              129.25637651351119,
+              36.003532502327516
+            ],
+            [
+              129.25637651351119,
+              36.00317785932604
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2083,
+        "bbox_pixel": [
+          6887.1,
+          3763.9,
+          6915.4,
+          3803.1
+        ],
+        "size_short_m": 28.27,
+        "size_long_m": 39.26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24593283545903,
+              35.9922823553436
+            ],
+            [
+              129.24644099668697,
+              35.9922823553436
+            ],
+            [
+              129.24644099668697,
+              35.99276925625299
+            ],
+            [
+              129.24593283545903,
+              35.99276925625299
+            ],
+            [
+              129.24593283545903,
+              35.9922823553436
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.2077,
+        "bbox_pixel": [
+          5948.9,
+          4960.1,
+          5994.8,
+          5014.0
+        ],
+        "size_short_m": 45.94,
+        "size_long_m": 53.89
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24864964445325,
+              36.00346648186097
+            ],
+            [
+              129.24897118998493,
+              36.00346648186097
+            ],
+            [
+              129.24897118998493,
+              36.00367347833263
+            ],
+            [
+              129.24864964445325,
+              36.00367347833263
+            ],
+            [
+              129.24864964445325,
+              36.00346648186097
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2073,
+        "bbox_pixel": [
+          6190.7,
+          3750.0,
+          6219.7,
+          3772.9
+        ],
+        "size_short_m": 22.89,
+        "size_long_m": 29.04
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24628793466422,
+              36.018068505919665
+            ],
+            [
+              129.24678385925054,
+              36.018068505919665
+            ],
+            [
+              129.24678385925054,
+              36.01855777424813
+            ],
+            [
+              129.24628793466422,
+              36.01855777424813
+            ],
+            [
+              129.24628793466422,
+              36.018068505919665
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 3,
+        "class_name": "excavator",
+        "class_name_ko": "굴삭기",
+        "parent_class_name": "engineering_vessel",
+        "parent_class_name_ko": "공학 차량",
+        "confidence": 0.206,
+        "bbox_pixel": [
+          5973.7,
+          2099.7,
+          6018.5,
+          2153.8
+        ],
+        "size_short_m": 44.82,
+        "size_long_m": 54.15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21403734062062,
+              35.98247276889636
+            ],
+            [
+              129.21430390264453,
+              35.98247276889636
+            ],
+            [
+              129.21430390264453,
+              35.982714411491116
+            ],
+            [
+              129.21403734062062,
+              35.982714411491116
+            ],
+            [
+              129.21403734062062,
+              35.98247276889636
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.2044,
+        "bbox_pixel": [
+          3076.4,
+          6082.1,
+          3100.5,
+          6108.8
+        ],
+        "size_short_m": 24.09,
+        "size_long_m": 26.75
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21856250652255,
+              35.993855722803154
+            ],
+            [
+              129.21905584219581,
+              35.993855722803154
+            ],
+            [
+              129.21905584219581,
+              35.99438425386335
+            ],
+            [
+              129.21856250652255,
+              35.99438425386335
+            ],
+            [
+              129.21856250652255,
+              35.993855722803154
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.202,
+        "bbox_pixel": [
+          3481.4,
+          4786.8,
+          3526.0,
+          4845.4
+        ],
+        "size_short_m": 44.6,
+        "size_long_m": 58.52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2609462603244,
+              35.98027083244803
+            ],
+            [
+              129.26139805747516,
+              35.98027083244803
+            ],
+            [
+              129.26139805747516,
+              35.98063649250269
+            ],
+            [
+              129.2609462603244,
+              35.98063649250269
+            ],
+            [
+              129.2609462603244,
+              35.98027083244803
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1998,
+        "bbox_pixel": [
+          7305.7,
+          6302.3,
+          7346.6,
+          6342.7
+        ],
+        "size_short_m": 40.45,
+        "size_long_m": 40.84
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19198567437067,
+              35.99157290109695
+            ],
+            [
+              129.19249957422969,
+              35.99157290109695
+            ],
+            [
+              129.19249957422969,
+              35.99192088232414
+            ],
+            [
+              129.19198567437067,
+              35.99192088232414
+            ],
+            [
+              129.19198567437067,
+              35.99157290109695
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1957,
+        "bbox_pixel": [
+          1086.5,
+          5065.1,
+          1132.9,
+          5103.6
+        ],
+        "size_short_m": 38.5,
+        "size_long_m": 46.4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.23478533623688,
+              36.00051609896499
+            ],
+            [
+              129.23533588225214,
+              36.00051609896499
+            ],
+            [
+              129.23533588225214,
+              36.001227721798784
+            ],
+            [
+              129.23478533623688,
+              36.001227721798784
+            ],
+            [
+              129.23478533623688,
+              36.00051609896499
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1939,
+        "bbox_pixel": [
+          4941.8,
+          4024.4,
+          4991.6,
+          4103.2
+        ],
+        "size_short_m": 49.81,
+        "size_long_m": 78.81
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21503807760377,
+              36.01741325064501
+            ],
+            [
+              129.21550281743038,
+              36.01741325064501
+            ],
+            [
+              129.21550281743038,
+              36.01798495555463
+            ],
+            [
+              129.21503807760377,
+              36.01798495555463
+            ],
+            [
+              129.21503807760377,
+              36.01741325064501
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1924,
+        "bbox_pixel": [
+          3158.0,
+          2169.9,
+          3200.0,
+          2233.2
+        ],
+        "size_short_m": 42.02,
+        "size_long_m": 63.32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21058285272036,
+              36.010991488042585
+            ],
+            [
+              129.21089201637815,
+              36.010991488042585
+            ],
+            [
+              129.21089201637815,
+              36.01128067017023
+            ],
+            [
+              129.21058285272036,
+              36.01128067017023
+            ],
+            [
+              129.21058285272036,
+              36.010991488042585
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1898,
+        "bbox_pixel": [
+          2758.1,
+          2914.4,
+          2786.1,
+          2946.4
+        ],
+        "size_short_m": 27.93,
+        "size_long_m": 32.01
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2424292924518,
+              35.996497490096864
+            ],
+            [
+              129.2425533712727,
+              35.996497490096864
+            ],
+            [
+              129.2425533712727,
+              35.996722917794244
+            ],
+            [
+              129.2424292924518,
+              35.996722917794244
+            ],
+            [
+              129.2424292924518,
+              35.996497490096864
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1855,
+        "bbox_pixel": [
+          5632.0,
+          4522.4,
+          5643.2,
+          4547.3
+        ],
+        "size_short_m": 11.25,
+        "size_long_m": 24.98
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.1993729725847,
+              36.00328915934919
+            ],
+            [
+              129.19979695411436,
+              36.00328915934919
+            ],
+            [
+              129.19979695411436,
+              36.00369890308705
+            ],
+            [
+              129.1993729725847,
+              36.00369890308705
+            ],
+            [
+              129.1993729725847,
+              36.00328915934919
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1812,
+        "bbox_pixel": [
+          1749.7,
+          3757.4,
+          1788.0,
+          3802.8
+        ],
+        "size_short_m": 38.3,
+        "size_long_m": 45.37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2616079553564,
+              36.00644831574977
+            ],
+            [
+              129.26225851311514,
+              36.00644831574977
+            ],
+            [
+              129.26225851311514,
+              36.007064021914836
+            ],
+            [
+              129.2616079553564,
+              36.007064021914836
+            ],
+            [
+              129.2616079553564,
+              36.00644831574977
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1806,
+        "bbox_pixel": [
+          7357.5,
+          3370.9,
+          7416.3,
+          3439.0
+        ],
+        "size_short_m": 58.81,
+        "size_long_m": 68.13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24881806172155,
+              35.97903028791044
+            ],
+            [
+              129.2493067415567,
+              35.97903028791044
+            ],
+            [
+              129.2493067415567,
+              35.97951889320682
+            ],
+            [
+              129.24881806172155,
+              35.97951889320682
+            ],
+            [
+              129.24881806172155,
+              35.97903028791044
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1805,
+        "bbox_pixel": [
+          6212.7,
+          6429.1,
+          6256.9,
+          6483.2
+        ],
+        "size_short_m": 44.19,
+        "size_long_m": 54.08
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21816952422998,
+              35.99393786843716
+            ],
+            [
+              129.21855505945962,
+              35.99393786843716
+            ],
+            [
+              129.21855505945962,
+              35.994336515972094
+            ],
+            [
+              129.21816952422998,
+              35.994336515972094
+            ],
+            [
+              129.21816952422998,
+              35.99393786843716
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1801,
+        "bbox_pixel": [
+          3446.0,
+          4792.2,
+          3480.9,
+          4836.3
+        ],
+        "size_short_m": 34.85,
+        "size_long_m": 44.14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20000821550636,
+              35.98425819761102
+            ],
+            [
+              129.2003227562577,
+              35.98425819761102
+            ],
+            [
+              129.2003227562577,
+              35.984526200701524
+            ],
+            [
+              129.20000821550636,
+              35.984526200701524
+            ],
+            [
+              129.20000821550636,
+              35.98425819761102
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.178,
+        "bbox_pixel": [
+          1811.3,
+          5883.8,
+          1839.7,
+          5913.5
+        ],
+        "size_short_m": 28.42,
+        "size_long_m": 29.67
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21585124801732,
+              36.0172782520827
+            ],
+            [
+              129.21639028878775,
+              36.0172782520827
+            ],
+            [
+              129.21639028878775,
+              36.01785102251123
+            ],
+            [
+              129.21585124801732,
+              36.01785102251123
+            ],
+            [
+              129.21585124801732,
+              36.0172782520827
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1733,
+        "bbox_pixel": [
+          3231.3,
+          2184.6,
+          3280.0,
+          2248.0
+        ],
+        "size_short_m": 48.71,
+        "size_long_m": 63.42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2353337730202,
+              35.97244079442484
+            ],
+            [
+              129.23574459713254,
+              35.97244079442484
+            ],
+            [
+              129.23574459713254,
+              35.972837563548886
+            ],
+            [
+              129.2353337730202,
+              35.972837563548886
+            ],
+            [
+              129.2353337730202,
+              35.97244079442484
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1724,
+        "bbox_pixel": [
+          4998.9,
+          7173.2,
+          5036.0,
+          7217.1
+        ],
+        "size_short_m": 37.15,
+        "size_long_m": 43.92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19506530433196,
+              36.00745257254453
+            ],
+            [
+              129.19550326787038,
+              36.00745257254453
+            ],
+            [
+              129.19550326787038,
+              36.00791457593323
+            ],
+            [
+              129.19506530433196,
+              36.00791457593323
+            ],
+            [
+              129.19506530433196,
+              36.00745257254453
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1722,
+        "bbox_pixel": [
+          1360.5,
+          3290.6,
+          1400.1,
+          3341.8
+        ],
+        "size_short_m": 39.57,
+        "size_long_m": 51.16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21501835163653,
+              36.01743221445349
+            ],
+            [
+              129.2153303465572,
+              36.01743221445349
+            ],
+            [
+              129.2153303465572,
+              36.017773542838434
+            ],
+            [
+              129.21501835163653,
+              36.017773542838434
+            ],
+            [
+              129.21501835163653,
+              36.01743221445349
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1704,
+        "bbox_pixel": [
+          3156.3,
+          2193.3,
+          3184.5,
+          2231.1
+        ],
+        "size_short_m": 28.2,
+        "size_long_m": 37.8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22421715277616,
+              36.02238756972249
+            ],
+            [
+              129.2246098105973,
+              36.02238756972249
+            ],
+            [
+              129.2246098105973,
+              36.0228172363122
+            ],
+            [
+              129.22421715277616,
+              36.0228172363122
+            ],
+            [
+              129.22421715277616,
+              36.02238756972249
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1698,
+        "bbox_pixel": [
+          3983.9,
+          1632.0,
+          4019.3,
+          1679.6
+        ],
+        "size_short_m": 35.49,
+        "size_long_m": 47.58
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.1926146846909,
+              35.98686550685307
+            ],
+            [
+              129.193089467542,
+              35.98686550685307
+            ],
+            [
+              129.193089467542,
+              35.98744270021303
+            ],
+            [
+              129.1926146846909,
+              35.98744270021303
+            ],
+            [
+              129.1926146846909,
+              35.98686550685307
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1682,
+        "bbox_pixel": [
+          1144.2,
+          5561.7,
+          1187.1,
+          5625.6
+        ],
+        "size_short_m": 42.92,
+        "size_long_m": 63.93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2066079719833,
+              35.99612229204869
+            ],
+            [
+              129.2071752758492,
+              35.99612229204869
+            ],
+            [
+              129.2071752758492,
+              35.996737521468205
+            ],
+            [
+              129.2066079719833,
+              35.996737521468205
+            ],
+            [
+              129.2066079719833,
+              35.99612229204869
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1667,
+        "bbox_pixel": [
+          2403.4,
+          4528.2,
+          2454.6,
+          4596.3
+        ],
+        "size_short_m": 51.28,
+        "size_long_m": 68.13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21996643823653,
+              35.99885336856833
+            ],
+            [
+              129.22041031856622,
+              35.99885336856833
+            ],
+            [
+              129.22041031856622,
+              35.99913500703607
+            ],
+            [
+              129.21996643823653,
+              35.99913500703607
+            ],
+            [
+              129.21996643823653,
+              35.99885336856833
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1662,
+        "bbox_pixel": [
+          3606.8,
+          4259.6,
+          3646.9,
+          4290.8
+        ],
+        "size_short_m": 31.15,
+        "size_long_m": 40.08
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22295745709715,
+              36.0088011176587
+            ],
+            [
+              129.22354523112344,
+              36.0088011176587
+            ],
+            [
+              129.22354523112344,
+              36.00951148564214
+            ],
+            [
+              129.22295745709715,
+              36.00951148564214
+            ],
+            [
+              129.22295745709715,
+              36.0088011176587
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1648,
+        "bbox_pixel": [
+          3873.7,
+          3108.1,
+          3926.9,
+          3186.8
+        ],
+        "size_short_m": 53.15,
+        "size_long_m": 78.67
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19175646173832,
+              36.00652548198581
+            ],
+            [
+              129.19240813111148,
+              36.00652548198581
+            ],
+            [
+              129.19240813111148,
+              36.00720159185607
+            ],
+            [
+              129.19175646173832,
+              36.00720159185607
+            ],
+            [
+              129.19175646173832,
+              36.00652548198581
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1629,
+        "bbox_pixel": [
+          1062.5,
+          3370.3,
+          1121.4,
+          3445.2
+        ],
+        "size_short_m": 58.88,
+        "size_long_m": 74.87
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.23868265026837,
+              35.9912811298255
+            ],
+            [
+              129.2388963137118,
+              35.9912811298255
+            ],
+            [
+              129.2388963137118,
+              35.99134206583719
+            ],
+            [
+              129.23868265026837,
+              35.99134206583719
+            ],
+            [
+              129.23868265026837,
+              35.9912811298255
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.162,
+        "bbox_pixel": [
+          5295.8,
+          5120.0,
+          5315.0,
+          5126.7
+        ],
+        "size_short_m": 6.71,
+        "size_long_m": 19.28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2107272237348,
+              36.01089747949382
+            ],
+            [
+              129.21111860284935,
+              36.01089747949382
+            ],
+            [
+              129.21111860284935,
+              36.01134509959211
+            ],
+            [
+              129.2107272237348,
+              36.01134509959211
+            ],
+            [
+              129.2107272237348,
+              36.01089747949382
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.16,
+        "bbox_pixel": [
+          2771.1,
+          2907.2,
+          2806.5,
+          2956.7
+        ],
+        "size_short_m": 35.38,
+        "size_long_m": 49.57
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20509595629665,
+              35.990249723387
+            ],
+            [
+              129.2053591236834,
+              35.990249723387
+            ],
+            [
+              129.2053591236834,
+              35.99033383185758
+            ],
+            [
+              129.20509595629665,
+              35.99033383185758
+            ],
+            [
+              129.20509595629665,
+              35.990249723387
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1595,
+        "bbox_pixel": [
+          2268.6,
+          5238.7,
+          2292.3,
+          5248.0
+        ],
+        "size_short_m": 9.28,
+        "size_long_m": 23.74
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24361865417038,
+              35.996271104346256
+            ],
+            [
+              129.24384727055644,
+              35.996271104346256
+            ],
+            [
+              129.24384727055644,
+              35.99674113206642
+            ],
+            [
+              129.24361865417038,
+              35.99674113206642
+            ],
+            [
+              129.24361865417038,
+              35.996271104346256
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 3,
+        "class_name": "excavator",
+        "class_name_ko": "굴삭기",
+        "parent_class_name": "engineering_vessel",
+        "parent_class_name_ko": "공학 차량",
+        "confidence": 0.1593,
+        "bbox_pixel": [
+          5739.2,
+          4520.1,
+          5759.9,
+          4572.1
+        ],
+        "size_short_m": 20.74,
+        "size_long_m": 52.08
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19750206108378,
+              35.98656219498984
+            ],
+            [
+              129.19779051738706,
+              35.98656219498984
+            ],
+            [
+              129.19779051738706,
+              35.986789573638966
+            ],
+            [
+              129.19750206108378,
+              35.986789573638966
+            ],
+            [
+              129.19750206108378,
+              35.98656219498984
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1567,
+        "bbox_pixel": [
+          1584.9,
+          5633.2,
+          1610.9,
+          5658.4
+        ],
+        "size_short_m": 25.17,
+        "size_long_m": 26.05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2084198087236,
+              36.02294932540624
+            ],
+            [
+              129.20871767367302,
+              36.02294932540624
+            ],
+            [
+              129.20871767367302,
+              36.02320706375686
+            ],
+            [
+              129.2084198087236,
+              36.02320706375686
+            ],
+            [
+              129.2084198087236,
+              36.02294932540624
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1563,
+        "bbox_pixel": [
+          2560.4,
+          1592.0,
+          2587.3,
+          1620.5
+        ],
+        "size_short_m": 26.9,
+        "size_long_m": 28.53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.26077387408992,
+              36.00472448511907
+            ],
+            [
+              129.260916437274,
+              36.00472448511907
+            ],
+            [
+              129.260916437274,
+              36.00495479983408
+            ],
+            [
+              129.26077387408992,
+              36.00495479983408
+            ],
+            [
+              129.26077387408992,
+              36.00472448511907
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1563,
+        "bbox_pixel": [
+          7283.0,
+          3605.0,
+          7295.9,
+          3630.6
+        ],
+        "size_short_m": 12.92,
+        "size_long_m": 25.51
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24863979935822,
+              35.99215543554338
+            ],
+            [
+              129.24929517815875,
+              35.99215543554338
+            ],
+            [
+              129.24929517815875,
+              35.99284150546634
+            ],
+            [
+              129.24863979935822,
+              35.99284150546634
+            ],
+            [
+              129.24863979935822,
+              35.99215543554338
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1558,
+        "bbox_pixel": [
+          6192.9,
+          4951.5,
+          6252.1,
+          5027.4
+        ],
+        "size_short_m": 59.27,
+        "size_long_m": 75.94
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22419033747613,
+              36.02403681343049
+            ],
+            [
+              129.2244841461102,
+              36.02403681343049
+            ],
+            [
+              129.2244841461102,
+              36.024267055176566
+            ],
+            [
+              129.22419033747613,
+              36.024267055176566
+            ],
+            [
+              129.22419033747613,
+              36.02403681343049
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.154,
+        "bbox_pixel": [
+          3981.1,
+          1471.2,
+          4007.6,
+          1496.7
+        ],
+        "size_short_m": 25.48,
+        "size_long_m": 26.53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20154934351982,
+              36.017407223507874
+            ],
+            [
+              129.20194189885345,
+              36.017407223507874
+            ],
+            [
+              129.20194189885345,
+              36.01774616554198
+            ],
+            [
+              129.20154934351982,
+              36.01774616554198
+            ],
+            [
+              129.20154934351982,
+              36.017407223507874
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1526,
+        "bbox_pixel": [
+          1942.6,
+          2199.0,
+          1978.1,
+          2236.5
+        ],
+        "size_short_m": 35.45,
+        "size_long_m": 37.52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24513309772624,
+              35.98187528827297
+            ],
+            [
+              129.24548621493264,
+              35.98187528827297
+            ],
+            [
+              129.24548621493264,
+              35.9821518572238
+            ],
+            [
+              129.24513309772624,
+              35.9821518572238
+            ],
+            [
+              129.24513309772624,
+              35.98187528827297
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1508,
+        "bbox_pixel": [
+          5879.8,
+          6137.9,
+          5911.7,
+          6168.5
+        ],
+        "size_short_m": 30.6,
+        "size_long_m": 31.91
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22479040260518,
+              36.027262840448536
+            ],
+            [
+              129.2251730804618,
+              36.027262840448536
+            ],
+            [
+              129.2251730804618,
+              36.02753268359054
+            ],
+            [
+              129.22479040260518,
+              36.02753268359054
+            ],
+            [
+              129.22479040260518,
+              36.027262840448536
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.149,
+        "bbox_pixel": [
+          4034.3,
+          1108.9,
+          4068.8,
+          1138.7
+        ],
+        "size_short_m": 29.85,
+        "size_long_m": 34.55
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21281623115615,
+              36.02027520905801
+            ],
+            [
+              129.21329938529723,
+              36.02027520905801
+            ],
+            [
+              129.21329938529723,
+              36.02079924015577
+            ],
+            [
+              129.21281623115615,
+              36.02079924015577
+            ],
+            [
+              129.21281623115615,
+              36.02027520905801
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1467,
+        "bbox_pixel": [
+          2957.1,
+          1858.2,
+          3000.8,
+          1916.2
+        ],
+        "size_short_m": 43.66,
+        "size_long_m": 58.03
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22096911332213,
+              36.01685917432248
+            ],
+            [
+              129.22163452294734,
+              36.01685917432248
+            ],
+            [
+              129.22163452294734,
+              36.01736889345047
+            ],
+            [
+              129.22096911332213,
+              36.01736889345047
+            ],
+            [
+              129.22096911332213,
+              36.01685917432248
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1465,
+        "bbox_pixel": [
+          3692.6,
+          2237.0,
+          3752.7,
+          2293.4
+        ],
+        "size_short_m": 56.4,
+        "size_long_m": 60.09
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20134018307218,
+              36.015171832328654
+            ],
+            [
+              129.2016715406702,
+              36.015171832328654
+            ],
+            [
+              129.2016715406702,
+              36.01556472612217
+            ],
+            [
+              129.20134018307218,
+              36.01556472612217
+            ],
+            [
+              129.20134018307218,
+              36.015171832328654
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1462,
+        "bbox_pixel": [
+          1924.3,
+          2440.9,
+          1954.2,
+          2484.5
+        ],
+        "size_short_m": 29.95,
+        "size_long_m": 43.52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19649588063092,
+              36.01334461599651
+            ],
+            [
+              129.1969344563526,
+              36.01334461599651
+            ],
+            [
+              129.1969344563526,
+              36.013672548246824
+            ],
+            [
+              129.19649588063092,
+              36.013672548246824
+            ],
+            [
+              129.19649588063092,
+              36.01334461599651
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.143,
+        "bbox_pixel": [
+          1488.2,
+          2651.7,
+          1527.8,
+          2688.0
+        ],
+        "size_short_m": 36.29,
+        "size_long_m": 39.59
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2238864883224,
+              35.984806196778656
+            ],
+            [
+              129.22417820325788,
+              35.984806196778656
+            ],
+            [
+              129.22417820325788,
+              35.98503897306714
+            ],
+            [
+              129.2238864883224,
+              35.98503897306714
+            ],
+            [
+              129.2238864883224,
+              35.984806196778656
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.143,
+        "bbox_pixel": [
+          3963.7,
+          5822.3,
+          3990.0,
+          5848.0
+        ],
+        "size_short_m": 25.76,
+        "size_long_m": 26.36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24926557507374,
+              35.972452762743345
+            ],
+            [
+              129.24945149769707,
+              35.972452762743345
+            ],
+            [
+              129.24945149769707,
+              35.972673464489155
+            ],
+            [
+              129.24926557507374,
+              35.972673464489155
+            ],
+            [
+              129.24926557507374,
+              35.972452762743345
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1428,
+        "bbox_pixel": [
+          6255.0,
+          7188.2,
+          6271.8,
+          7212.7
+        ],
+        "size_short_m": 16.83,
+        "size_long_m": 24.44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24942019830468,
+              35.988152828996796
+            ],
+            [
+              129.2497287405246,
+              35.988152828996796
+            ],
+            [
+              129.2497287405246,
+              35.98840265930838
+            ],
+            [
+              129.24942019830468,
+              35.98840265930838
+            ],
+            [
+              129.24942019830468,
+              35.988152828996796
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1413,
+        "bbox_pixel": [
+          6264.5,
+          5443.6,
+          6292.3,
+          5471.2
+        ],
+        "size_short_m": 27.64,
+        "size_long_m": 27.88
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.1913040032552,
+              35.99496354309602
+            ],
+            [
+              129.1916633410284,
+              35.99496354309602
+            ],
+            [
+              129.1916633410284,
+              35.9955706990259
+            ],
+            [
+              129.1913040032552,
+              35.9955706990259
+            ],
+            [
+              129.1913040032552,
+              35.99496354309602
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1409,
+        "bbox_pixel": [
+          1024.2,
+          4660.4,
+          1056.8,
+          4727.7
+        ],
+        "size_short_m": 32.52,
+        "size_long_m": 67.28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19932875346274,
+              36.014451409097084
+            ],
+            [
+              129.19972831339862,
+              36.014451409097084
+            ],
+            [
+              129.19972831339862,
+              36.014737363582576
+            ],
+            [
+              129.19932875346274,
+              36.014737363582576
+            ],
+            [
+              129.19932875346274,
+              36.014451409097084
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1392,
+        "bbox_pixel": [
+          1743.2,
+          2533.1,
+          1779.3,
+          2564.7
+        ],
+        "size_short_m": 31.64,
+        "size_long_m": 36.07
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19768042938182,
+              36.02604614125999
+            ],
+            [
+              129.19815879334215,
+              36.02604614125999
+            ],
+            [
+              129.19815879334215,
+              36.02649471892404
+            ],
+            [
+              129.19768042938182,
+              36.02649471892404
+            ],
+            [
+              129.19768042938182,
+              36.02604614125999
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1388,
+        "bbox_pixel": [
+          1592.0,
+          1229.3,
+          1635.2,
+          1279.0
+        ],
+        "size_short_m": 43.2,
+        "size_long_m": 49.67
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22005320463398,
+              36.01791993873191
+            ],
+            [
+              129.22059841832342,
+              36.01791993873191
+            ],
+            [
+              129.22059841832342,
+              36.01845473045013
+            ],
+            [
+              129.22005320463398,
+              36.01845473045013
+            ],
+            [
+              129.22005320463398,
+              36.01791993873191
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1375,
+        "bbox_pixel": [
+          3609.8,
+          2116.8,
+          3659.0,
+          2176.0
+        ],
+        "size_short_m": 49.26,
+        "size_long_m": 59.21
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2408040109299,
+              36.005470515823966
+            ],
+            [
+              129.2413783763646,
+              36.005470515823966
+            ],
+            [
+              129.2413783763646,
+              36.00614068449223
+            ],
+            [
+              129.2408040109299,
+              36.00614068449223
+            ],
+            [
+              129.2408040109299,
+              36.005470515823966
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1374,
+        "bbox_pixel": [
+          5482.9,
+          3478.1,
+          5534.9,
+          3552.3
+        ],
+        "size_short_m": 51.95,
+        "size_long_m": 74.2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.26641918894853,
+              35.97712793447327
+            ],
+            [
+              129.26650585467138,
+              35.97712793447327
+            ],
+            [
+              129.26650585467138,
+              35.97741149344298
+            ],
+            [
+              129.26641918894853,
+              35.97741149344298
+            ],
+            [
+              129.26641918894853,
+              35.97712793447327
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1374,
+        "bbox_pixel": [
+          7800.1,
+          6658.6,
+          7808.0,
+          6690.1
+        ],
+        "size_short_m": 7.9,
+        "size_long_m": 31.43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21878516707898,
+              36.02012088825931
+            ],
+            [
+              129.21931975088265,
+              36.02012088825931
+            ],
+            [
+              129.21931975088265,
+              36.0205191219515
+            ],
+            [
+              129.21878516707898,
+              36.0205191219515
+            ],
+            [
+              129.21878516707898,
+              36.02012088825931
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1348,
+        "bbox_pixel": [
+          3495.0,
+          1888.0,
+          3543.3,
+          1932.1
+        ],
+        "size_short_m": 44.06,
+        "size_long_m": 48.27
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2138122070081,
+              36.01763583920901
+            ],
+            [
+              129.21439697354637,
+              36.01763583920901
+            ],
+            [
+              129.21439697354637,
+              36.01807126019978
+            ],
+            [
+              129.2138122070081,
+              36.01807126019978
+            ],
+            [
+              129.2138122070081,
+              36.01763583920901
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1346,
+        "bbox_pixel": [
+          3047.5,
+          2160.5,
+          3100.3,
+          2208.7
+        ],
+        "size_short_m": 48.18,
+        "size_long_m": 52.8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2540453802919,
+              36.01526942586399
+            ],
+            [
+              129.25436152228457,
+              36.01526942586399
+            ],
+            [
+              129.25436152228457,
+              36.015586330683625
+            ],
+            [
+              129.2540453802919,
+              36.015586330683625
+            ],
+            [
+              129.2540453802919,
+              36.01526942586399
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1341,
+        "bbox_pixel": [
+          6673.5,
+          2427.5,
+          6702.1,
+          2462.5
+        ],
+        "size_short_m": 28.58,
+        "size_long_m": 35.08
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2284732633256,
+              35.986310723248494
+            ],
+            [
+              129.22878862426418,
+              35.986310723248494
+            ],
+            [
+              129.22878862426418,
+              35.98652381627412
+            ],
+            [
+              129.2284732633256,
+              35.98652381627412
+            ],
+            [
+              129.2284732633256,
+              35.986310723248494
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1336,
+        "bbox_pixel": [
+          4376.8,
+          5656.6,
+          4405.3,
+          5680.2
+        ],
+        "size_short_m": 23.57,
+        "size_long_m": 28.48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2379285066423,
+              35.99772769018474
+            ],
+            [
+              129.2382624533001,
+              35.99772769018474
+            ],
+            [
+              129.2382624533001,
+              35.997933787160456
+            ],
+            [
+              129.2379285066423,
+              35.997933787160456
+            ],
+            [
+              129.2379285066423,
+              35.99772769018474
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.133,
+        "bbox_pixel": [
+          5226.0,
+          4389.0,
+          5256.2,
+          4411.8
+        ],
+        "size_short_m": 22.79,
+        "size_long_m": 30.15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21020552737735,
+              35.97916987229208
+            ],
+            [
+              129.21076083764598,
+              35.97916987229208
+            ],
+            [
+              129.21076083764598,
+              35.97984483867105
+            ],
+            [
+              129.21020552737735,
+              35.97984483867105
+            ],
+            [
+              129.21020552737735,
+              35.97916987229208
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1328,
+        "bbox_pixel": [
+          2731.7,
+          6401.1,
+          2781.9,
+          6475.9
+        ],
+        "size_short_m": 50.22,
+        "size_long_m": 74.76
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2610472522132,
+              35.97887390596367
+            ],
+            [
+              129.26157776634798,
+              35.97887390596367
+            ],
+            [
+              129.26157776634798,
+              35.97945897042867
+            ],
+            [
+              129.2610472522132,
+              35.97945897042867
+            ],
+            [
+              129.2610472522132,
+              35.97887390596367
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1307,
+        "bbox_pixel": [
+          7315.2,
+          6432.8,
+          7363.2,
+          6497.6
+        ],
+        "size_short_m": 48.0,
+        "size_long_m": 64.76
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24866981176268,
+              35.99100687569751
+            ],
+            [
+              129.24954372055157,
+              35.99100687569751
+            ],
+            [
+              129.24954372055157,
+              35.99155293657749
+            ],
+            [
+              129.24866981176268,
+              35.99155293657749
+            ],
+            [
+              129.24866981176268,
+              35.99100687569751
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1291,
+        "bbox_pixel": [
+          6195.9,
+          5094.4,
+          6274.9,
+          5154.7
+        ],
+        "size_short_m": 60.36,
+        "size_long_m": 78.93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2387840767852,
+              36.01397479268944
+            ],
+            [
+              129.23929976772,
+              36.01397479268944
+            ],
+            [
+              129.23929976772,
+              36.01442263599087
+            ],
+            [
+              129.2387840767852,
+              36.01442263599087
+            ],
+            [
+              129.2387840767852,
+              36.01397479268944
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1282,
+        "bbox_pixel": [
+          5298.6,
+          2560.0,
+          5345.2,
+          2609.6
+        ],
+        "size_short_m": 46.59,
+        "size_long_m": 49.56
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22071706202655,
+              35.98556859515429
+            ],
+            [
+              129.2210906919171,
+              35.98556859515429
+            ],
+            [
+              129.2210906919171,
+              35.98608916380632
+            ],
+            [
+              129.22071706202655,
+              35.98608916380632
+            ],
+            [
+              129.22071706202655,
+              35.98556859515429
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1275,
+        "bbox_pixel": [
+          3677.7,
+          5706.4,
+          3711.5,
+          5764.1
+        ],
+        "size_short_m": 33.81,
+        "size_long_m": 57.66
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19057580783982,
+              35.98816894204304
+            ],
+            [
+              129.191028875527,
+              35.98816894204304
+            ],
+            [
+              129.191028875527,
+              35.98866898993004
+            ],
+            [
+              129.19057580783982,
+              35.98866898993004
+            ],
+            [
+              129.19057580783982,
+              35.98816894204304
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1272,
+        "bbox_pixel": [
+          960.1,
+          5426.0,
+          1001.1,
+          5481.4
+        ],
+        "size_short_m": 40.95,
+        "size_long_m": 55.38
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20922165317043,
+              36.00877065277814
+            ],
+            [
+              129.20950028226812,
+              36.00877065277814
+            ],
+            [
+              129.20950028226812,
+              36.00901461881179
+            ],
+            [
+              129.20922165317043,
+              36.00901461881179
+            ],
+            [
+              129.20922165317043,
+              36.00877065277814
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1269,
+        "bbox_pixel": [
+          2636.0,
+          3166.0,
+          2661.2,
+          3193.0
+        ],
+        "size_short_m": 25.17,
+        "size_long_m": 27.01
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.18967314299869,
+              35.99821795802242
+            ],
+            [
+              129.19003560356467,
+              35.99821795802242
+            ],
+            [
+              129.19003560356467,
+              35.99869826295224
+            ],
+            [
+              129.18967314299869,
+              35.99869826295224
+            ],
+            [
+              129.18967314299869,
+              35.99821795802242
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1257,
+        "bbox_pixel": [
+          876.6,
+          4313.8,
+          909.4,
+          4367.0
+        ],
+        "size_short_m": 32.77,
+        "size_long_m": 53.21
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19631738390285,
+              35.99036747436392
+            ],
+            [
+              129.1966449510582,
+              35.99036747436392
+            ],
+            [
+              129.1966449510582,
+              35.990697053088965
+            ],
+            [
+              129.19631738390285,
+              35.990697053088965
+            ],
+            [
+              129.19631738390285,
+              35.99036747436392
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1241,
+        "bbox_pixel": [
+          1477.2,
+          5200.1,
+          1506.8,
+          5236.6
+        ],
+        "size_short_m": 29.6,
+        "size_long_m": 36.5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22760862597178,
+              35.98498704204532
+            ],
+            [
+              129.22836650746646,
+              35.98498704204532
+            ],
+            [
+              129.22836650746646,
+              35.985620915054575
+            ],
+            [
+              129.22760862597178,
+              35.985620915054575
+            ],
+            [
+              129.22760862597178,
+              35.98498704204532
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1228,
+        "bbox_pixel": [
+          4299.1,
+          5756.9,
+          4367.5,
+          5827.1
+        ],
+        "size_short_m": 68.48,
+        "size_long_m": 70.15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20174029174584,
+              36.017951757750076
+            ],
+            [
+              129.20234198031739,
+              36.017951757750076
+            ],
+            [
+              129.20234198031739,
+              36.01831232546484
+            ],
+            [
+              129.20174029174584,
+              36.01831232546484
+            ],
+            [
+              129.20174029174584,
+              36.017951757750076
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1209,
+        "bbox_pixel": [
+          1959.7,
+          2136.1,
+          2014.0,
+          2176.0
+        ],
+        "size_short_m": 39.88,
+        "size_long_m": 54.3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2056973064288,
+              35.995058363521494
+            ],
+            [
+              129.2061925092208,
+              35.995058363521494
+            ],
+            [
+              129.2061925092208,
+              35.99535912988917
+            ],
+            [
+              129.2056973064288,
+              35.99535912988917
+            ],
+            [
+              129.2056973064288,
+              35.995058363521494
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1184,
+        "bbox_pixel": [
+          2321.6,
+          4681.2,
+          2366.3,
+          4714.5
+        ],
+        "size_short_m": 33.27,
+        "size_long_m": 44.7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20203140489488,
+              36.005640608541064
+            ],
+            [
+              129.20258054527272,
+              36.005640608541064
+            ],
+            [
+              129.20258054527272,
+              36.006177252682306
+            ],
+            [
+              129.20203140489488,
+              36.006177252682306
+            ],
+            [
+              129.20203140489488,
+              36.005640608541064
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 3,
+        "class_name": "excavator",
+        "class_name_ko": "굴삭기",
+        "parent_class_name": "engineering_vessel",
+        "parent_class_name_ko": "공학 차량",
+        "confidence": 0.1176,
+        "bbox_pixel": [
+          1988.7,
+          3482.0,
+          2038.3,
+          3541.4
+        ],
+        "size_short_m": 49.61,
+        "size_long_m": 59.42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.20008762953427,
+              36.016966158060896
+            ],
+            [
+              129.2005569077781,
+              36.016966158060896
+            ],
+            [
+              129.2005569077781,
+              36.01726011741878
+            ],
+            [
+              129.20008762953427,
+              36.01726011741878
+            ],
+            [
+              129.20008762953427,
+              36.016966158060896
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1155,
+        "bbox_pixel": [
+          1811.0,
+          2253.1,
+          1853.4,
+          2285.7
+        ],
+        "size_short_m": 32.52,
+        "size_long_m": 42.35
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24935387563346,
+              35.972629152385224
+            ],
+            [
+              129.24945383714132,
+              35.972629152385224
+            ],
+            [
+              129.24945383714132,
+              35.97281003811033
+            ],
+            [
+              129.24935387563346,
+              35.97281003811033
+            ],
+            [
+              129.24935387563346,
+              35.972629152385224
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1152,
+        "bbox_pixel": [
+          6262.9,
+          7173.1,
+          6272.0,
+          7193.1
+        ],
+        "size_short_m": 9.06,
+        "size_long_m": 20.04
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.18918309198844,
+              35.99735697579691
+            ],
+            [
+              129.18965470626685,
+              35.99735697579691
+            ],
+            [
+              129.18965470626685,
+              35.99770316649726
+            ],
+            [
+              129.18918309198844,
+              35.99770316649726
+            ],
+            [
+              129.18918309198844,
+              35.99735697579691
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1152,
+        "bbox_pixel": [
+          832.6,
+          4424.3,
+          875.2,
+          4462.6
+        ],
+        "size_short_m": 38.32,
+        "size_long_m": 42.58
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22552301620536,
+              35.97316099024778
+            ],
+            [
+              129.22584236893402,
+              35.97316099024778
+            ],
+            [
+              129.22584236893402,
+              35.97360857823489
+            ],
+            [
+              129.22552301620536,
+              35.97360857823489
+            ],
+            [
+              129.22552301620536,
+              35.97316099024778
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.113,
+        "bbox_pixel": [
+          4114.1,
+          7089.7,
+          4143.0,
+          7139.3
+        ],
+        "size_short_m": 28.91,
+        "size_long_m": 49.58
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19942491167325,
+              35.98934314709311
+            ],
+            [
+              129.20005149381788,
+              35.98934314709311
+            ],
+            [
+              129.20005149381788,
+              35.98974352433364
+            ],
+            [
+              129.19942491167325,
+              35.98974352433364
+            ],
+            [
+              129.19942491167325,
+              35.98934314709311
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1126,
+        "bbox_pixel": [
+          1757.5,
+          5305.3,
+          1814.1,
+          5349.5
+        ],
+        "size_short_m": 44.29,
+        "size_long_m": 56.57
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.23923499251842,
+              36.0007649251677
+            ],
+            [
+              129.2398736671391,
+              36.0007649251677
+            ],
+            [
+              129.2398736671391,
+              36.00149014182972
+            ],
+            [
+              129.23923499251842,
+              36.00149014182972
+            ],
+            [
+              129.23923499251842,
+              36.0007649251677
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.112,
+        "bbox_pixel": [
+          5342.8,
+          3994.3,
+          5400.6,
+          4074.6
+        ],
+        "size_short_m": 57.76,
+        "size_long_m": 80.3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22914981011536,
+              36.00446283008137
+            ],
+            [
+              129.2297135008095,
+              36.00446283008137
+            ],
+            [
+              129.2297135008095,
+              36.00506679470042
+            ],
+            [
+              129.22914981011536,
+              36.00506679470042
+            ],
+            [
+              129.22914981011536,
+              36.00446283008137
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1118,
+        "bbox_pixel": [
+          4432.9,
+          3599.8,
+          4483.9,
+          3666.7
+        ],
+        "size_short_m": 50.96,
+        "size_long_m": 66.87
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22533423679107,
+              35.99545540981265
+            ],
+            [
+              129.22563493059747,
+              35.99545540981265
+            ],
+            [
+              129.22563493059747,
+              35.995717684359946
+            ],
+            [
+              129.22533423679107,
+              35.995717684359946
+            ],
+            [
+              129.22533423679107,
+              35.99545540981265
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1113,
+        "bbox_pixel": [
+          4091.5,
+          4637.5,
+          4118.6,
+          4666.6
+        ],
+        "size_short_m": 27.17,
+        "size_long_m": 29.03
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.24928621881736,
+              35.972751975417744
+            ],
+            [
+              129.24945258258137,
+              35.972751975417744
+            ],
+            [
+              129.24945258258137,
+              35.97300466672828
+            ],
+            [
+              129.24928621881736,
+              35.97300466672828
+            ],
+            [
+              129.24928621881736,
+              35.972751975417744
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1113,
+        "bbox_pixel": [
+          6256.8,
+          7151.5,
+          6271.8,
+          7179.5
+        ],
+        "size_short_m": 15.07,
+        "size_long_m": 27.99
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.1982108011387,
+              36.001739337234355
+            ],
+            [
+              129.19841665927265,
+              36.001739337234355
+            ],
+            [
+              129.19841665927265,
+              36.00205365063968
+            ],
+            [
+              129.1982108011387,
+              36.00205365063968
+            ],
+            [
+              129.1982108011387,
+              36.001739337234355
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1106,
+        "bbox_pixel": [
+          1645.3,
+          3940.1,
+          1663.9,
+          3974.9
+        ],
+        "size_short_m": 18.62,
+        "size_long_m": 34.82
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.26472350474216,
+              35.99578859807999
+            ],
+            [
+              129.26499525075135,
+              35.99578859807999
+            ],
+            [
+              129.26499525075135,
+              35.99590255127481
+            ],
+            [
+              129.26472350474216,
+              35.99590255127481
+            ],
+            [
+              129.26472350474216,
+              35.99578859807999
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1104,
+        "bbox_pixel": [
+          7641.7,
+          4608.1,
+          7666.2,
+          4620.7
+        ],
+        "size_short_m": 12.57,
+        "size_long_m": 24.53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.25926317361694,
+              35.99528344394622
+            ],
+            [
+              129.2595565146858,
+              35.99528344394622
+            ],
+            [
+              129.2595565146858,
+              35.99555915186817
+            ],
+            [
+              129.25926317361694,
+              35.99555915186817
+            ],
+            [
+              129.25926317361694,
+              35.99528344394622
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1102,
+        "bbox_pixel": [
+          7149.6,
+          4647.5,
+          7176.1,
+          4678.0
+        ],
+        "size_short_m": 26.52,
+        "size_long_m": 30.51
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21005494888468,
+              35.97928169760498
+            ],
+            [
+              129.2103583590387,
+              35.97928169760498
+            ],
+            [
+              129.2103583590387,
+              35.97964717727471
+            ],
+            [
+              129.21005494888468,
+              35.97964717727471
+            ],
+            [
+              129.21005494888468,
+              35.97928169760498
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1098,
+        "bbox_pixel": [
+          2718.1,
+          6423.1,
+          2745.6,
+          6463.6
+        ],
+        "size_short_m": 27.44,
+        "size_long_m": 40.48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.22158495121704,
+              35.99022028142351
+            ],
+            [
+              129.22189367038789,
+              35.99022028142351
+            ],
+            [
+              129.22189367038789,
+              35.99054757024796
+            ],
+            [
+              129.22158495121704,
+              35.99054757024796
+            ],
+            [
+              129.22158495121704,
+              35.99022028142351
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.108,
+        "bbox_pixel": [
+          3754.8,
+          5211.8,
+          3782.7,
+          5248.0
+        ],
+        "size_short_m": 27.91,
+        "size_long_m": 36.24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2039565708827,
+              35.99464554302233
+            ],
+            [
+              129.20407999336598,
+              35.99464554302233
+            ],
+            [
+              129.20407999336598,
+              35.994967071590764
+            ],
+            [
+              129.2039565708827,
+              35.994967071590764
+            ],
+            [
+              129.2039565708827,
+              35.99464554302233
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1074,
+        "bbox_pixel": [
+          2164.8,
+          4725.0,
+          2176.0,
+          4760.7
+        ],
+        "size_short_m": 11.2,
+        "size_long_m": 35.64
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2187610006415,
+              36.01946704233709
+            ],
+            [
+              129.21938078411904,
+              36.01946704233709
+            ],
+            [
+              129.21938078411904,
+              36.02001701809138
+            ],
+            [
+              129.2187610006415,
+              36.02001701809138
+            ],
+            [
+              129.2187610006415,
+              36.01946704233709
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1072,
+        "bbox_pixel": [
+          3492.9,
+          1943.7,
+          3548.9,
+          2004.6
+        ],
+        "size_short_m": 55.98,
+        "size_long_m": 60.88
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19754126299176,
+              36.01476224370808
+            ],
+            [
+              129.1978596449795,
+              36.01476224370808
+            ],
+            [
+              129.1978596449795,
+              36.01498192808213
+            ],
+            [
+              129.19754126299176,
+              36.01498192808213
+            ],
+            [
+              129.19754126299176,
+              36.01476224370808
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 1,
+        "class_name": "truck",
+        "class_name_ko": "소형 트럭",
+        "parent_class_name": "truck",
+        "parent_class_name_ko": "트럭",
+        "confidence": 0.1072,
+        "bbox_pixel": [
+          1582.1,
+          2506.3,
+          1610.8,
+          2530.6
+        ],
+        "size_short_m": 24.31,
+        "size_long_m": 28.74
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2485983702119,
+              35.97065997676975
+            ],
+            [
+              129.24890235413957,
+              35.97065997676975
+            ],
+            [
+              129.24890235413957,
+              35.97091870532349
+            ],
+            [
+              129.2485983702119,
+              35.97091870532349
+            ],
+            [
+              129.2485983702119,
+              35.97065997676975
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1067,
+        "bbox_pixel": [
+          6195.3,
+          7383.0,
+          6222.8,
+          7411.6
+        ],
+        "size_short_m": 27.48,
+        "size_long_m": 28.63
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2151527197954,
+              36.01729857859849
+            ],
+            [
+              129.2156773074269,
+              36.01729857859849
+            ],
+            [
+              129.2156773074269,
+              36.01785360644822
+            ],
+            [
+              129.2151527197954,
+              36.01785360644822
+            ],
+            [
+              129.2151527197954,
+              36.01729857859849
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1056,
+        "bbox_pixel": [
+          3168.3,
+          2184.4,
+          3215.8,
+          2245.9
+        ],
+        "size_short_m": 47.41,
+        "size_long_m": 61.46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21622146333215,
+              35.9857545884358
+            ],
+            [
+              129.21652154103347,
+              35.9857545884358
+            ],
+            [
+              129.21652154103347,
+              35.98602863964848
+            ],
+            [
+              129.21622146333215,
+              35.98602863964848
+            ],
+            [
+              129.21622146333215,
+              35.9857545884358
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 0,
+        "class_name": "vehicle",
+        "class_name_ko": "자동차",
+        "parent_class_name": "passenger_vehicle",
+        "parent_class_name_ko": "승용차",
+        "confidence": 0.1054,
+        "bbox_pixel": [
+          3272.5,
+          5714.1,
+          3299.6,
+          5744.4
+        ],
+        "size_short_m": 27.12,
+        "size_long_m": 30.34
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.19051191841774,
+              35.99255077356758
+            ],
+            [
+              129.1910816868039,
+              35.99255077356758
+            ],
+            [
+              129.1910816868039,
+              35.99317267455543
+            ],
+            [
+              129.19051191841774,
+              35.99317267455543
+            ],
+            [
+              129.19051191841774,
+              35.99255077356758
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1054,
+        "bbox_pixel": [
+          953.4,
+          4926.5,
+          1004.9,
+          4995.4
+        ],
+        "size_short_m": 51.49,
+        "size_long_m": 68.88
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.2155464079345,
+              35.986112873361044
+            ],
+            [
+              129.2164067751334,
+              35.986112873361044
+            ],
+            [
+              129.2164067751334,
+              35.986681930318596
+            ],
+            [
+              129.2155464079345,
+              35.986681930318596
+            ],
+            [
+              129.2155464079345,
+              35.986112873361044
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1037,
+        "bbox_pixel": [
+          3211.5,
+          5641.7,
+          3289.2,
+          5704.7
+        ],
+        "size_short_m": 62.94,
+        "size_long_m": 77.7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.18855855240187,
+              35.984790573488105
+            ],
+            [
+              129.18903779032985,
+              35.984790573488105
+            ],
+            [
+              129.18903779032985,
+              35.98541260447232
+            ],
+            [
+              129.18855855240187,
+              35.98541260447232
+            ],
+            [
+              129.18855855240187,
+              35.984790573488105
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1032,
+        "bbox_pixel": [
+          779.0,
+          5787.6,
+          822.3,
+          5856.5
+        ],
+        "size_short_m": 43.33,
+        "size_long_m": 68.91
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              129.21666267822786,
+              36.030287778291225
+            ],
+            [
+              129.217155200647,
+              36.030287778291225
+            ],
+            [
+              129.217155200647,
+              36.030750867333836
+            ],
+            [
+              129.21666267822786,
+              36.030750867333836
+            ],
+            [
+              129.21666267822786,
+              36.030287778291225
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "class_id": 4,
+        "class_name": "container",
+        "class_name_ko": "컨테이너",
+        "parent_class_name": "container",
+        "parent_class_name_ko": "컨테이너",
+        "confidence": 0.1006,
+        "bbox_pixel": [
+          3301.2,
+          753.6,
+          3345.7,
+          804.9
+        ],
+        "size_short_m": 44.49,
+        "size_long_m": 51.26
+      }
+    }
+  ]
+}

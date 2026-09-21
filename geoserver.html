@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenLayers GeoServer WMS / WMTS Example</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.9.0/ol.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="./index.html">COG Examples</a>
+    <nav aria-label="Example navigation">
+      <a href="./openlayers.html">OpenLayers COG</a>
+      <a href="./leaflet.html">Leaflet</a>
+      <a class="active" href="./geoserver.html">GeoServer</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <section class="map-panel">
+      <div id="map" class="map" aria-label="OpenLayers GeoServer WMS and WMTS map"></div>
+      <div class="status ready" id="status">GeoServer ready</div>
+    </section>
+
+    <aside class="side-panel">
+      <h1>GeoServer</h1>
+      <p>OpenLayers에서 GeoServer 레이어를 WMS 또는 WMTS로 선택해 시각화합니다.</p>
+
+      <label class="field-row" for="serviceSelect">
+        <span>Service</span>
+        <select id="serviceSelect">
+          <option value="WMS">WMS</option>
+          <option value="WMTS" selected>WMTS</option>
+        </select>
+      </label>
+
+      <label class="field-row" for="layerSelect">
+        <span>Layer</span>
+        <select id="layerSelect"></select>
+      </label>
+
+      <label class="field-row" for="opacityRange">
+        <span>Opacity</span>
+        <input id="opacityRange" type="range" min="0" max="1" step="0.05" value="0.9">
+      </label>
+
+      <section class="info-list" aria-label="Selected GeoServer layer information">
+        <div>
+          <span>Workspace</span>
+          <strong id="workspaceName">water</strong>
+        </div>
+        <div>
+          <span>Layer</span>
+          <strong id="layerName"></strong>
+        </div>
+        <div>
+          <span>Qualified name</span>
+          <strong id="qualifiedName"></strong>
+        </div>
+        <div>
+          <span>Service</span>
+          <strong id="serviceName">WMTS</strong>
+        </div>
+        <div>
+          <span>GeoJSON</span>
+          <strong id="geojsonName"></strong>
+        </div>
+        <div>
+          <span>CRS</span>
+          <strong>EPSG:4326 view / EPSG:4326 request</strong>
+        </div>
+      </section>
+
+      <a id="legendLink" class="text-link" target="_blank" rel="noreferrer">Open legend graphic</a>
+    </aside>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/ol@10.9.0/dist/ol.js"></script>
+  <script>
+    const GEOSERVER_WMS = 'http://geoserver.stellarspacehub.com/geoserver/wms';
+    const GEOSERVER_WMTS = 'http://geoserver.stellarspacehub.com/geoserver/gwc/service/wmts';
+    const GEOSERVER_OWS = 'http://geoserver.stellarspacehub.com/geoserver/ows';
+
+    const layers = [
+      {
+        workspace: 'water',
+        layer: '20260408_061608_ssc10_u0001_pansharpened',
+        geojson: '20260408_061608_ssc10_u0001_pansharpened_detections_v2.geojson',
+        extent: [129.18495472640615, 35.92151584066123, 129.28393422907496, 36.14186526729437]
+      },
+      {
+        workspace: 'water',
+        layer: 'BSG-102-20260406-234649-435056801_ortho_cog',
+        geojson: 'BSG-102-20260406-234649-435056801_ortho_detections_v2.geojson',
+        extent: [129.17986559594826, 35.964945592602696, 129.27773729166793, 36.037610405766735]
+      },
+      {
+        workspace: 'water',
+        layer: 'BSG-119-20260406-224609-435441813_ortho_cog',
+        geojson: 'BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson',
+        extent: [129.18715504209214, 35.961537353901676, 129.27391111719695, 36.03860899072905]
+      },
+      {
+        workspace: 'water',
+        layer: 'BSG-131-20260411-033223-436461625-L3-ortho.rgb_cog',
+        geojson: 'detections.cleaned.geojson',
+        extent: [129.20241526295263, 35.97392031545102, 129.2549967739652, 36.03033742112227]
+      },
+      {
+        workspace: 'water',
+        layer: 'BSG-134-20260419-230738-437910513-L3-ortho.rgb_cog',
+        geojson: 'BSG-134-20260419-230738-437910513-L3-ortho.rgb_detections_v2.geojson',
+        extent: [129.19674768384178, 35.974011739990594, 129.26237013898233, 36.03150810834366]
+      }
+    ];
+
+    const serviceSelect = document.querySelector('#serviceSelect');
+    const layerSelect = document.querySelector('#layerSelect');
+    const opacityRange = document.querySelector('#opacityRange');
+    const status = document.querySelector('#status');
+    const workspaceName = document.querySelector('#workspaceName');
+    const layerName = document.querySelector('#layerName');
+    const qualifiedName = document.querySelector('#qualifiedName');
+    const serviceName = document.querySelector('#serviceName');
+    const geojsonName = document.querySelector('#geojsonName');
+    const legendLink = document.querySelector('#legendLink');
+
+    layers.forEach((item, index) => {
+      const option = document.createElement('option');
+      option.value = String(index);
+      option.textContent = item.layer;
+      layerSelect.append(option);
+    });
+
+    const wmtsMatrixIds = Array.from({length: 22}, (value, index) => `EPSG:4326:${index}`);
+    const wmtsResolutions = wmtsMatrixIds.map((value, index) => 0.703125 / Math.pow(2, index));
+    const wmtsTileGrid = new ol.tilegrid.WMTS({
+      origin: [-180, 90],
+      resolutions: wmtsResolutions,
+      matrixIds: wmtsMatrixIds,
+      tileSize: [256, 256]
+    });
+
+    let activeLayer = null;
+    let activeVectorLayer = null;
+
+    const map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM(),
+          opacity: 0.55
+        })
+      ],
+      view: new ol.View({
+        projection: 'EPSG:4326',
+        center: [129.23, 36.0],
+        zoom: 10,
+        maxZoom: 21
+      })
+    });
+
+    function getQualifiedName(item) {
+      return `${item.workspace}:${item.layer}`;
+    }
+
+    function attachTileStatus(source, service, name) {
+      source.on('tileloadstart', () => {
+        status.textContent = `Loading ${service} ${name}`;
+        status.classList.remove('error');
+        status.classList.add('ready');
+      });
+
+      source.on('tileloadend', () => {
+        status.textContent = `Applied ${service} ${name}`;
+        status.classList.remove('error');
+        status.classList.add('ready');
+      });
+
+      source.on('tileloaderror', () => {
+        status.textContent = `${service} tile load failed: ${name}`;
+        status.classList.add('error');
+      });
+    }
+
+    function createGeoJsonLayer(item) {
+      const source = new ol.source.Vector({
+        url: new URL(item.geojson, window.location.href).href,
+        format: new ol.format.GeoJSON({
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:4326'
+        })
+      });
+
+      source.on('featuresloadend', (event) => {
+        status.textContent = `Applied ${serviceSelect.value} ${getQualifiedName(item)} / GeoJSON ${event.features.length.toLocaleString()}`;
+        status.classList.remove('error');
+        status.classList.add('ready');
+      });
+
+      source.on('featuresloaderror', () => {
+        status.textContent = `GeoJSON load failed: ${item.geojson}`;
+        status.classList.add('error');
+      });
+
+      return new ol.layer.Vector({
+        source,
+        zIndex: 10,
+        style: new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: '#f59e0b',
+            width: 2
+          }),
+          fill: new ol.style.Fill({
+            color: 'rgba(245, 158, 11, 0.16)'
+          }),
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({color: 'rgba(245, 158, 11, 0.9)'}),
+            stroke: new ol.style.Stroke({color: '#111827', width: 1.5})
+          })
+        })
+      });
+    }
+
+    function createWmsLayer(name) {
+      const source = new ol.source.TileWMS({
+        url: GEOSERVER_WMS,
+        serverType: 'geoserver',
+        transition: 0,
+        params: {
+          FORMAT: 'image/png',
+          LAYERS: name,
+          SRS: 'EPSG:4326',
+          TILED: true,
+          TRANSPARENT: true,
+          VERSION: '1.1.1'
+        }
+      });
+
+      attachTileStatus(source, 'WMS', name);
+
+      return new ol.layer.Tile({
+        source,
+        opacity: Number(opacityRange.value)
+      });
+    }
+
+    function createWmtsLayer(name) {
+      const source = new ol.source.WMTS({
+        url: GEOSERVER_WMTS,
+        layer: name,
+        matrixSet: 'EPSG:4326',
+        format: 'image/png',
+        projection: 'EPSG:4326',
+        requestEncoding: 'KVP',
+        style: 'raster',
+        tileGrid: wmtsTileGrid,
+        wrapX: true
+      });
+
+      attachTileStatus(source, 'WMTS', name);
+
+      return new ol.layer.Tile({
+        source,
+        opacity: Number(opacityRange.value)
+      });
+    }
+
+    function fitToExtent(extent) {
+      map.getView().fit(extent, {
+        padding: [36, 36, 36, 36],
+        duration: 300,
+        maxZoom: 14
+      });
+    }
+
+    function applyLayer() {
+      const item = layers[Number(layerSelect.value)];
+      const name = getQualifiedName(item);
+      const service = serviceSelect.value;
+
+      if (activeLayer) {
+        map.removeLayer(activeLayer);
+      }
+
+      if (activeVectorLayer) {
+        map.removeLayer(activeVectorLayer);
+      }
+
+      activeLayer = service === 'WMTS' ? createWmtsLayer(name) : createWmsLayer(name);
+      map.addLayer(activeLayer);
+      activeVectorLayer = createGeoJsonLayer(item);
+      map.addLayer(activeVectorLayer);
+
+      workspaceName.textContent = item.workspace;
+      layerName.textContent = item.layer;
+      qualifiedName.textContent = name;
+      serviceName.textContent = service;
+      geojsonName.textContent = item.geojson;
+      status.textContent = `Applied ${service} ${name}`;
+      legendLink.href = `${GEOSERVER_OWS}?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image/png&width=24&height=24&layer=${encodeURIComponent(name)}`;
+
+      fitToExtent(item.extent);
+    }
+
+    layerSelect.addEventListener('change', applyLayer);
+    serviceSelect.addEventListener('change', applyLayer);
+
+    opacityRange.addEventListener('input', (event) => {
+      if (activeLayer) {
+        activeLayer.setOpacity(Number(event.target.value));
+      }
+    });
+
+    applyLayer();
+  </script>
+</body>
+</html>

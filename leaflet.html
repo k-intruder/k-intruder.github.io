@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leaflet COG Example</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="./index.html">COG Examples</a>
+    <nav aria-label="Example navigation">
+      <a href="./openlayers.html">OpenLayers COG</a>
+      <a class="active" href="./leaflet.html">Leaflet</a>
+      <a href="./geoserver.html">GeoServer</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <section class="map-panel">
+      <div id="map" class="map" aria-label="Leaflet COG map"></div>
+      <div class="status" id="status">Loading COG...</div>
+    </section>
+    <aside class="side-panel">
+      <h1>Leaflet</h1>
+      <p>Leaflet uses georaster-layer-for-leaflet to render the BSG-119 preview COG and overlays the matching GeoJSON detections.</p>
+      <label class="toggle-row">
+        <input id="detectionsToggle" type="checkbox" checked>
+        <span>Show detections</span>
+      </label>
+      <label class="toggle-row">
+        <input id="rasterToggle" type="checkbox" checked>
+        <span>Show COG</span>
+      </label>
+
+      <section class="info-list" aria-label="Leaflet layer information">
+        <div>
+          <span>COG</span>
+          <strong>leaflet_BSG-119_4326_preview_cog.tif</strong>
+        </div>
+        <div>
+          <span>GeoJSON</span>
+          <strong>BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson</strong>
+        </div>
+        <div>
+          <span>Projection</span>
+          <strong>EPSG:4326 preview COG</strong>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/proj4@2.11.0/dist/proj4.js"></script>
+  <script src="https://unpkg.com/georaster@1.6.0/dist/georaster.browser.bundle.min.js"></script>
+  <script src="https://unpkg.com/georaster-layer-for-leaflet@4.1.2/dist/v3/webpack/bundle/georaster-layer-for-leaflet.min.js"></script>
+  <script>
+    const COG_URL = new URL('./leaflet_BSG-119_4326_preview_cog.tif', window.location.href).href;
+    const DETECTIONS_URL = new URL('./BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson', window.location.href).href;
+    const BOUNDS = [[35.961537353901676, 129.18715504209214], [36.03860899072905, 129.27391111719695]];
+    const status = document.querySelector('#status');
+
+    const map = L.map('map', {
+      zoomControl: true,
+      preferCanvas: true
+    });
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 22,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    map.fitBounds(BOUNDS, {padding: [28, 28]});
+
+    let rasterLayer = null;
+    let detectionsLayer = null;
+    let detectionCount = 0;
+
+    function updateStatus() {
+      const cogText = rasterLayer ? 'COG loaded' : 'Loading COG...';
+      const detectionText = detectionCount ? ` / detections ${detectionCount.toLocaleString()}` : '';
+      status.textContent = cogText + detectionText;
+      if (rasterLayer || detectionCount) {
+        status.classList.add('ready');
+      }
+    }
+
+    parseGeoraster(COG_URL)
+      .then((georaster) => {
+        georaster.projection = 4326;
+
+        rasterLayer = new GeoRasterLayer({
+          georaster,
+          debugLevel: 1,
+          opacity: 0.95,
+          resolution: 128,
+          pixelValuesToColorFn: (values) => {
+            const red = values[0] || 0;
+            const green = values[1] || 0;
+            const blue = values[2] || 0;
+            if (red === 0 && green === 0 && blue === 0) return null;
+
+            const scale = 255 / 4095;
+            const clamp = (value) => Math.max(0, Math.min(255, Math.round(value * scale)));
+            return `rgb(${clamp(red)}, ${clamp(green)}, ${clamp(blue)})`;
+          }
+        });
+
+        rasterLayer.addTo(map);
+        rasterLayer.bringToFront();
+        map.fitBounds(rasterLayer.getBounds(), {padding: [28, 28]});
+        if (detectionsLayer) detectionsLayer.bringToFront();
+        updateStatus();
+      })
+      .catch((error) => {
+        console.error(error);
+        status.textContent = `COG load failed: ${error.message || error}`;
+        status.classList.add('error');
+      });
+
+    fetch(DETECTIONS_URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((geojson) => {
+        detectionCount = geojson.features.length;
+        detectionsLayer = L.geoJSON(geojson, {
+          pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+            radius: 5,
+            color: '#111827',
+            weight: 1.5,
+            fillColor: '#ffc400',
+            fillOpacity: 0.85
+          }),
+          style: {
+            color: '#ffc400',
+            weight: 2,
+            fillColor: '#ffc400',
+            fillOpacity: 0.18
+          },
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties || {};
+            layer.bindPopup([
+              props.class_name || 'detection',
+              props.confidence != null ? `confidence: ${props.confidence}` : ''
+            ].filter(Boolean).join('<br>'));
+          }
+        }).addTo(map);
+
+        updateStatus();
+      })
+      .catch((error) => {
+        console.error(error);
+        status.textContent = `GeoJSON load failed: ${error.message || error}`;
+        status.classList.add('error');
+      });
+
+    document.querySelector('#detectionsToggle').addEventListener('change', (event) => {
+      if (!detectionsLayer) return;
+      if (event.target.checked) {
+        detectionsLayer.addTo(map);
+      } else {
+        detectionsLayer.removeFrom(map);
+      }
+    });
+
+    document.querySelector('#rasterToggle').addEventListener('change', (event) => {
+      if (!rasterLayer) return;
+      if (event.target.checked) {
+        rasterLayer.addTo(map);
+      } else {
+        rasterLayer.removeFrom(map);
+      }
+    });
+  </script>
+</body>
+</html>

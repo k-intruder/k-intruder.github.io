@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenLayers Local COG Example</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.9.0/ol.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="./index.html">COG Examples</a>
+    <nav aria-label="Example navigation">
+      <a class="active" href="./openlayers.html">OpenLayers COG</a>
+      <a href="./leaflet.html">Leaflet</a>
+      <a href="./geoserver.html">GeoServer</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <section class="map-panel">
+      <div id="map" class="map" aria-label="OpenLayers local COG map"></div>
+      <div class="status" id="status">Loading COG...</div>
+    </section>
+
+    <aside class="side-panel">
+      <h1>OpenLayers COG</h1>
+      <p>OpenLayers GeoTIFF source로 로컬 COG를 직접 읽고, 같은 장면의 GeoJSON 탐지 결과를 겹쳐 표시합니다.</p>
+
+      <label class="toggle-row">
+        <input id="detectionsToggle" type="checkbox" checked>
+        <span>Show detections</span>
+      </label>
+      <label class="toggle-row">
+        <input id="osmToggle" type="checkbox" checked>
+        <span>Show OSM background</span>
+      </label>
+
+      <section class="info-list" aria-label="Local OpenLayers layer information">
+        <div>
+          <span>COG</span>
+          <strong>leaflet_BSG-119_4326_preview_cog.tif</strong>
+        </div>
+        <div>
+          <span>GeoJSON</span>
+          <strong>BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson</strong>
+        </div>
+        <div>
+          <span>Projection</span>
+          <strong>EPSG:4326 preview COG</strong>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/geotiff"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ol@10.9.0/dist/ol.js"></script>
+  <script>
+    const COG_URL = new URL('./leaflet_BSG-119_4326_preview_cog.tif', window.location.href).href;
+    const DETECTIONS_URL = new URL('./BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson', window.location.href).href;
+
+    const status = document.querySelector('#status');
+
+    const osmLayer = new ol.layer.Tile({
+      source: new ol.source.OSM(),
+      opacity: 0.55
+    });
+
+    const cogSource = new ol.source.GeoTIFF({
+      normalize: true,
+      interpolate: false,
+      projection: 'EPSG:4326',
+      sources: [{
+        url: COG_URL,
+        nodata: 0,
+        bands: [1, 2, 3],
+        min: 0,
+        max: 4095
+      }]
+    });
+
+    const cogLayer = new ol.layer.WebGLTile({
+      source: cogSource,
+      opacity: 0.95
+    });
+
+    const detectionsSource = new ol.source.Vector({
+      url: DETECTIONS_URL,
+      format: new ol.format.GeoJSON({
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:4326'
+      })
+    });
+
+    const detectionsLayer = new ol.layer.Vector({
+      source: detectionsSource,
+      zIndex: 10,
+      style: new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 5,
+          fill: new ol.style.Fill({color: 'rgba(245, 158, 11, 0.9)'}),
+          stroke: new ol.style.Stroke({color: '#111827', width: 1.5})
+        }),
+        stroke: new ol.style.Stroke({color: '#f59e0b', width: 2}),
+        fill: new ol.style.Fill({color: 'rgba(245, 158, 11, 0.16)'})
+      })
+    });
+
+    const map = new ol.Map({
+      target: 'map',
+      layers: [osmLayer, cogLayer, detectionsLayer],
+      view: cogSource.getView().then((viewOptions) => {
+        viewOptions.showFullExtent = true;
+        viewOptions.padding = [36, 36, 36, 36];
+        viewOptions.maxZoom = 22;
+        return viewOptions;
+      })
+    });
+
+    cogSource.on('change', () => {
+      if (cogSource.getState() === 'ready') {
+        status.textContent = 'COG loaded';
+        status.classList.add('ready');
+      }
+    });
+
+    cogSource.on('error', () => {
+      status.textContent = 'COG load failed. Check the file path and HTTP Range support.';
+      status.classList.add('error');
+    });
+
+    detectionsSource.on('featuresloadend', (event) => {
+      status.textContent = `COG loaded / detections ${event.features.length.toLocaleString()}`;
+      status.classList.add('ready');
+    });
+
+    detectionsSource.on('featuresloaderror', () => {
+      status.textContent = 'COG loaded, but GeoJSON load failed.';
+      status.classList.add('error');
+    });
+
+    document.querySelector('#detectionsToggle').addEventListener('change', (event) => {
+      detectionsLayer.setVisible(event.target.checked);
+    });
+
+    document.querySelector('#osmToggle').addEventListener('change', (event) => {
+      osmLayer.setVisible(event.target.checked);
+    });
+  </script>
+</body>
+</html>
