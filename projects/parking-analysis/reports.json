@@ -1,0 +1,101 @@
+{
+  "bands": [
+    "1~10",
+    "11~20",
+    "21~40",
+    "41~60",
+    "61~80",
+    "80시간 초과"
+  ],
+  "reports": [
+    {
+      "slug": "2026-07",
+      "title": "2026년 7월",
+      "type": "monthly",
+      "file": "reports/2026-07.html",
+      "published": "2026-08-06",
+      "basis": "시스템 월별 집계",
+      "kpi": {
+        "households": 366,
+        "totalHours": 9353,
+        "mean": 25.55,
+        "median": 10,
+        "over80": 24,
+        "overRate": 6.56,
+        "max": 738,
+        "bands": [
+          190,
+          56,
+          57,
+          28,
+          11,
+          24
+        ]
+      }
+    },
+    {
+      "slug": "2026-08",
+      "title": "2026년 8월",
+      "type": "monthly",
+      "file": "reports/2026-08.html",
+      "published": "2026-09-02",
+      "basis": "시스템 월별 집계",
+      "kpi": {
+        "households": 416,
+        "totalHours": 7045,
+        "mean": 16.94,
+        "median": 8.5,
+        "over80": 5,
+        "overRate": 1.2,
+        "max": 95,
+        "bands": [
+          229,
+          63,
+          72,
+          32,
+          15,
+          5
+        ]
+      }
+    },
+    {
+      "slug": "2026-09",
+      "title": "2026년 9월",
+      "type": "monthly",
+      "file": "reports/2026-09.html",
+      "published": "2026-10-04",
+      "basis": "입·출차 원자료 (방문예약, 추석 9/24~27 제외)",
+      "kpi": {
+        "households": 413,
+        "totalHours": 4682.7,
+        "mean": 11.34,
+        "median": 4.75,
+        "over80": 4,
+        "overRate": 0.97,
+        "max": 105.8,
+        "bands": [
+          282,
+          58,
+          38,
+          26,
+          5,
+          4
+        ]
+      }
+    },
+    {
+      "slug": "2026-chuseok",
+      "title": "2026 추석 특별판",
+      "type": "special",
+      "file": "reports/2026-chuseok.html",
+      "published": "2026-10-04",
+      "period": "2026.09.24 – 09.27",
+      "highlights": [
+        "4일간 입차 430건 · 일평균 107.5건 (평시 9월 75.1건 대비 +43.2%)",
+        "추석 당일 9/25 168건으로 평시의 약 2.2배",
+        "방문예약 88.4% · 중앙 체류시간 2시간 4분",
+        "24시간 이상 체류 21건 · 출차 미확인 42건"
+      ]
+    }
+  ]
+}

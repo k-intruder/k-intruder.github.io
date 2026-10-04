@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>방문차량 주차 분석</title>
+  <link rel="stylesheet" href="../../assets/portfolio.css">
+  <script src="../../assets/auth.js" data-guard="parking-analysis"></script>
+  <style>
+    .back { display: inline-block; margin-bottom: 28px; color: var(--accent-strong); font-weight: 800; text-decoration: none; }
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 12px; margin-top: 18px; }
+    .kpi { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .kpi span { display: block; color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+    .kpi strong { display: block; margin-top: 4px; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+    .kpi em { font-style: normal; font-size: 0.8rem; font-weight: 700; color: var(--muted); }
+    .kpi em.down { color: var(--accent-strong); }
+    .kpi em.up { color: var(--private); }
+    .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 16px; }
+    .chart-card { padding: 16px 16px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); min-width: 0; }
+    .chart-card.wide { grid-column: 1 / -1; }
+    .chart-card h3 { margin: 0; font-size: 1rem; }
+    .chart-card p { margin: 2px 0 0; color: var(--muted); font-size: 0.85rem; }
+    .chart { height: 300px; }
+    .basis { margin: 16px 0 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--pending); border-radius: 8px; background: var(--panel); font-size: 0.9rem; }
+    .basis ul { margin: 6px 0 0; padding-left: 18px; color: var(--muted); }
+    .report-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+    .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .report-table th, .report-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+    .report-table th:first-child, .report-table td:first-child { text-align: left; }
+    .report-table th { color: var(--muted); font-size: 0.8rem; }
+    .report-table tr:last-child td { border-bottom: 0; }
+    .report-table a { color: var(--accent-strong); font-weight: 800; text-decoration: none; }
+    .report-table a:hover { text-decoration: underline; }
+    .special-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+    .privacy { margin-top: 40px; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <a class="back" href="../../">&larr; Portfolio</a>
+    <header class="profile">
+      <p class="eyebrow">데이터 분석 · 매월 업데이트</p>
+      <h1>방문차량 주차 분석</h1>
+      <p class="profile-intro">
+        아파트 방문차량 등록시간을 세대별로 집계해 월 80시간 무료 기준의 적정성을 검토합니다.
+        2026년 7월부터 매월 리포트를 만들고, 명절처럼 패턴이 다른 기간은 특별판으로 분리해 분석합니다.
+      </p>
+    </header>
+
+    <section aria-labelledby="latestHeading">
+      <div class="section-head"><h2 id="latestHeading">최신 월</h2><span class="count" id="latestLabel"></span></div>
+      <div class="kpi-row" id="kpiRow"></div>
+    </section>
+
+    <section aria-labelledby="trendHeading">
+      <div class="section-head"><h2 id="trendHeading">월별 추이</h2></div>
+      <div class="chart-grid">
+        <article class="chart-card">
+          <h3>이용 세대 · 80시간 초과 세대</h3>
+          <p>이용 세대수(막대)와 80시간 초과 세대수(선)</p>
+          <div class="chart" id="householdChart"></div>
+        </article>
+        <article class="chart-card">
+          <h3>세대당 평균 · 중앙값</h3>
+          <p>평균은 장시간 이용 세대의 영향을 크게 받습니다</p>
+          <div class="chart" id="centerChart"></div>
+        </article>
+        <article class="chart-card wide">
+          <h3>이용시간 구간 비율</h3>
+          <p>월별 이용 세대 중 각 구간이 차지하는 비율</p>
+          <div class="chart" id="bandChart"></div>
+        </article>
+      </div>
+      <div class="basis">
+        <strong>산정 기준</strong>
+        <ul id="basisList"></ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="monthlyHeading">
+      <div class="section-head"><h2 id="monthlyHeading">월별 리포트</h2></div>
+      <div class="table-scroll">
+        <table class="report-table">
+          <thead>
+            <tr><th>월</th><th>이용 세대</th><th>총 이용시간</th><th>평균</th><th>중앙값</th><th>80h 초과</th><th>최대</th></tr>
+          </thead>
+          <tbody id="monthlyBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="specialHeading">
+      <div class="section-head"><h2 id="specialHeading">특별판</h2></div>
+      <div class="special-grid" id="specialGrid"></div>
+    </section>
+
+    <p class="privacy">
+      공개용 자료는 세대 호수·차량번호를 제거하고 무작위 익명 번호로 대체했습니다. 동 단위 집계만 원래 값을 유지합니다.
+    </p>
+  </main>
+
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script>
+    (function () {
+      const fmt = new Intl.NumberFormat('ko-KR', {maximumFractionDigits: 1});
+      const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      const el = (tag, className, text) => {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text != null) node.textContent = text;
+        return node;
+      };
+
+      function kpiCard(label, value, delta, lowerIsGood) {
+        const card = el('div', 'kpi');
+        card.append(el('span', null, label), el('strong', null, value));
+        if (delta != null && isFinite(delta)) {
+          const tone = lowerIsGood == null || delta === 0 ? '' : ((lowerIsGood ? delta < 0 : delta > 0) ? 'down' : 'up');
+          const sign = delta > 0 ? '▲' : delta < 0 ? '▼' : '';
+          const em = el('em', tone, `전월 대비 ${sign} ${fmt.format(Math.abs(delta))}`);
+          card.append(em);
+        }
+        return card;
+      }
+
+      function renderKpis(monthly) {
+        const latest = monthly[monthly.length - 1];
+        const prev = monthly[monthly.length - 2];
+        const k = latest.kpi, p = prev && prev.kpi;
+        const d = (key) => p ? k[key] - p[key] : null;
+        document.querySelector('#latestLabel').textContent = latest.title;
+        document.querySelector('#kpiRow').replaceChildren(
+          kpiCard('이용 세대', `${fmt.format(k.households)}세대`, d('households'), null),
+          kpiCard('평균 이용시간', `${fmt.format(k.mean)}h`, d('mean'), true),
+          kpiCard('중앙값', `${fmt.format(k.median)}h`, d('median'), true),
+          kpiCard('80시간 초과', `${k.over80}세대 · ${fmt.format(k.overRate)}%`, d('over80'), true),
+          kpiCard('최대 이용시간', `${fmt.format(k.max)}h`, d('max'), true)
+        );
+      }
+
+      function renderCharts(monthly, bands) {
+        const ink = css('--ink'), muted = css('--muted'), line = css('--line');
+        const accent = css('--accent'), warn = css('--private'), pending = css('--pending');
+        const x = monthly.map((r) => r.title.replace(/^\d{4}년\s*/, ''));
+        const base = {
+          paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+          font: {family: getComputedStyle(document.body).fontFamily, color: muted, size: 12},
+          margin: {l: 48, r: 48, t: 30, b: 40},
+          legend: {orientation: 'h', y: -0.18},
+          xaxis: {gridcolor: line, linecolor: line},
+          yaxis: {gridcolor: line, zeroline: false, rangemode: 'tozero'},
+          hoverlabel: {bgcolor: ink, font: {color: css('--paper')}}
+        };
+        const cfg = {responsive: true, displayModeBar: false};
+
+        Plotly.newPlot('householdChart', [
+          {x, y: monthly.map((r) => r.kpi.households), type: 'bar', name: '이용 세대', marker: {color: accent},
+            text: monthly.map((r) => r.kpi.households), textposition: 'inside', insidetextfont: {color: '#fff'},
+            hovertemplate: '%{x}<br>%{y}세대<extra></extra>'},
+          {x, y: monthly.map((r) => r.kpi.over80), type: 'scatter', mode: 'lines+markers+text', name: '80시간 초과', yaxis: 'y2',
+            line: {color: warn, width: 3}, marker: {size: 8}, text: monthly.map((r) => `${r.kpi.over80}세대`),
+            textposition: 'top center', textfont: {color: warn}, hovertemplate: '%{x}<br>초과 %{y}세대<extra></extra>'}
+        ], {...base, yaxis2: {overlaying: 'y', side: 'right', rangemode: 'tozero', showgrid: false, zeroline: false}}, cfg);
+
+        Plotly.newPlot('centerChart', [
+          {x, y: monthly.map((r) => r.kpi.mean), type: 'scatter', mode: 'lines+markers+text', name: '평균',
+            line: {color: pending, width: 3}, text: monthly.map((r) => `${fmt.format(r.kpi.mean)}h`), textposition: 'top center',
+            hovertemplate: '%{x}<br>평균 %{y:.1f}시간<extra></extra>'},
+          {x, y: monthly.map((r) => r.kpi.median), type: 'scatter', mode: 'lines+markers+text', name: '중앙값',
+            line: {color: accent, width: 3}, text: monthly.map((r) => `${fmt.format(r.kpi.median)}h`), textposition: 'bottom center',
+            hovertemplate: '%{x}<br>중앙값 %{y:.1f}시간<extra></extra>'}
+        ], {...base, yaxis: {...base.yaxis, ticksuffix: 'h'}}, cfg);
+
+        const palette = [accent, pending, warn, muted, ink];
+        Plotly.newPlot('bandChart', monthly.map((r, i) => {
+          const total = r.kpi.bands.reduce((s, v) => s + v, 0);
+          return {
+            x: bands, y: r.kpi.bands.map((v) => v / total * 100), type: 'bar', name: x[i],
+            marker: {color: palette[(monthly.length - 1 - i) % palette.length], opacity: i === monthly.length - 1 ? 1 : 0.55},
+            customdata: r.kpi.bands, hovertemplate: `${x[i]} %{x}<br>%{y:.1f}% (%{customdata}세대)<extra></extra>`
+          };
+        }), {...base, barmode: 'group', yaxis: {...base.yaxis, ticksuffix: '%'}}, cfg);
+      }
+
+      function renderTables(monthly, specials) {
+        document.querySelector('#monthlyBody').replaceChildren(...[...monthly].reverse().map((r) => {
+          const tr = el('tr');
+          const first = el('td');
+          const link = el('a', null, r.title);
+          link.href = r.file;
+          first.append(link);
+          const k = r.kpi;
+          tr.append(first, ...[
+            `${fmt.format(k.households)}세대`, `${fmt.format(k.totalHours)}h`, `${fmt.format(k.mean)}h`,
+            `${fmt.format(k.median)}h`, `${k.over80}세대 (${fmt.format(k.overRate)}%)`, `${fmt.format(k.max)}h`
+          ].map((v) => el('td', null, v)));
+          return tr;
+        }));
+
+        document.querySelector('#basisList').replaceChildren(
+          ...monthly.map((r) => el('li', null, `${r.title}: ${r.basis || '-'}`)),
+          el('li', null, '산정 방식이 다른 달은 총 이용시간의 절대 비교에 주의가 필요합니다.')
+        );
+
+        document.querySelector('#specialGrid').replaceChildren(...[...specials].reverse().map((r) => {
+          const card = el('article', 'project-card');
+          const meta = el('div', 'card-meta');
+          meta.append(el('span', 'pill', '특별판'));
+          if (r.period) meta.append(el('span', 'period', r.period));
+          const title = el('h3', 'card-title');
+          const link = el('a', null, r.title);
+          link.href = r.file;
+          title.append(link);
+          card.append(meta, title);
+          if (r.highlights) {
+            const list = el('ul', 'card-highlights');
+            r.highlights.forEach((h) => list.append(el('li', null, h)));
+            card.append(list);
+          }
+          const footer = el('div', 'card-footer');
+          const open = el('a', 'card-open', '리포트 보기 →');
+          open.href = r.file;
+          footer.append(open);
+          card.append(footer);
+          return card;
+        }));
+        document.querySelector('#specialHeading').closest('section').hidden = !specials.length;
+      }
+
+      fetch('./reports.json', {cache: 'no-store'})
+        .then((response) => {
+          if (!response.ok) throw new Error(response.status);
+          return response.json();
+        })
+        .then((manifest) => {
+          const monthly = manifest.reports.filter((r) => r.type === 'monthly' && r.kpi);
+          const specials = manifest.reports.filter((r) => r.type === 'special');
+          if (monthly.length) {
+            renderKpis(monthly);
+            renderCharts(monthly, manifest.bands);
+          }
+          renderTables(monthly, specials);
+        })
+        .catch((error) => {
+          console.error(error);
+          document.querySelector('#kpiRow').textContent = '리포트 목록을 불러오지 못했습니다.';
+        });
+    })();
+  </script>
+</body>
+</html>

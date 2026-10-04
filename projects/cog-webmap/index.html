@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>COG 웹 지도 뷰어</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="../../assets/auth.js" data-guard="cog-webmap"></script>
+</head>
+<body class="home">
+  <main class="home-shell">
+    <a class="back-link" href="../../">&larr; Portfolio</a>
+    <section class="intro">
+      <p class="eyebrow">Cloud Optimized GeoTIFF</p>
+      <h1>COG 지도 예제</h1>
+      <p>
+        같은 COG GeoTIFF와 탐지 GeoJSON을 OpenLayers와 Leaflet에서 각각 불러오는
+        GitHub Pages용 정적 예제입니다.
+      </p>
+    </section>
+
+    <section class="example-grid" aria-label="지도 예제 목록">
+      <a class="example-card" href="./openlayers.html">
+        <span class="library">OpenLayers</span>
+        <strong>COG + GeoJSON</strong>
+        <span>GeoTIFF source로 COG를 직접 타일처럼 표시하고 탐지 GeoJSON을 겹칩니다.</span>
+      </a>
+
+      <a class="example-card" href="./leaflet.html">
+        <span class="library">Leaflet</span>
+        <strong>COG + GeoJSON</strong>
+        <span>georaster-layer-for-leaflet으로 COG를 표시하고 Leaflet 레이어 컨트롤을 붙입니다.</span>
+      </a>
+
+      <a class="example-card" href="./geoserver.html">
+        <span class="library">GeoServer</span>
+        <strong>OpenLayers WMS</strong>
+        <span>GeoServer의 water workspace WMS 레이어 5개를 선택해 시각화합니다.</span>
+      </a>
+    </section>
+
+    <section class="notes">
+      <h2>파일</h2>
+      <ul>
+        <li><code>leaflet_BSG-119_4326_preview_cog.tif</code></li>
+        <li><code>BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson</code></li>
+        <li><code>detections.cleaned.geojson</code> for the repaired BSG-131 GeoServer overlay</li>
+      </ul>
+      <p>
+        GitHub Pages에 올릴 때 1GB 이상의 GeoTIFF는 일반 GitHub 파일 제한에 걸릴 수 있습니다.
+        필요하면 COG만 별도 객체 스토리지나 릴리즈 자산에 두고 각 HTML의 <code>COG_URL</code>만 바꾸면 됩니다.
+        로컬에서 확인할 때는 저장소 루트에서 <code>python tools/range_server.py</code>로 Range 요청을 지원하는 서버를 띄우세요.
+        OpenLayers와 Leaflet 예제는 GitHub Pages 배포를 위해 EPSG:4326 경량 COG를 사용합니다. BSG-131 원본 탐지 GeoJSON은 일부 문자열과 마지막 feature가 깨져 있어, GeoServer 예제에서는 geometry와 핵심 속성만 추출한 정리본을 사용합니다.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

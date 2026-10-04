@@ -3,53 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>COG Web Map Examples</title>
-  <link rel="stylesheet" href="./styles.css">
+  <title>k-intruder Portfolio</title>
+  <meta name="description" content="k-intruder 개인 프로젝트 포트폴리오">
+  <link rel="stylesheet" href="./assets/portfolio.css">
+  <script src="./assets/auth.js"></script>
 </head>
-<body class="home">
-  <main class="home-shell">
-    <section class="intro">
-      <p class="eyebrow">Cloud Optimized GeoTIFF</p>
-      <h1>COG 지도 예제</h1>
-      <p>
-        같은 COG GeoTIFF와 탐지 GeoJSON을 OpenLayers와 Leaflet에서 각각 불러오는
-        GitHub Pages용 정적 예제입니다.
-      </p>
-    </section>
+<body>
+  <div class="owner-bar" id="ownerBar" hidden>
+    <div class="owner-bar-inner">
+      <span class="owner-chip">소유자 모드</span>
+      <label class="owner-preview">
+        <input id="previewToggle" type="checkbox">
+        <span>방문자 시점으로 보기</span>
+      </label>
+      <span class="owner-bar-spacer"></span>
+      <button class="btn btn-ghost" id="draftButton" type="button" hidden></button>
+      <button class="btn btn-ghost" id="logoutButton" type="button">로그아웃</button>
+    </div>
+  </div>
 
-    <section class="example-grid" aria-label="지도 예제 목록">
-      <a class="example-card" href="./openlayers.html">
-        <span class="library">OpenLayers</span>
-        <strong>COG + GeoJSON</strong>
-        <span>GeoTIFF source로 COG를 직접 타일처럼 표시하고 탐지 GeoJSON을 겹칩니다.</span>
-      </a>
+  <main class="shell">
+    <header class="profile">
+      <p class="eyebrow" id="profileHeadline">개인 프로젝트 포트폴리오</p>
+      <h1 id="profileName">k-intruder</h1>
+      <p class="profile-intro" id="profileIntro"></p>
+      <ul class="profile-links" id="profileLinks"></ul>
+    </header>
 
-      <a class="example-card" href="./leaflet.html">
-        <span class="library">Leaflet</span>
-        <strong>COG + GeoJSON</strong>
-        <span>georaster-layer-for-leaflet으로 COG를 표시하고 Leaflet 레이어 컨트롤을 붙입니다.</span>
-      </a>
+    <p class="notice" id="deniedNotice" role="alert" hidden>
+      요청한 프로젝트는 비공개 상태이거나 존재하지 않습니다.
+    </p>
 
-      <a class="example-card" href="./geoserver.html">
-        <span class="library">GeoServer</span>
-        <strong>OpenLayers WMS</strong>
-        <span>GeoServer의 water workspace WMS 레이어 5개를 선택해 시각화합니다.</span>
-      </a>
-    </section>
-
-    <section class="notes">
-      <h2>파일</h2>
-      <ul>
-        <li><code>leaflet_BSG-119_4326_preview_cog.tif</code></li>
-        <li><code>BSG-119-20260406-224609-435441813_ortho_detections_v2.geojson</code></li>
-        <li><code>detections.cleaned.geojson</code> for the repaired BSG-131 GeoServer overlay</li>
-      </ul>
-      <p>
-        GitHub Pages에 올릴 때 1GB 이상의 GeoTIFF는 일반 GitHub 파일 제한에 걸릴 수 있습니다.
-        필요하면 COG만 별도 객체 스토리지나 릴리즈 자산에 두고 각 HTML의 <code>COG_URL</code>만 바꾸면 됩니다.
-        OpenLayers와 Leaflet 예제는 GitHub Pages 배포를 위해 EPSG:4326 경량 COG를 사용합니다. BSG-131 원본 탐지 GeoJSON은 일부 문자열과 마지막 feature가 깨져 있어, GeoServer 예제에서는 geometry와 핵심 속성만 추출한 정리본을 사용합니다.
-      </p>
+    <section aria-labelledby="projectsHeading">
+      <div class="section-head">
+        <h2 id="projectsHeading">Projects</h2>
+        <span class="count" id="projectCount"></span>
+      </div>
+      <div class="project-grid" id="projectGrid" aria-live="polite"></div>
+      <p class="empty" id="emptyState" hidden>아직 공개된 프로젝트가 없습니다.</p>
+      <p class="empty error" id="loadError" hidden>프로젝트 목록을 불러오지 못했습니다.</p>
     </section>
   </main>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> k-intruder</span>
+    <button class="footer-link" id="ownerLoginButton" type="button">관리자</button>
+  </footer>
+
+  <dialog class="dialog" id="loginDialog" aria-labelledby="loginTitle">
+    <form method="dialog" id="loginForm">
+      <h2 id="loginTitle">소유자 로그인</h2>
+      <p class="dialog-text">비공개 프로젝트 확인과 공개 여부 관리를 위해 로그인합니다.</p>
+      <label class="field">
+        <span>비밀번호</span>
+        <input id="passwordInput" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="form-error" id="loginError" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button class="btn btn-ghost" type="button" id="loginCancel">취소</button>
+        <button class="btn btn-primary" type="submit" id="loginSubmit">로그인</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog dialog-wide" id="draftDialog" aria-labelledby="draftTitle">
+    <h2 id="draftTitle">공개 설정 변경사항</h2>
+    <p class="dialog-text">
+      정적 사이트라 변경사항은 브라우저에만 임시 저장됩니다. 아래 파일로
+      <code>data/projects.json</code>을 덮어쓰고 커밋·푸시하면 방문자에게 반영됩니다.
+    </p>
+    <ul class="draft-list" id="draftList"></ul>
+    <div class="dialog-actions">
+      <button class="btn btn-ghost" type="button" id="draftDiscard">변경 취소</button>
+      <span class="owner-bar-spacer"></span>
+      <button class="btn btn-ghost" type="button" id="draftCopy">JSON 복사</button>
+      <button class="btn btn-primary" type="button" id="draftDownload">projects.json 다운로드</button>
+      <button class="btn btn-ghost" type="button" id="draftClose">닫기</button>
+    </div>
+  </dialog>
+
+  <script src="./assets/portfolio.js"></script>
 </body>
 </html>

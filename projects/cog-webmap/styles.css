@@ -339,3 +339,25 @@ h1 {
     min-height: calc(100vh - 72px);
   }
 }
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+}
+
+.crumbs a:first-child {
+  color: var(--muted);
+}
+
+.crumbs a:last-child,
+.back-link {
+  color: var(--accent-strong);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-weight: 800;
+}

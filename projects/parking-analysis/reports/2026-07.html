@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script src="../../../assets/auth.js" data-guard="parking-analysis"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026년 7월 방문차량 등록시간 통계 대시보드</title>
+<style>
+  :root {
+    --navy:#16324f; --blue:#2563eb; --teal:#0f766e; --cyan:#0891b2;
+    --orange:#ea580c; --red:#dc2626; --green:#15803d; --purple:#7c3aed;
+    --ink:#172033; --muted:#667085; --line:#dbe3ee; --surface:#ffffff;
+    --soft:#f4f7fb; --soft-blue:#edf4ff; --soft-teal:#ecfdf8; --shadow:0 8px 26px rgba(22,50,79,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#eef5fc 0,#f8fafc 320px,#f4f7fb 100%);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.55}
+  .wrap{max-width:1480px;margin:0 auto;padding:28px 22px 60px}
+  .hero{background:linear-gradient(135deg,#16324f,#245d83 56%,#0f766e);color:white;border-radius:26px;
+        padding:34px 38px;box-shadow:0 18px 50px rgba(22,50,79,.22);position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-110px;top:-190px;
+              background:rgba(255,255,255,.08)}
+  .hero h1{font-size:clamp(27px,3.4vw,45px);line-height:1.2;margin:0 0 10px;letter-spacing:-1.4px}
+  .hero p{max-width:980px;margin:0;color:#e4f2f5;font-size:16px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .badge{padding:6px 11px;border:1px solid rgba(255,255,255,.3);border-radius:999px;background:rgba(255,255,255,.1);font-size:13px}
+  .toolbar{margin:18px 0;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:18px;
+           padding:14px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:8px;z-index:20}
+  .toolbar label{font-size:13px;font-weight:700;color:#344054}
+  select,input[type="search"]{border:1px solid #cbd5e1;border-radius:10px;padding:9px 11px;background:white;color:#1f2937}
+  select{min-width:110px}
+  .switch{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;background:#f8fafc;border:1px solid #e2e8f0;font-size:13px}
+  .btn{border:0;border-radius:10px;padding:9px 13px;background:#16324f;color:white;font-weight:700;cursor:pointer}
+  .btn.alt{background:#0f766e}.btn.light{background:#e9eef5;color:#26384b}
+  .spacer{flex:1}
+  .kpis{display:grid;grid-template-columns:repeat(6,minmax(150px,1fr));gap:13px;margin:17px 0}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 17px;box-shadow:var(--shadow)}
+  .kpi .label{font-size:13px;color:var(--muted);font-weight:700}
+  .kpi .value{font-size:26px;font-weight:850;letter-spacing:-.7px;margin:4px 0 2px;color:var(--navy)}
+  .kpi .sub{font-size:12px;color:#7b8794}
+  .summary{display:grid;grid-template-columns:2fr 1fr;gap:15px;margin-bottom:17px}
+  .insight,.caution{border-radius:18px;padding:20px 22px;box-shadow:var(--shadow)}
+  .insight{background:var(--soft-teal);border:1px solid #a7e5d4}
+  .caution{background:#fff7ed;border:1px solid #fed7aa}
+  .insight h2,.caution h2{font-size:18px;margin:0 0 8px}.insight h2{color:#0f5e58}.caution h2{color:#9a3412}
+  .insight p,.caution p{margin:0;font-size:14px}
+  .section-title{margin:30px 0 12px}
+  .section-title h2{margin:0;font-size:24px;color:var(--navy);letter-spacing:-.5px}
+  .section-title p{margin:4px 0 0;color:var(--muted);font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 18px 14px;box-shadow:var(--shadow);min-width:0}
+  .panel.wide{grid-column:1/-1}
+  .panel h3{font-size:17px;margin:0 0 2px;color:#26384b}
+  .panel .hint{font-size:12px;color:#8793a1;margin-bottom:6px}
+  .chart{height:390px}
+  .chart.tall{height:470px}.chart.short{height:310px}
+  .explain{border-top:1px dashed #d6dee8;margin-top:5px;padding:12px 3px 2px;font-size:13px;color:#536171}
+  .explain strong{color:#27384b}
+  .simulator{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:7px 0 8px;background:#f8fafc;border:1px solid #e2e8f0;padding:11px 12px;border-radius:13px}
+  .simulator input[type="range"]{width:min(470px,62vw)}
+  .sim-value{font-size:21px;font-weight:850;color:var(--blue);min-width:72px}
+  .mini-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:10px 0}
+  .mini{background:#f8fafc;border:1px solid #e2e8f0;border-radius:13px;padding:12px}
+  .mini b{display:block;font-size:18px;color:var(--navy)}.mini span{font-size:11px;color:var(--muted)}
+  .table-tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}
+  .table-wrap{overflow:auto;max-height:580px;border:1px solid var(--line);border-radius:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:white}
+  th{position:sticky;top:0;background:#edf3f9;color:#26384b;text-align:center;z-index:2}
+  th,td{padding:9px 10px;border-bottom:1px solid #e8edf3;white-space:nowrap}
+  td{text-align:right}td:nth-child(2),td:nth-child(3){text-align:left}
+  tr:hover td{background:#f8fbff}
+  .tag{display:inline-block;padding:3px 7px;border-radius:999px;font-size:11px;font-weight:750}
+  .tag.over{background:#fee2e2;color:#991b1b}.tag.out{background:#ffedd5;color:#9a3412}.tag.normal{background:#dcfce7;color:#166534}
+  .method{background:#fff;border:1px solid var(--line);border-radius:20px;padding:21px 24px;margin-top:17px;box-shadow:var(--shadow)}
+  .method h3{margin:0 0 9px;color:var(--navy)}
+  .method ul{margin:5px 0 0;padding-left:20px;font-size:14px;color:#4d5b6a}
+  .method li{margin:6px 0}
+  footer{text-align:center;color:#7b8794;font-size:12px;margin-top:25px}
+  @media(max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}.grid.three{grid-template-columns:1fr 1fr}}
+  @media(max-width:780px){
+    .wrap{padding:15px 10px 40px}.hero{padding:25px 21px;border-radius:19px}.toolbar{position:static}
+    .kpis{grid-template-columns:1fr 1fr}.summary,.grid,.grid.three{grid-template-columns:1fr}
+    .panel.wide{grid-column:auto}.chart{height:350px}.mini-kpis{grid-template-columns:1fr 1fr}
+    .spacer{display:none}
+  }
+  @media print{
+    @page{size:A4 portrait;margin:12mm 10mm}
+    body{background:white;font-size:10.5pt}
+    .toolbar{display:none}
+    .panel,.kpi,.hero,.insight,.caution,.method{box-shadow:none}
+    .wrap{max-width:none;padding:0}
+    .chart{height:300px}
+
+    body.hide-detail-on-print .pdf-optional-detail{display:none !important}
+    .print-note{display:none !important}
+
+    /* 상세표를 PDF에 포함할 때 스크롤 영역을 완전히 해제 */
+    body:not(.hide-detail-on-print) .pdf-optional-detail{
+      display:block !important;
+      break-inside:auto !important;
+      page-break-inside:auto !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail.table-section{
+      display:block !important;
+      break-before:auto !important;
+      page-break-before:auto !important;
+      break-after:auto !important;
+      page-break-after:auto !important;
+      break-inside:auto !important;
+      page-break-inside:auto !important;
+      overflow:visible !important;
+      border:0 !important;
+      border-radius:0 !important;
+      padding:0 !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail .table-tools{
+      display:none !important;
+    }
+    body:not(.hide-detail-on-print) .section-title.pdf-optional-detail{
+      break-after:avoid-page !important;
+      page-break-after:avoid !important;
+      margin-bottom:6px !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail .table-wrap{
+      display:block !important;
+      max-height:none !important;
+      height:auto !important;
+      overflow:visible !important;
+      border:0 !important;
+      border-radius:0 !important;
+      break-inside:auto !important;
+      page-break-inside:auto !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail table{
+      display:table !important;
+      width:100% !important;
+      font-size:9pt !important;
+      table-layout:fixed;
+      border-collapse:collapse;
+      break-inside:auto !important;
+      page-break-inside:auto !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail tbody{
+      display:table-row-group !important;
+      break-inside:auto !important;
+      page-break-inside:auto !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail thead{
+      display:table-header-group;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail tfoot{
+      display:table-footer-group;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail tr{
+      break-inside:avoid !important;
+      page-break-inside:avoid !important;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail th,
+    body:not(.hide-detail-on-print) .pdf-optional-detail td{
+      padding:5px 6px !important;
+      white-space:normal !important;
+      word-break:keep-all;
+      border:1px solid #dbe3ee;
+    }
+    body:not(.hide-detail-on-print) .pdf-optional-detail th{
+      position:static !important;
+      background:#edf3f9 !important;
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
+  }
+</style>
+<script src="https://cdn.plot.ly/plotly-3.3.1.min.js"></script>
+</head>
+<body>
+<nav class="report-nav" style="position:sticky;top:0;z-index:9999;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:10px 16px;background:#0f172a;color:#e2e8f0;font:600 13px/1.4 system-ui,'Malgun Gothic',sans-serif">
+  <a href="../../../" style="color:#94a3b8;text-decoration:none">Portfolio</a><span aria-hidden="true">/</span>
+  <a href="../" style="color:#5eead4;text-decoration:none">방문차량 주차 분석</a><span aria-hidden="true">/</span>
+  <span>2026년 7월</span>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <h1>2026년 7월 방문차량 등록시간 통계 대시보드</h1>
+  </header>
+
+  <div class="toolbar">
+    <label for="buildingFilter">동 선택</label>
+    <select id="buildingFilter"></select>
+    <label class="switch"><input type="checkbox" id="excludeExtreme"> 최대값 738시간 제외</label>
+    <label class="switch"><input type="checkbox" id="privacyMode"> 호수만 익명 표시</label>
+    <label class="switch" title="체크하지 않으면 인쇄·PDF 저장 시 세대별 상세자료가 자동으로 제외됩니다.">
+      <input type="checkbox" id="includeDetailPrint">
+      PDF에 80시간 초과 상세자료 포함
+    </label>
+    <div class="spacer"></div>
+    <button class="btn alt" id="csvBtn">현재 데이터 CSV</button>
+    <button class="btn light" id="printBtn">인쇄 / PDF</button>
+  </div>
+
+  <section class="kpis">
+    <div class="kpi"><div class="label">이용 세대</div><div class="value" id="kpiN">-</div><div class="sub">해당 월 등록시간이 있는 세대</div></div>
+    <div class="kpi"><div class="label">총 사용시간</div><div class="value" id="kpiTotal">-</div><div class="sub">선택 조건의 누적시간</div></div>
+    <div class="kpi"><div class="label">평균 / 중앙값</div><div class="value" id="kpiCenter">-</div><div class="sub">극단값 영향 비교</div></div>
+    <div class="kpi"><div class="label">80시간 이내</div><div class="value" id="kpiWithin">-</div><div class="sub">현행 기준 내 이용 비율</div></div>
+    <div class="kpi"><div class="label">80시간 초과</div><div class="value" id="kpiOver">-</div><div class="sub">초과 세대수와 비율</div></div>
+    <div class="kpi"><div class="label">총 초과시간</div><div class="value" id="kpiExcess">-</div><div class="sub">80시간 초과분 합계</div></div>
+  </section>
+
+  <section class="summary">
+    <div class="insight">
+      <h2>핵심 해석</h2>
+      <p id="dynamicSummary"></p>
+    </div>
+    <div class="caution">
+      <h2>해석 시 주의</h2>
+      <p>이 자료는 <strong>차량번호별·방문횟수별 원자료가 아니라 세대별 월 누적시간</strong>입니다. 따라서 한 차량의 장기주차인지, 여러 방문차량의 합산인지, 출차 종료 누락인지까지는 이 파일만으로 구분할 수 없습니다.</p>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <h2>1. 이용시간 분포</h2>
+    <p>이용시간 구간, 80시간 초과 상세분포, 박스플롯을 통해 핵심 분포만 확인합니다.</p>
+  </div>
+  <section class="grid">
+    <article class="panel">
+      <h3>전체 이용시간 구간별 세대수</h3>
+      <div id="bandChart" class="chart"></div>
+      <div class="explain" id="bandExplain"></div>
+    </article>
+    <article class="panel">
+      <h3>월 80시간 초과 세대 상세분포</h3>
+      <div id="overBandChart" class="chart"></div>
+      <div class="explain" id="overBandExplain"></div>
+    </article>
+    <article class="panel wide">
+      <h3>박스플롯(Box Plot)</h3>
+      <div id="boxChart" class="chart"></div>
+      <div class="explain" id="boxExplain"></div>
+    </article>
+  </section>
+
+  <div class="section-title">
+    <h2>2. 동별 비교</h2>
+    <p>동별 평균·중앙값·80시간 초과율만 비교합니다.</p>
+  </div>
+  <section class="grid">
+    <article class="panel">
+      <h3>동별 평균·중앙값과 80시간 초과율</h3>
+      <div id="buildingSummaryChart" class="chart"></div>
+      <div class="explain" id="buildingExplain"></div>
+    </article>
+  </section>
+  <section class="grid">
+  </section>
+
+  <div class="section-title">
+    <h2>3. 운영기준 시뮬레이션</h2>
+    <p>가상 무료 제공시간을 직접 조정하여 초과 세대수와 초과시간 변화를 확인합니다.</p>
+  </div>
+  <section class="grid">
+    <article class="panel wide">
+      <h3>기준시간 직접 비교</h3>
+      <div class="simulator">
+        <label for="thresholdSlider"><strong>가상 무료 제공시간</strong></label>
+        <input id="thresholdSlider" type="range" min="20" max="160" step="5" value="80">
+        <span class="sim-value" id="thresholdValue">80시간</span>
+      </div>
+      <div class="mini-kpis">
+        <div class="mini"><b id="simCount">-</b><span>초과 세대</span></div>
+        <div class="mini"><b id="simRate">-</b><span>초과 세대 비율</span></div>
+        <div class="mini"><b id="simHours">-</b><span>총 초과시간</span></div>
+        <div class="mini"><b id="simFee">-</b><span>3,000원 적용 시</span></div>
+      </div>
+      <div class="explain" id="simExplain"></div>
+    </article>
+  </section>
+
+    <div class="print-note" style="margin:14px 0 4px;padding:12px 15px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:12px;font-size:13px;color:#1e3a5f;">
+    <strong>PDF 저장 안내:</strong> 상단의 <strong>‘PDF에 80시간 초과 상세자료 포함’</strong>을 체크하면, 초과 세대 전체가 스크롤 없이 현재 페이지의 남은 공간부터 출력되며, 필요한 경우 다음 페이지로 행 단위로 이어집니다. 체크하지 않으면 상세표는 PDF에서 제외됩니다.
+  </div>
+  <div class="section-title pdf-optional-detail">
+    <h2>4. 80시간 초과 세대 상세자료</h2>
+    <p>IQR 이상치와 80시간 정책 초과는 서로 다른 개념입니다. 상세자료는 내부 검토용으로 사용하고 외부 공개 시 익명 처리가 필요합니다.</p>
+  </div>
+  <section class="panel pdf-optional-detail table-section">
+    <div class="table-tools">
+      <input id="tableSearch" type="search" placeholder="동·호수 검색">
+      <select id="tableMode">
+        <option value="all">전체 세대</option>
+        <option value="over">80시간 초과만</option>
+        <option value="outlier">IQR 이상치만</option>
+      </select>
+      <select id="tableSort">
+        <option value="hours">사용시간 높은 순</option>
+        <option value="excess">초과시간 높은 순</option>
+        <option value="fee">부과금액 높은 순</option>
+        <option value="label">동·호수 순</option>
+      </select>
+      <span id="tableCount" style="font-size:12px;color:#667085"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>순위</th><th>동</th><th>호</th><th>사용시간</th><th>초과시간</th><th>부과금액</th><th>분류</th></tr></thead>
+        <tbody id="detailBody"></tbody>
+      </table>
+    </div>
+    <div class="explain" id="tableExplain"></div>
+  </section>
+
+  <section class="method">
+    <h3>차트 해석 방법</h3>
+    <ul>
+      <li><strong>구간별 차트</strong>: 세대가 어느 이용시간대에 주로 분포하는지 확인합니다.</li>
+      <li><strong>박스플롯</strong>: 중앙값과 중간 50% 범위, 통계적으로 긴 이용시간을 한눈에 비교합니다.</li>
+      <li><strong>동별 비교</strong>: 평균은 극단값의 영향을 받으므로 중앙값과 80시간 초과율을 함께 봅니다.</li>
+      <li><strong>기준 시뮬레이션</strong>: 무료 제공시간을 변경했을 때 초과 세대수와 초과시간이 어떻게 달라지는지 비교합니다.</li>
+      <li>본 분석은 2026년 7월 한 달 자료이므로 여러 달 자료를 추가로 확인해야 운영기준의 적정성을 더 안정적으로 판단할 수 있습니다.</li>
+    </ul>
+  </section>
+
+  <footer>방문차량 운영기준 검토용 내부 분석자료 · 생성일 2026-08-06</footer>
+</div>
+
+<script>
+const RAW = [{"id": 1, "building": "101동", "unit": "익명 001", "label": "101동 익명 001", "hours": 27, "excess": 0, "fee": 0}, {"id": 11, "building": "101동", "unit": "익명 011", "label": "101동 익명 011", "hours": 5, "excess": 0, "fee": 0}, {"id": 20, "building": "101동", "unit": "익명 020", "label": "101동 익명 020", "hours": 21, "excess": 0, "fee": 0}, {"id": 24, "building": "101동", "unit": "익명 024", "label": "101동 익명 024", "hours": 4, "excess": 0, "fee": 0}, {"id": 38, "building": "101동", "unit": "익명 038", "label": "101동 익명 038", "hours": 15, "excess": 0, "fee": 0}, {"id": 41, "building": "101동", "unit": "익명 041", "label": "101동 익명 041", "hours": 1, "excess": 0, "fee": 0}, {"id": 42, "building": "101동", "unit": "익명 042", "label": "101동 익명 042", "hours": 38, "excess": 0, "fee": 0}, {"id": 44, "building": "101동", "unit": "익명 044", "label": "101동 익명 044", "hours": 72, "excess": 0, "fee": 0}, {"id": 51, "building": "101동", "unit": "익명 051", "label": "101동 익명 051", "hours": 9, "excess": 0, "fee": 0}, {"id": 58, "building": "101동", "unit": "익명 058", "label": "101동 익명 058", "hours": 5, "excess": 0, "fee": 0}, {"id": 66, "building": "101동", "unit": "익명 066", "label": "101동 익명 066", "hours": 63, "excess": 0, "fee": 0}, {"id": 78, "building": "101동", "unit": "익명 078", "label": "101동 익명 078", "hours": 46, "excess": 0, "fee": 0}, {"id": 86, "building": "101동", "unit": "익명 086", "label": "101동 익명 086", "hours": 5, "excess": 0, "fee": 0}, {"id": 87, "building": "101동", "unit": "익명 087", "label": "101동 익명 087", "hours": 39, "excess": 0, "fee": 0}, {"id": 91, "building": "101동", "unit": "익명 091", "label": "101동 익명 091", "hours": 3, "excess": 0, "fee": 0}, {"id": 94, "building": "101동", "unit": "익명 094", "label": "101동 익명 094", "hours": 1, "excess": 0, "fee": 0}, {"id": 116, "building": "101동", "unit": "익명 116", "label": "101동 익명 116", "hours": 1, "excess": 0, "fee": 0}, {"id": 122, "building": "101동", "unit": "익명 122", "label": "101동 익명 122", "hours": 102, "excess": 22, "fee": 66000}, {"id": 124, "building": "101동", "unit": "익명 124", "label": "101동 익명 124", "hours": 29, "excess": 0, "fee": 0}, {"id": 126, "building": "101동", "unit": "익명 126", "label": "101동 익명 126", "hours": 40, "excess": 0, "fee": 0}, {"id": 130, "building": "101동", "unit": "익명 130", "label": "101동 익명 130", "hours": 1, "excess": 0, "fee": 0}, {"id": 131, "building": "101동", "unit": "익명 131", "label": "101동 익명 131", "hours": 10, "excess": 0, "fee": 0}, {"id": 137, "building": "101동", "unit": "익명 137", "label": "101동 익명 137", "hours": 45, "excess": 0, "fee": 0}, {"id": 145, "building": "101동", "unit": "익명 145", "label": "101동 익명 145", "hours": 10, "excess": 0, "fee": 0}, {"id": 154, "building": "101동", "unit": "익명 154", "label": "101동 익명 154", "hours": 7, "excess": 0, "fee": 0}, {"id": 161, "building": "101동", "unit": "익명 161", "label": "101동 익명 161", "hours": 3, "excess": 0, "fee": 0}, {"id": 176, "building": "101동", "unit": "익명 176", "label": "101동 익명 176", "hours": 3, "excess": 0, "fee": 0}, {"id": 180, "building": "101동", "unit": "익명 180", "label": "101동 익명 180", "hours": 6, "excess": 0, "fee": 0}, {"id": 182, "building": "101동", "unit": "익명 182", "label": "101동 익명 182", "hours": 53, "excess": 0, "fee": 0}, {"id": 184, "building": "101동", "unit": "익명 184", "label": "101동 익명 184", "hours": 39, "excess": 0, "fee": 0}, {"id": 197, "building": "101동", "unit": "익명 197", "label": "101동 익명 197", "hours": 2, "excess": 0, "fee": 0}, {"id": 206, "building": "101동", "unit": "익명 206", "label": "101동 익명 206", "hours": 14, "excess": 0, "fee": 0}, {"id": 209, "building": "101동", "unit": "익명 209", "label": "101동 익명 209", "hours": 16, "excess": 0, "fee": 0}, {"id": 214, "building": "101동", "unit": "익명 214", "label": "101동 익명 214", "hours": 12, "excess": 0, "fee": 0}, {"id": 216, "building": "101동", "unit": "익명 216", "label": "101동 익명 216", "hours": 22, "excess": 0, "fee": 0}, {"id": 217, "building": "101동", "unit": "익명 217", "label": "101동 익명 217", "hours": 19, "excess": 0, "fee": 0}, {"id": 225, "building": "101동", "unit": "익명 225", "label": "101동 익명 225", "hours": 7, "excess": 0, "fee": 0}, {"id": 234, "building": "101동", "unit": "익명 234", "label": "101동 익명 234", "hours": 20, "excess": 0, "fee": 0}, {"id": 242, "building": "101동", "unit": "익명 242", "label": "101동 익명 242", "hours": 1, "excess": 0, "fee": 0}, {"id": 247, "building": "101동", "unit": "익명 247", "label": "101동 익명 247", "hours": 19, "excess": 0, "fee": 0}, {"id": 249, "building": "101동", "unit": "익명 249", "label": "101동 익명 249", "hours": 79, "excess": 0, "fee": 0}, {"id": 250, "building": "101동", "unit": "익명 250", "label": "101동 익명 250", "hours": 6, "excess": 0, "fee": 0}, {"id": 262, "building": "101동", "unit": "익명 262", "label": "101동 익명 262", "hours": 44, "excess": 0, "fee": 0}, {"id": 275, "building": "101동", "unit": "익명 275", "label": "101동 익명 275", "hours": 5, "excess": 0, "fee": 0}, {"id": 277, "building": "101동", "unit": "익명 277", "label": "101동 익명 277", "hours": 2, "excess": 0, "fee": 0}, {"id": 278, "building": "101동", "unit": "익명 278", "label": "101동 익명 278", "hours": 19, "excess": 0, "fee": 0}, {"id": 279, "building": "101동", "unit": "익명 279", "label": "101동 익명 279", "hours": 5, "excess": 0, "fee": 0}, {"id": 292, "building": "101동", "unit": "익명 292", "label": "101동 익명 292", "hours": 4, "excess": 0, "fee": 0}, {"id": 293, "building": "101동", "unit": "익명 293", "label": "101동 익명 293", "hours": 186, "excess": 106, "fee": 318000}, {"id": 296, "building": "101동", "unit": "익명 296", "label": "101동 익명 296", "hours": 1, "excess": 0, "fee": 0}, {"id": 297, "building": "101동", "unit": "익명 297", "label": "101동 익명 297", "hours": 5, "excess": 0, "fee": 0}, {"id": 310, "building": "101동", "unit": "익명 310", "label": "101동 익명 310", "hours": 71, "excess": 0, "fee": 0}, {"id": 335, "building": "101동", "unit": "익명 335", "label": "101동 익명 335", "hours": 108, "excess": 28, "fee": 84000}, {"id": 336, "building": "101동", "unit": "익명 336", "label": "101동 익명 336", "hours": 52, "excess": 0, "fee": 0}, {"id": 341, "building": "101동", "unit": "익명 341", "label": "101동 익명 341", "hours": 3, "excess": 0, "fee": 0}, {"id": 342, "building": "101동", "unit": "익명 342", "label": "101동 익명 342", "hours": 16, "excess": 0, "fee": 0}, {"id": 350, "building": "101동", "unit": "익명 350", "label": "101동 익명 350", "hours": 2, "excess": 0, "fee": 0}, {"id": 354, "building": "101동", "unit": "익명 354", "label": "101동 익명 354", "hours": 2, "excess": 0, "fee": 0}, {"id": 363, "building": "101동", "unit": "익명 363", "label": "101동 익명 363", "hours": 1, "excess": 0, "fee": 0}, {"id": 2, "building": "102동", "unit": "익명 002", "label": "102동 익명 002", "hours": 5, "excess": 0, "fee": 0}, {"id": 4, "building": "102동", "unit": "익명 004", "label": "102동 익명 004", "hours": 19, "excess": 0, "fee": 0}, {"id": 7, "building": "102동", "unit": "익명 007", "label": "102동 익명 007", "hours": 1, "excess": 0, "fee": 0}, {"id": 13, "building": "102동", "unit": "익명 013", "label": "102동 익명 013", "hours": 10, "excess": 0, "fee": 0}, {"id": 18, "building": "102동", "unit": "익명 018", "label": "102동 익명 018", "hours": 11, "excess": 0, "fee": 0}, {"id": 31, "building": "102동", "unit": "익명 031", "label": "102동 익명 031", "hours": 10, "excess": 0, "fee": 0}, {"id": 32, "building": "102동", "unit": "익명 032", "label": "102동 익명 032", "hours": 1, "excess": 0, "fee": 0}, {"id": 35, "building": "102동", "unit": "익명 035", "label": "102동 익명 035", "hours": 3, "excess": 0, "fee": 0}, {"id": 47, "building": "102동", "unit": "익명 047", "label": "102동 익명 047", "hours": 1, "excess": 0, "fee": 0}, {"id": 67, "building": "102동", "unit": "익명 067", "label": "102동 익명 067", "hours": 9, "excess": 0, "fee": 0}, {"id": 68, "building": "102동", "unit": "익명 068", "label": "102동 익명 068", "hours": 7, "excess": 0, "fee": 0}, {"id": 72, "building": "102동", "unit": "익명 072", "label": "102동 익명 072", "hours": 113, "excess": 33, "fee": 99000}, {"id": 73, "building": "102동", "unit": "익명 073", "label": "102동 익명 073", "hours": 15, "excess": 0, "fee": 0}, {"id": 76, "building": "102동", "unit": "익명 076", "label": "102동 익명 076", "hours": 3, "excess": 0, "fee": 0}, {"id": 92, "building": "102동", "unit": "익명 092", "label": "102동 익명 092", "hours": 1, "excess": 0, "fee": 0}, {"id": 97, "building": "102동", "unit": "익명 097", "label": "102동 익명 097", "hours": 3, "excess": 0, "fee": 0}, {"id": 99, "building": "102동", "unit": "익명 099", "label": "102동 익명 099", "hours": 15, "excess": 0, "fee": 0}, {"id": 120, "building": "102동", "unit": "익명 120", "label": "102동 익명 120", "hours": 3, "excess": 0, "fee": 0}, {"id": 127, "building": "102동", "unit": "익명 127", "label": "102동 익명 127", "hours": 2, "excess": 0, "fee": 0}, {"id": 132, "building": "102동", "unit": "익명 132", "label": "102동 익명 132", "hours": 5, "excess": 0, "fee": 0}, {"id": 150, "building": "102동", "unit": "익명 150", "label": "102동 익명 150", "hours": 5, "excess": 0, "fee": 0}, {"id": 165, "building": "102동", "unit": "익명 165", "label": "102동 익명 165", "hours": 119, "excess": 39, "fee": 117000}, {"id": 179, "building": "102동", "unit": "익명 179", "label": "102동 익명 179", "hours": 7, "excess": 0, "fee": 0}, {"id": 183, "building": "102동", "unit": "익명 183", "label": "102동 익명 183", "hours": 2, "excess": 0, "fee": 0}, {"id": 192, "building": "102동", "unit": "익명 192", "label": "102동 익명 192", "hours": 27, "excess": 0, "fee": 0}, {"id": 195, "building": "102동", "unit": "익명 195", "label": "102동 익명 195", "hours": 6, "excess": 0, "fee": 0}, {"id": 202, "building": "102동", "unit": "익명 202", "label": "102동 익명 202", "hours": 38, "excess": 0, "fee": 0}, {"id": 204, "building": "102동", "unit": "익명 204", "label": "102동 익명 204", "hours": 3, "excess": 0, "fee": 0}, {"id": 210, "building": "102동", "unit": "익명 210", "label": "102동 익명 210", "hours": 19, "excess": 0, "fee": 0}, {"id": 212, "building": "102동", "unit": "익명 212", "label": "102동 익명 212", "hours": 53, "excess": 0, "fee": 0}, {"id": 222, "building": "102동", "unit": "익명 222", "label": "102동 익명 222", "hours": 1, "excess": 0, "fee": 0}, {"id": 235, "building": "102동", "unit": "익명 235", "label": "102동 익명 235", "hours": 2, "excess": 0, "fee": 0}, {"id": 245, "building": "102동", "unit": "익명 245", "label": "102동 익명 245", "hours": 47, "excess": 0, "fee": 0}, {"id": 252, "building": "102동", "unit": "익명 252", "label": "102동 익명 252", "hours": 17, "excess": 0, "fee": 0}, {"id": 253, "building": "102동", "unit": "익명 253", "label": "102동 익명 253", "hours": 6, "excess": 0, "fee": 0}, {"id": 268, "building": "102동", "unit": "익명 268", "label": "102동 익명 268", "hours": 113, "excess": 33, "fee": 99000}, {"id": 274, "building": "102동", "unit": "익명 274", "label": "102동 익명 274", "hours": 20, "excess": 0, "fee": 0}, {"id": 280, "building": "102동", "unit": "익명 280", "label": "102동 익명 280", "hours": 68, "excess": 0, "fee": 0}, {"id": 287, "building": "102동", "unit": "익명 287", "label": "102동 익명 287", "hours": 48, "excess": 0, "fee": 0}, {"id": 291, "building": "102동", "unit": "익명 291", "label": "102동 익명 291", "hours": 32, "excess": 0, "fee": 0}, {"id": 301, "building": "102동", "unit": "익명 301", "label": "102동 익명 301", "hours": 6, "excess": 0, "fee": 0}, {"id": 311, "building": "102동", "unit": "익명 311", "label": "102동 익명 311", "hours": 3, "excess": 0, "fee": 0}, {"id": 316, "building": "102동", "unit": "익명 316", "label": "102동 익명 316", "hours": 16, "excess": 0, "fee": 0}, {"id": 317, "building": "102동", "unit": "익명 317", "label": "102동 익명 317", "hours": 336, "excess": 256, "fee": 768000}, {"id": 321, "building": "102동", "unit": "익명 321", "label": "102동 익명 321", "hours": 11, "excess": 0, "fee": 0}, {"id": 322, "building": "102동", "unit": "익명 322", "label": "102동 익명 322", "hours": 19, "excess": 0, "fee": 0}, {"id": 326, "building": "102동", "unit": "익명 326", "label": "102동 익명 326", "hours": 10, "excess": 0, "fee": 0}, {"id": 328, "building": "102동", "unit": "익명 328", "label": "102동 익명 328", "hours": 19, "excess": 0, "fee": 0}, {"id": 334, "building": "102동", "unit": "익명 334", "label": "102동 익명 334", "hours": 88, "excess": 8, "fee": 24000}, {"id": 337, "building": "102동", "unit": "익명 337", "label": "102동 익명 337", "hours": 31, "excess": 0, "fee": 0}, {"id": 340, "building": "102동", "unit": "익명 340", "label": "102동 익명 340", "hours": 9, "excess": 0, "fee": 0}, {"id": 346, "building": "102동", "unit": "익명 346", "label": "102동 익명 346", "hours": 26, "excess": 0, "fee": 0}, {"id": 353, "building": "102동", "unit": "익명 353", "label": "102동 익명 353", "hours": 18, "excess": 0, "fee": 0}, {"id": 360, "building": "102동", "unit": "익명 360", "label": "102동 익명 360", "hours": 4, "excess": 0, "fee": 0}, {"id": 364, "building": "102동", "unit": "익명 364", "label": "102동 익명 364", "hours": 24, "excess": 0, "fee": 0}, {"id": 366, "building": "102동", "unit": "익명 366", "label": "102동 익명 366", "hours": 35, "excess": 0, "fee": 0}, {"id": 14, "building": "103동", "unit": "익명 014", "label": "103동 익명 014", "hours": 1, "excess": 0, "fee": 0}, {"id": 80, "building": "103동", "unit": "익명 080", "label": "103동 익명 080", "hours": 8, "excess": 0, "fee": 0}, {"id": 119, "building": "103동", "unit": "익명 119", "label": "103동 익명 119", "hours": 4, "excess": 0, "fee": 0}, {"id": 129, "building": "103동", "unit": "익명 129", "label": "103동 익명 129", "hours": 1, "excess": 0, "fee": 0}, {"id": 138, "building": "103동", "unit": "익명 138", "label": "103동 익명 138", "hours": 34, "excess": 0, "fee": 0}, {"id": 139, "building": "103동", "unit": "익명 139", "label": "103동 익명 139", "hours": 30, "excess": 0, "fee": 0}, {"id": 163, "building": "103동", "unit": "익명 163", "label": "103동 익명 163", "hours": 7, "excess": 0, "fee": 0}, {"id": 194, "building": "103동", "unit": "익명 194", "label": "103동 익명 194", "hours": 145, "excess": 65, "fee": 195000}, {"id": 196, "building": "103동", "unit": "익명 196", "label": "103동 익명 196", "hours": 4, "excess": 0, "fee": 0}, {"id": 203, "building": "103동", "unit": "익명 203", "label": "103동 익명 203", "hours": 1, "excess": 0, "fee": 0}, {"id": 237, "building": "103동", "unit": "익명 237", "label": "103동 익명 237", "hours": 1, "excess": 0, "fee": 0}, {"id": 241, "building": "103동", "unit": "익명 241", "label": "103동 익명 241", "hours": 7, "excess": 0, "fee": 0}, {"id": 261, "building": "103동", "unit": "익명 261", "label": "103동 익명 261", "hours": 96, "excess": 16, "fee": 48000}, {"id": 284, "building": "103동", "unit": "익명 284", "label": "103동 익명 284", "hours": 15, "excess": 0, "fee": 0}, {"id": 303, "building": "103동", "unit": "익명 303", "label": "103동 익명 303", "hours": 38, "excess": 0, "fee": 0}, {"id": 324, "building": "103동", "unit": "익명 324", "label": "103동 익명 324", "hours": 13, "excess": 0, "fee": 0}, {"id": 331, "building": "103동", "unit": "익명 331", "label": "103동 익명 331", "hours": 4, "excess": 0, "fee": 0}, {"id": 359, "building": "103동", "unit": "익명 359", "label": "103동 익명 359", "hours": 13, "excess": 0, "fee": 0}, {"id": 3, "building": "104동", "unit": "익명 003", "label": "104동 익명 003", "hours": 4, "excess": 0, "fee": 0}, {"id": 8, "building": "104동", "unit": "익명 008", "label": "104동 익명 008", "hours": 2, "excess": 0, "fee": 0}, {"id": 12, "building": "104동", "unit": "익명 012", "label": "104동 익명 012", "hours": 14, "excess": 0, "fee": 0}, {"id": 15, "building": "104동", "unit": "익명 015", "label": "104동 익명 015", "hours": 40, "excess": 0, "fee": 0}, {"id": 26, "building": "104동", "unit": "익명 026", "label": "104동 익명 026", "hours": 10, "excess": 0, "fee": 0}, {"id": 27, "building": "104동", "unit": "익명 027", "label": "104동 익명 027", "hours": 5, "excess": 0, "fee": 0}, {"id": 28, "building": "104동", "unit": "익명 028", "label": "104동 익명 028", "hours": 7, "excess": 0, "fee": 0}, {"id": 39, "building": "104동", "unit": "익명 039", "label": "104동 익명 039", "hours": 8, "excess": 0, "fee": 0}, {"id": 45, "building": "104동", "unit": "익명 045", "label": "104동 익명 045", "hours": 16, "excess": 0, "fee": 0}, {"id": 48, "building": "104동", "unit": "익명 048", "label": "104동 익명 048", "hours": 2, "excess": 0, "fee": 0}, {"id": 49, "building": "104동", "unit": "익명 049", "label": "104동 익명 049", "hours": 22, "excess": 0, "fee": 0}, {"id": 50, "building": "104동", "unit": "익명 050", "label": "104동 익명 050", "hours": 13, "excess": 0, "fee": 0}, {"id": 53, "building": "104동", "unit": "익명 053", "label": "104동 익명 053", "hours": 17, "excess": 0, "fee": 0}, {"id": 55, "building": "104동", "unit": "익명 055", "label": "104동 익명 055", "hours": 1, "excess": 0, "fee": 0}, {"id": 57, "building": "104동", "unit": "익명 057", "label": "104동 익명 057", "hours": 66, "excess": 0, "fee": 0}, {"id": 85, "building": "104동", "unit": "익명 085", "label": "104동 익명 085", "hours": 1, "excess": 0, "fee": 0}, {"id": 89, "building": "104동", "unit": "익명 089", "label": "104동 익명 089", "hours": 5, "excess": 0, "fee": 0}, {"id": 93, "building": "104동", "unit": "익명 093", "label": "104동 익명 093", "hours": 2, "excess": 0, "fee": 0}, {"id": 98, "building": "104동", "unit": "익명 098", "label": "104동 익명 098", "hours": 88, "excess": 8, "fee": 24000}, {"id": 101, "building": "104동", "unit": "익명 101", "label": "104동 익명 101", "hours": 1, "excess": 0, "fee": 0}, {"id": 103, "building": "104동", "unit": "익명 103", "label": "104동 익명 103", "hours": 2, "excess": 0, "fee": 0}, {"id": 104, "building": "104동", "unit": "익명 104", "label": "104동 익명 104", "hours": 1, "excess": 0, "fee": 0}, {"id": 105, "building": "104동", "unit": "익명 105", "label": "104동 익명 105", "hours": 1, "excess": 0, "fee": 0}, {"id": 107, "building": "104동", "unit": "익명 107", "label": "104동 익명 107", "hours": 3, "excess": 0, "fee": 0}, {"id": 110, "building": "104동", "unit": "익명 110", "label": "104동 익명 110", "hours": 2, "excess": 0, "fee": 0}, {"id": 112, "building": "104동", "unit": "익명 112", "label": "104동 익명 112", "hours": 38, "excess": 0, "fee": 0}, {"id": 121, "building": "104동", "unit": "익명 121", "label": "104동 익명 121", "hours": 6, "excess": 0, "fee": 0}, {"id": 123, "building": "104동", "unit": "익명 123", "label": "104동 익명 123", "hours": 63, "excess": 0, "fee": 0}, {"id": 141, "building": "104동", "unit": "익명 141", "label": "104동 익명 141", "hours": 9, "excess": 0, "fee": 0}, {"id": 142, "building": "104동", "unit": "익명 142", "label": "104동 익명 142", "hours": 22, "excess": 0, "fee": 0}, {"id": 156, "building": "104동", "unit": "익명 156", "label": "104동 익명 156", "hours": 43, "excess": 0, "fee": 0}, {"id": 157, "building": "104동", "unit": "익명 157", "label": "104동 익명 157", "hours": 12, "excess": 0, "fee": 0}, {"id": 162, "building": "104동", "unit": "익명 162", "label": "104동 익명 162", "hours": 4, "excess": 0, "fee": 0}, {"id": 166, "building": "104동", "unit": "익명 166", "label": "104동 익명 166", "hours": 2, "excess": 0, "fee": 0}, {"id": 173, "building": "104동", "unit": "익명 173", "label": "104동 익명 173", "hours": 1, "excess": 0, "fee": 0}, {"id": 185, "building": "104동", "unit": "익명 185", "label": "104동 익명 185", "hours": 40, "excess": 0, "fee": 0}, {"id": 200, "building": "104동", "unit": "익명 200", "label": "104동 익명 200", "hours": 1, "excess": 0, "fee": 0}, {"id": 205, "building": "104동", "unit": "익명 205", "label": "104동 익명 205", "hours": 17, "excess": 0, "fee": 0}, {"id": 207, "building": "104동", "unit": "익명 207", "label": "104동 익명 207", "hours": 43, "excess": 0, "fee": 0}, {"id": 215, "building": "104동", "unit": "익명 215", "label": "104동 익명 215", "hours": 31, "excess": 0, "fee": 0}, {"id": 220, "building": "104동", "unit": "익명 220", "label": "104동 익명 220", "hours": 11, "excess": 0, "fee": 0}, {"id": 224, "building": "104동", "unit": "익명 224", "label": "104동 익명 224", "hours": 21, "excess": 0, "fee": 0}, {"id": 227, "building": "104동", "unit": "익명 227", "label": "104동 익명 227", "hours": 7, "excess": 0, "fee": 0}, {"id": 229, "building": "104동", "unit": "익명 229", "label": "104동 익명 229", "hours": 193, "excess": 113, "fee": 339000}, {"id": 230, "building": "104동", "unit": "익명 230", "label": "104동 익명 230", "hours": 3, "excess": 0, "fee": 0}, {"id": 232, "building": "104동", "unit": "익명 232", "label": "104동 익명 232", "hours": 7, "excess": 0, "fee": 0}, {"id": 238, "building": "104동", "unit": "익명 238", "label": "104동 익명 238", "hours": 2, "excess": 0, "fee": 0}, {"id": 239, "building": "104동", "unit": "익명 239", "label": "104동 익명 239", "hours": 1, "excess": 0, "fee": 0}, {"id": 243, "building": "104동", "unit": "익명 243", "label": "104동 익명 243", "hours": 24, "excess": 0, "fee": 0}, {"id": 246, "building": "104동", "unit": "익명 246", "label": "104동 익명 246", "hours": 4, "excess": 0, "fee": 0}, {"id": 251, "building": "104동", "unit": "익명 251", "label": "104동 익명 251", "hours": 1, "excess": 0, "fee": 0}, {"id": 282, "building": "104동", "unit": "익명 282", "label": "104동 익명 282", "hours": 83, "excess": 3, "fee": 9000}, {"id": 285, "building": "104동", "unit": "익명 285", "label": "104동 익명 285", "hours": 1, "excess": 0, "fee": 0}, {"id": 288, "building": "104동", "unit": "익명 288", "label": "104동 익명 288", "hours": 58, "excess": 0, "fee": 0}, {"id": 300, "building": "104동", "unit": "익명 300", "label": "104동 익명 300", "hours": 34, "excess": 0, "fee": 0}, {"id": 305, "building": "104동", "unit": "익명 305", "label": "104동 익명 305", "hours": 23, "excess": 0, "fee": 0}, {"id": 306, "building": "104동", "unit": "익명 306", "label": "104동 익명 306", "hours": 13, "excess": 0, "fee": 0}, {"id": 318, "building": "104동", "unit": "익명 318", "label": "104동 익명 318", "hours": 14, "excess": 0, "fee": 0}, {"id": 319, "building": "104동", "unit": "익명 319", "label": "104동 익명 319", "hours": 5, "excess": 0, "fee": 0}, {"id": 329, "building": "104동", "unit": "익명 329", "label": "104동 익명 329", "hours": 38, "excess": 0, "fee": 0}, {"id": 332, "building": "104동", "unit": "익명 332", "label": "104동 익명 332", "hours": 34, "excess": 0, "fee": 0}, {"id": 347, "building": "104동", "unit": "익명 347", "label": "104동 익명 347", "hours": 1, "excess": 0, "fee": 0}, {"id": 349, "building": "104동", "unit": "익명 349", "label": "104동 익명 349", "hours": 3, "excess": 0, "fee": 0}, {"id": 351, "building": "104동", "unit": "익명 351", "label": "104동 익명 351", "hours": 7, "excess": 0, "fee": 0}, {"id": 358, "building": "104동", "unit": "익명 358", "label": "104동 익명 358", "hours": 52, "excess": 0, "fee": 0}, {"id": 362, "building": "104동", "unit": "익명 362", "label": "104동 익명 362", "hours": 58, "excess": 0, "fee": 0}, {"id": 365, "building": "104동", "unit": "익명 365", "label": "104동 익명 365", "hours": 4, "excess": 0, "fee": 0}, {"id": 9, "building": "105동", "unit": "익명 009", "label": "105동 익명 009", "hours": 22, "excess": 0, "fee": 0}, {"id": 17, "building": "105동", "unit": "익명 017", "label": "105동 익명 017", "hours": 3, "excess": 0, "fee": 0}, {"id": 19, "building": "105동", "unit": "익명 019", "label": "105동 익명 019", "hours": 28, "excess": 0, "fee": 0}, {"id": 21, "building": "105동", "unit": "익명 021", "label": "105동 익명 021", "hours": 48, "excess": 0, "fee": 0}, {"id": 37, "building": "105동", "unit": "익명 037", "label": "105동 익명 037", "hours": 43, "excess": 0, "fee": 0}, {"id": 52, "building": "105동", "unit": "익명 052", "label": "105동 익명 052", "hours": 3, "excess": 0, "fee": 0}, {"id": 62, "building": "105동", "unit": "익명 062", "label": "105동 익명 062", "hours": 31, "excess": 0, "fee": 0}, {"id": 63, "building": "105동", "unit": "익명 063", "label": "105동 익명 063", "hours": 11, "excess": 0, "fee": 0}, {"id": 79, "building": "105동", "unit": "익명 079", "label": "105동 익명 079", "hours": 101, "excess": 21, "fee": 63000}, {"id": 82, "building": "105동", "unit": "익명 082", "label": "105동 익명 082", "hours": 8, "excess": 0, "fee": 0}, {"id": 95, "building": "105동", "unit": "익명 095", "label": "105동 익명 095", "hours": 9, "excess": 0, "fee": 0}, {"id": 100, "building": "105동", "unit": "익명 100", "label": "105동 익명 100", "hours": 4, "excess": 0, "fee": 0}, {"id": 108, "building": "105동", "unit": "익명 108", "label": "105동 익명 108", "hours": 20, "excess": 0, "fee": 0}, {"id": 111, "building": "105동", "unit": "익명 111", "label": "105동 익명 111", "hours": 14, "excess": 0, "fee": 0}, {"id": 115, "building": "105동", "unit": "익명 115", "label": "105동 익명 115", "hours": 19, "excess": 0, "fee": 0}, {"id": 125, "building": "105동", "unit": "익명 125", "label": "105동 익명 125", "hours": 73, "excess": 0, "fee": 0}, {"id": 128, "building": "105동", "unit": "익명 128", "label": "105동 익명 128", "hours": 4, "excess": 0, "fee": 0}, {"id": 147, "building": "105동", "unit": "익명 147", "label": "105동 익명 147", "hours": 2, "excess": 0, "fee": 0}, {"id": 170, "building": "105동", "unit": "익명 170", "label": "105동 익명 170", "hours": 22, "excess": 0, "fee": 0}, {"id": 171, "building": "105동", "unit": "익명 171", "label": "105동 익명 171", "hours": 74, "excess": 0, "fee": 0}, {"id": 174, "building": "105동", "unit": "익명 174", "label": "105동 익명 174", "hours": 11, "excess": 0, "fee": 0}, {"id": 178, "building": "105동", "unit": "익명 178", "label": "105동 익명 178", "hours": 27, "excess": 0, "fee": 0}, {"id": 198, "building": "105동", "unit": "익명 198", "label": "105동 익명 198", "hours": 738, "excess": 658, "fee": 1974000}, {"id": 199, "building": "105동", "unit": "익명 199", "label": "105동 익명 199", "hours": 27, "excess": 0, "fee": 0}, {"id": 219, "building": "105동", "unit": "익명 219", "label": "105동 익명 219", "hours": 2, "excess": 0, "fee": 0}, {"id": 254, "building": "105동", "unit": "익명 254", "label": "105동 익명 254", "hours": 17, "excess": 0, "fee": 0}, {"id": 255, "building": "105동", "unit": "익명 255", "label": "105동 익명 255", "hours": 15, "excess": 0, "fee": 0}, {"id": 258, "building": "105동", "unit": "익명 258", "label": "105동 익명 258", "hours": 7, "excess": 0, "fee": 0}, {"id": 260, "building": "105동", "unit": "익명 260", "label": "105동 익명 260", "hours": 47, "excess": 0, "fee": 0}, {"id": 267, "building": "105동", "unit": "익명 267", "label": "105동 익명 267", "hours": 3, "excess": 0, "fee": 0}, {"id": 271, "building": "105동", "unit": "익명 271", "label": "105동 익명 271", "hours": 5, "excess": 0, "fee": 0}, {"id": 273, "building": "105동", "unit": "익명 273", "label": "105동 익명 273", "hours": 27, "excess": 0, "fee": 0}, {"id": 290, "building": "105동", "unit": "익명 290", "label": "105동 익명 290", "hours": 38, "excess": 0, "fee": 0}, {"id": 294, "building": "105동", "unit": "익명 294", "label": "105동 익명 294", "hours": 14, "excess": 0, "fee": 0}, {"id": 302, "building": "105동", "unit": "익명 302", "label": "105동 익명 302", "hours": 13, "excess": 0, "fee": 0}, {"id": 307, "building": "105동", "unit": "익명 307", "label": "105동 익명 307", "hours": 8, "excess": 0, "fee": 0}, {"id": 309, "building": "105동", "unit": "익명 309", "label": "105동 익명 309", "hours": 5, "excess": 0, "fee": 0}, {"id": 312, "building": "105동", "unit": "익명 312", "label": "105동 익명 312", "hours": 8, "excess": 0, "fee": 0}, {"id": 320, "building": "105동", "unit": "익명 320", "label": "105동 익명 320", "hours": 6, "excess": 0, "fee": 0}, {"id": 323, "building": "105동", "unit": "익명 323", "label": "105동 익명 323", "hours": 47, "excess": 0, "fee": 0}, {"id": 325, "building": "105동", "unit": "익명 325", "label": "105동 익명 325", "hours": 11, "excess": 0, "fee": 0}, {"id": 327, "building": "105동", "unit": "익명 327", "label": "105동 익명 327", "hours": 1, "excess": 0, "fee": 0}, {"id": 330, "building": "105동", "unit": "익명 330", "label": "105동 익명 330", "hours": 3, "excess": 0, "fee": 0}, {"id": 333, "building": "105동", "unit": "익명 333", "label": "105동 익명 333", "hours": 3, "excess": 0, "fee": 0}, {"id": 343, "building": "105동", "unit": "익명 343", "label": "105동 익명 343", "hours": 2, "excess": 0, "fee": 0}, {"id": 348, "building": "105동", "unit": "익명 348", "label": "105동 익명 348", "hours": 7, "excess": 0, "fee": 0}, {"id": 352, "building": "105동", "unit": "익명 352", "label": "105동 익명 352", "hours": 30, "excess": 0, "fee": 0}, {"id": 357, "building": "105동", "unit": "익명 357", "label": "105동 익명 357", "hours": 31, "excess": 0, "fee": 0}, {"id": 361, "building": "105동", "unit": "익명 361", "label": "105동 익명 361", "hours": 46, "excess": 0, "fee": 0}, {"id": 5, "building": "106동", "unit": "익명 005", "label": "106동 익명 005", "hours": 3, "excess": 0, "fee": 0}, {"id": 6, "building": "106동", "unit": "익명 006", "label": "106동 익명 006", "hours": 2, "excess": 0, "fee": 0}, {"id": 16, "building": "106동", "unit": "익명 016", "label": "106동 익명 016", "hours": 8, "excess": 0, "fee": 0}, {"id": 22, "building": "106동", "unit": "익명 022", "label": "106동 익명 022", "hours": 5, "excess": 0, "fee": 0}, {"id": 23, "building": "106동", "unit": "익명 023", "label": "106동 익명 023", "hours": 2, "excess": 0, "fee": 0}, {"id": 25, "building": "106동", "unit": "익명 025", "label": "106동 익명 025", "hours": 17, "excess": 0, "fee": 0}, {"id": 30, "building": "106동", "unit": "익명 030", "label": "106동 익명 030", "hours": 1, "excess": 0, "fee": 0}, {"id": 33, "building": "106동", "unit": "익명 033", "label": "106동 익명 033", "hours": 50, "excess": 0, "fee": 0}, {"id": 34, "building": "106동", "unit": "익명 034", "label": "106동 익명 034", "hours": 50, "excess": 0, "fee": 0}, {"id": 40, "building": "106동", "unit": "익명 040", "label": "106동 익명 040", "hours": 23, "excess": 0, "fee": 0}, {"id": 59, "building": "106동", "unit": "익명 059", "label": "106동 익명 059", "hours": 32, "excess": 0, "fee": 0}, {"id": 61, "building": "106동", "unit": "익명 061", "label": "106동 익명 061", "hours": 18, "excess": 0, "fee": 0}, {"id": 64, "building": "106동", "unit": "익명 064", "label": "106동 익명 064", "hours": 54, "excess": 0, "fee": 0}, {"id": 65, "building": "106동", "unit": "익명 065", "label": "106동 익명 065", "hours": 8, "excess": 0, "fee": 0}, {"id": 69, "building": "106동", "unit": "익명 069", "label": "106동 익명 069", "hours": 17, "excess": 0, "fee": 0}, {"id": 70, "building": "106동", "unit": "익명 070", "label": "106동 익명 070", "hours": 8, "excess": 0, "fee": 0}, {"id": 71, "building": "106동", "unit": "익명 071", "label": "106동 익명 071", "hours": 103, "excess": 23, "fee": 69000}, {"id": 74, "building": "106동", "unit": "익명 074", "label": "106동 익명 074", "hours": 66, "excess": 0, "fee": 0}, {"id": 77, "building": "106동", "unit": "익명 077", "label": "106동 익명 077", "hours": 29, "excess": 0, "fee": 0}, {"id": 81, "building": "106동", "unit": "익명 081", "label": "106동 익명 081", "hours": 47, "excess": 0, "fee": 0}, {"id": 88, "building": "106동", "unit": "익명 088", "label": "106동 익명 088", "hours": 4, "excess": 0, "fee": 0}, {"id": 109, "building": "106동", "unit": "익명 109", "label": "106동 익명 109", "hours": 47, "excess": 0, "fee": 0}, {"id": 136, "building": "106동", "unit": "익명 136", "label": "106동 익명 136", "hours": 3, "excess": 0, "fee": 0}, {"id": 143, "building": "106동", "unit": "익명 143", "label": "106동 익명 143", "hours": 10, "excess": 0, "fee": 0}, {"id": 148, "building": "106동", "unit": "익명 148", "label": "106동 익명 148", "hours": 124, "excess": 44, "fee": 132000}, {"id": 153, "building": "106동", "unit": "익명 153", "label": "106동 익명 153", "hours": 3, "excess": 0, "fee": 0}, {"id": 155, "building": "106동", "unit": "익명 155", "label": "106동 익명 155", "hours": 24, "excess": 0, "fee": 0}, {"id": 158, "building": "106동", "unit": "익명 158", "label": "106동 익명 158", "hours": 147, "excess": 67, "fee": 201000}, {"id": 159, "building": "106동", "unit": "익명 159", "label": "106동 익명 159", "hours": 14, "excess": 0, "fee": 0}, {"id": 164, "building": "106동", "unit": "익명 164", "label": "106동 익명 164", "hours": 2, "excess": 0, "fee": 0}, {"id": 172, "building": "106동", "unit": "익명 172", "label": "106동 익명 172", "hours": 41, "excess": 0, "fee": 0}, {"id": 175, "building": "106동", "unit": "익명 175", "label": "106동 익명 175", "hours": 30, "excess": 0, "fee": 0}, {"id": 177, "building": "106동", "unit": "익명 177", "label": "106동 익명 177", "hours": 2, "excess": 0, "fee": 0}, {"id": 186, "building": "106동", "unit": "익명 186", "label": "106동 익명 186", "hours": 21, "excess": 0, "fee": 0}, {"id": 187, "building": "106동", "unit": "익명 187", "label": "106동 익명 187", "hours": 2, "excess": 0, "fee": 0}, {"id": 190, "building": "106동", "unit": "익명 190", "label": "106동 익명 190", "hours": 2, "excess": 0, "fee": 0}, {"id": 191, "building": "106동", "unit": "익명 191", "label": "106동 익명 191", "hours": 11, "excess": 0, "fee": 0}, {"id": 193, "building": "106동", "unit": "익명 193", "label": "106동 익명 193", "hours": 1, "excess": 0, "fee": 0}, {"id": 201, "building": "106동", "unit": "익명 201", "label": "106동 익명 201", "hours": 1, "excess": 0, "fee": 0}, {"id": 208, "building": "106동", "unit": "익명 208", "label": "106동 익명 208", "hours": 118, "excess": 38, "fee": 114000}, {"id": 213, "building": "106동", "unit": "익명 213", "label": "106동 익명 213", "hours": 6, "excess": 0, "fee": 0}, {"id": 228, "building": "106동", "unit": "익명 228", "label": "106동 익명 228", "hours": 8, "excess": 0, "fee": 0}, {"id": 231, "building": "106동", "unit": "익명 231", "label": "106동 익명 231", "hours": 5, "excess": 0, "fee": 0}, {"id": 248, "building": "106동", "unit": "익명 248", "label": "106동 익명 248", "hours": 2, "excess": 0, "fee": 0}, {"id": 256, "building": "106동", "unit": "익명 256", "label": "106동 익명 256", "hours": 3, "excess": 0, "fee": 0}, {"id": 259, "building": "106동", "unit": "익명 259", "label": "106동 익명 259", "hours": 19, "excess": 0, "fee": 0}, {"id": 266, "building": "106동", "unit": "익명 266", "label": "106동 익명 266", "hours": 31, "excess": 0, "fee": 0}, {"id": 269, "building": "106동", "unit": "익명 269", "label": "106동 익명 269", "hours": 5, "excess": 0, "fee": 0}, {"id": 270, "building": "106동", "unit": "익명 270", "label": "106동 익명 270", "hours": 135, "excess": 55, "fee": 165000}, {"id": 283, "building": "106동", "unit": "익명 283", "label": "106동 익명 283", "hours": 60, "excess": 0, "fee": 0}, {"id": 286, "building": "106동", "unit": "익명 286", "label": "106동 익명 286", "hours": 20, "excess": 0, "fee": 0}, {"id": 289, "building": "106동", "unit": "익명 289", "label": "106동 익명 289", "hours": 2, "excess": 0, "fee": 0}, {"id": 298, "building": "106동", "unit": "익명 298", "label": "106동 익명 298", "hours": 8, "excess": 0, "fee": 0}, {"id": 299, "building": "106동", "unit": "익명 299", "label": "106동 익명 299", "hours": 13, "excess": 0, "fee": 0}, {"id": 314, "building": "106동", "unit": "익명 314", "label": "106동 익명 314", "hours": 15, "excess": 0, "fee": 0}, {"id": 338, "building": "106동", "unit": "익명 338", "label": "106동 익명 338", "hours": 13, "excess": 0, "fee": 0}, {"id": 339, "building": "106동", "unit": "익명 339", "label": "106동 익명 339", "hours": 21, "excess": 0, "fee": 0}, {"id": 356, "building": "106동", "unit": "익명 356", "label": "106동 익명 356", "hours": 3, "excess": 0, "fee": 0}, {"id": 10, "building": "107동", "unit": "익명 010", "label": "107동 익명 010", "hours": 1, "excess": 0, "fee": 0}, {"id": 29, "building": "107동", "unit": "익명 029", "label": "107동 익명 029", "hours": 2, "excess": 0, "fee": 0}, {"id": 36, "building": "107동", "unit": "익명 036", "label": "107동 익명 036", "hours": 2, "excess": 0, "fee": 0}, {"id": 43, "building": "107동", "unit": "익명 043", "label": "107동 익명 043", "hours": 28, "excess": 0, "fee": 0}, {"id": 46, "building": "107동", "unit": "익명 046", "label": "107동 익명 046", "hours": 6, "excess": 0, "fee": 0}, {"id": 54, "building": "107동", "unit": "익명 054", "label": "107동 익명 054", "hours": 7, "excess": 0, "fee": 0}, {"id": 56, "building": "107동", "unit": "익명 056", "label": "107동 익명 056", "hours": 6, "excess": 0, "fee": 0}, {"id": 60, "building": "107동", "unit": "익명 060", "label": "107동 익명 060", "hours": 91, "excess": 11, "fee": 33000}, {"id": 75, "building": "107동", "unit": "익명 075", "label": "107동 익명 075", "hours": 28, "excess": 0, "fee": 0}, {"id": 83, "building": "107동", "unit": "익명 083", "label": "107동 익명 083", "hours": 10, "excess": 0, "fee": 0}, {"id": 96, "building": "107동", "unit": "익명 096", "label": "107동 익명 096", "hours": 2, "excess": 0, "fee": 0}, {"id": 106, "building": "107동", "unit": "익명 106", "label": "107동 익명 106", "hours": 1, "excess": 0, "fee": 0}, {"id": 113, "building": "107동", "unit": "익명 113", "label": "107동 익명 113", "hours": 139, "excess": 59, "fee": 177000}, {"id": 133, "building": "107동", "unit": "익명 133", "label": "107동 익명 133", "hours": 7, "excess": 0, "fee": 0}, {"id": 144, "building": "107동", "unit": "익명 144", "label": "107동 익명 144", "hours": 309, "excess": 229, "fee": 687000}, {"id": 146, "building": "107동", "unit": "익명 146", "label": "107동 익명 146", "hours": 2, "excess": 0, "fee": 0}, {"id": 149, "building": "107동", "unit": "익명 149", "label": "107동 익명 149", "hours": 4, "excess": 0, "fee": 0}, {"id": 151, "building": "107동", "unit": "익명 151", "label": "107동 익명 151", "hours": 3, "excess": 0, "fee": 0}, {"id": 152, "building": "107동", "unit": "익명 152", "label": "107동 익명 152", "hours": 2, "excess": 0, "fee": 0}, {"id": 160, "building": "107동", "unit": "익명 160", "label": "107동 익명 160", "hours": 3, "excess": 0, "fee": 0}, {"id": 169, "building": "107동", "unit": "익명 169", "label": "107동 익명 169", "hours": 18, "excess": 0, "fee": 0}, {"id": 188, "building": "107동", "unit": "익명 188", "label": "107동 익명 188", "hours": 6, "excess": 0, "fee": 0}, {"id": 211, "building": "107동", "unit": "익명 211", "label": "107동 익명 211", "hours": 17, "excess": 0, "fee": 0}, {"id": 218, "building": "107동", "unit": "익명 218", "label": "107동 익명 218", "hours": 3, "excess": 0, "fee": 0}, {"id": 221, "building": "107동", "unit": "익명 221", "label": "107동 익명 221", "hours": 35, "excess": 0, "fee": 0}, {"id": 223, "building": "107동", "unit": "익명 223", "label": "107동 익명 223", "hours": 5, "excess": 0, "fee": 0}, {"id": 233, "building": "107동", "unit": "익명 233", "label": "107동 익명 233", "hours": 1, "excess": 0, "fee": 0}, {"id": 236, "building": "107동", "unit": "익명 236", "label": "107동 익명 236", "hours": 23, "excess": 0, "fee": 0}, {"id": 240, "building": "107동", "unit": "익명 240", "label": "107동 익명 240", "hours": 9, "excess": 0, "fee": 0}, {"id": 244, "building": "107동", "unit": "익명 244", "label": "107동 익명 244", "hours": 56, "excess": 0, "fee": 0}, {"id": 264, "building": "107동", "unit": "익명 264", "label": "107동 익명 264", "hours": 2, "excess": 0, "fee": 0}, {"id": 265, "building": "107동", "unit": "익명 265", "label": "107동 익명 265", "hours": 6, "excess": 0, "fee": 0}, {"id": 281, "building": "107동", "unit": "익명 281", "label": "107동 익명 281", "hours": 26, "excess": 0, "fee": 0}, {"id": 295, "building": "107동", "unit": "익명 295", "label": "107동 익명 295", "hours": 4, "excess": 0, "fee": 0}, {"id": 304, "building": "107동", "unit": "익명 304", "label": "107동 익명 304", "hours": 69, "excess": 0, "fee": 0}, {"id": 313, "building": "107동", "unit": "익명 313", "label": "107동 익명 313", "hours": 26, "excess": 0, "fee": 0}, {"id": 84, "building": "108동", "unit": "익명 084", "label": "108동 익명 084", "hours": 1, "excess": 0, "fee": 0}, {"id": 90, "building": "108동", "unit": "익명 090", "label": "108동 익명 090", "hours": 10, "excess": 0, "fee": 0}, {"id": 102, "building": "108동", "unit": "익명 102", "label": "108동 익명 102", "hours": 7, "excess": 0, "fee": 0}, {"id": 114, "building": "108동", "unit": "익명 114", "label": "108동 익명 114", "hours": 45, "excess": 0, "fee": 0}, {"id": 117, "building": "108동", "unit": "익명 117", "label": "108동 익명 117", "hours": 5, "excess": 0, "fee": 0}, {"id": 118, "building": "108동", "unit": "익명 118", "label": "108동 익명 118", "hours": 5, "excess": 0, "fee": 0}, {"id": 134, "building": "108동", "unit": "익명 134", "label": "108동 익명 134", "hours": 2, "excess": 0, "fee": 0}, {"id": 135, "building": "108동", "unit": "익명 135", "label": "108동 익명 135", "hours": 2, "excess": 0, "fee": 0}, {"id": 140, "building": "108동", "unit": "익명 140", "label": "108동 익명 140", "hours": 1, "excess": 0, "fee": 0}, {"id": 167, "building": "108동", "unit": "익명 167", "label": "108동 익명 167", "hours": 107, "excess": 27, "fee": 81000}, {"id": 168, "building": "108동", "unit": "익명 168", "label": "108동 익명 168", "hours": 1, "excess": 0, "fee": 0}, {"id": 181, "building": "108동", "unit": "익명 181", "label": "108동 익명 181", "hours": 32, "excess": 0, "fee": 0}, {"id": 189, "building": "108동", "unit": "익명 189", "label": "108동 익명 189", "hours": 25, "excess": 0, "fee": 0}, {"id": 226, "building": "108동", "unit": "익명 226", "label": "108동 익명 226", "hours": 1, "excess": 0, "fee": 0}, {"id": 257, "building": "108동", "unit": "익명 257", "label": "108동 익명 257", "hours": 5, "excess": 0, "fee": 0}, {"id": 263, "building": "108동", "unit": "익명 263", "label": "108동 익명 263", "hours": 43, "excess": 0, "fee": 0}, {"id": 272, "building": "108동", "unit": "익명 272", "label": "108동 익명 272", "hours": 9, "excess": 0, "fee": 0}, {"id": 276, "building": "108동", "unit": "익명 276", "label": "108동 익명 276", "hours": 18, "excess": 0, "fee": 0}, {"id": 308, "building": "108동", "unit": "익명 308", "label": "108동 익명 308", "hours": 8, "excess": 0, "fee": 0}, {"id": 315, "building": "108동", "unit": "익명 315", "label": "108동 익명 315", "hours": 10, "excess": 0, "fee": 0}, {"id": 344, "building": "108동", "unit": "익명 344", "label": "108동 익명 344", "hours": 9, "excess": 0, "fee": 0}, {"id": 345, "building": "108동", "unit": "익명 345", "label": "108동 익명 345", "hours": 5, "excess": 0, "fee": 0}, {"id": 355, "building": "108동", "unit": "익명 355", "label": "108동 익명 355", "hours": 26, "excess": 0, "fee": 0}];
+const COLORS = ['#2563eb','#0f766e','#7c3aed','#ea580c','#0891b2','#dc2626','#4f46e5','#15803d'];
+const PLOT_CONFIG = {responsive:true, displaylogo:false, scrollZoom:true, modeBarButtonsToRemove:['lasso2d','select2d']};
+const fmt = new Intl.NumberFormat('ko-KR');
+const won = v => fmt.format(Math.round(v)) + '원';
+const pct = v => (v*100).toFixed(1) + '%';
+
+function quantile(sorted, q){
+  if(!sorted.length) return 0;
+  const pos=(sorted.length-1)*q, base=Math.floor(pos), rest=pos-base;
+  return sorted[base+1]!==undefined ? sorted[base]+rest*(sorted[base+1]-sorted[base]) : sorted[base];
+}
+function stats(data){
+  const a=data.map(d=>d.hours).sort((x,y)=>x-y);
+  const n=a.length, total=a.reduce((s,v)=>s+v,0), mean=n?total/n:0;
+  const q1=quantile(a,.25), median=quantile(a,.5), q3=quantile(a,.75), iqr=q3-q1;
+  const upper=q3+1.5*iqr;
+  const variance=n?a.reduce((s,v)=>s+(v-mean)**2,0)/n:0;
+  const over=data.filter(d=>d.hours>80);
+  return {n,total,mean,median,q1,q3,iqr,upper,std:Math.sqrt(variance),min:a[0]||0,max:a[n-1]||0,
+          within:n-over.length,overN:over.length,excess:over.reduce((s,d)=>s+(d.hours-80),0),
+          fee:over.reduce((s,d)=>s+(d.hours-80)*3000,0), sorted:a};
+}
+function gini(values){
+  const a=[...values].sort((x,y)=>x-y), n=a.length, sum=a.reduce((s,v)=>s+v,0);
+  if(!n||!sum) return 0;
+  let weighted=0; a.forEach((v,i)=>weighted+=(i+1)*v);
+  return 2*weighted/(n*sum)-(n+1)/n;
+}
+function displayLabel(d){
+  return document.getElementById('privacyMode').checked
+    ? `${d.building} 익명 ${String(d.id).padStart(3,'0')}`
+    : d.label;
+}
+function currentData(){
+  const b=document.getElementById('buildingFilter').value;
+  const exclude=document.getElementById('excludeExtreme').checked;
+  const maxAll=Math.max(...RAW.map(d=>d.hours));
+  return RAW.filter(d=>(b==='전체'||d.building===b) && (!exclude || d.hours<maxAll));
+}
+function baseLayout(title=''){
+  return {title:{text:title,font:{size:13,color:'#52606d'}},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'#fbfdff',
+    margin:{l:62,r:32,t:40,b:60},font:{family:'Segoe UI, Noto Sans KR, sans-serif',color:'#3b4858',size:12},
+    hoverlabel:{bgcolor:'#172033',font:{color:'white'}},legend:{orientation:'h',y:-.18},xaxis:{gridcolor:'#e9eef4',zeroline:false},
+    yaxis:{gridcolor:'#e9eef4',zeroline:false}};
+}
+const BANDS=[
+  {label:'1~10시간',min:1,max:10,color:'#9cc5ff'},
+  {label:'11~20시간',min:11,max:20,color:'#6fa8f8'},
+  {label:'21~40시간',min:21,max:40,color:'#3f83df'},
+  {label:'41~60시간',min:41,max:60,color:'#30a89d'},
+  {label:'61~80시간',min:61,max:80,color:'#0f766e'},
+  {label:'80시간 초과',min:81,max:Infinity,color:'#dc2626'}
+];
+const OVER_BANDS=[
+  {label:'81~100시간',min:81,max:100,color:'#fbbf24'},
+  {label:'101~150시간',min:101,max:150,color:'#f59e0b'},
+  {label:'151~200시간',min:151,max:200,color:'#f97316'},
+  {label:'201~300시간',min:201,max:300,color:'#ea580c'},
+  {label:'301시간 이상',min:301,max:Infinity,color:'#dc2626'}
+];
+function bandFor(h){ return BANDS.find(b=>h>=b.min && h<=b.max) || BANDS[0]; }
+
+function updateKPIs(data,s){
+  document.getElementById('kpiN').textContent=fmt.format(s.n)+'세대';
+  document.getElementById('kpiTotal').textContent=fmt.format(s.total)+'시간';
+  document.getElementById('kpiCenter').textContent=`${s.mean.toFixed(1)} / ${s.median.toFixed(1)}h`;
+  document.getElementById('kpiWithin').textContent=`${fmt.format(s.within)}세대 · ${pct(s.within/s.n)}`;
+  document.getElementById('kpiOver').textContent=`${fmt.format(s.overN)}세대 · ${pct(s.overN/s.n)}`;
+  document.getElementById('kpiExcess').textContent=fmt.format(s.excess)+'시간';
+  const p80=s.n?s.within/s.n:0;
+  document.getElementById('dynamicSummary').innerHTML =
+    `선택된 ${fmt.format(s.n)}세대 중 <strong>${pct(p80)}</strong>가 월 80시간 이내이며, 중앙값은 <strong>${s.median.toFixed(1)}시간</strong>입니다. `+
+    `평균은 ${s.mean.toFixed(1)}시간으로 중앙값보다 높아 분포가 오른쪽으로 길게 치우쳐 있습니다. `+
+    `따라서 현행 80시간은 일반적인 이용 세대의 중심 구간보다 상당히 높은 위치에 있으나, 1개월 자료만으로 최종 적정성을 단정하기보다는 장시간 등록 원인과 월별 반복성을 함께 확인하는 것이 타당합니다.`;
+}
+
+function drawECDF(data,s){
+  const x=[...s.sorted], y=x.map((_,i)=>(i+1)/x.length*100);
+  const at80=s.within/s.n*100;
+  const layout=baseLayout();
+  layout.xaxis={title:'월 누적 사용시간',gridcolor:'#e9eef4'};
+  layout.yaxis={title:'누적 세대 비율(%)',range:[0,101],gridcolor:'#e9eef4',ticksuffix:'%'};
+  layout.shapes=[
+    {type:'line',x0:80,x1:80,y0:0,y1:at80,line:{color:'#dc2626',width:2,dash:'dash'}},
+    {type:'line',x0:0,x1:80,y0:at80,y1:at80,line:{color:'#dc2626',width:2,dash:'dot'}}
+  ];
+  layout.annotations=[{x:80,y:at80,text:`80시간 이하 ${at80.toFixed(1)}%`,showarrow:true,arrowcolor:'#dc2626',font:{color:'#991b1b'}}];
+  Plotly.react('ecdfChart',[{x,y,type:'scatter',mode:'lines',line:{shape:'hv',width:3,color:'#0f766e'},fill:'tozeroy',fillcolor:'rgba(15,118,110,.10)',
+    hovertemplate:'%{x}시간 이하<br>%{y:.1f}%<extra></extra>'}],layout,PLOT_CONFIG);
+  document.getElementById('ecdfExplain').innerHTML =
+    `80시간 지점의 누적비율은 <strong>${at80.toFixed(1)}%</strong>입니다. 즉 현재 자료에서는 약 <strong>${(100-at80).toFixed(1)}%</strong>만 기준을 초과합니다.`;
+}
+function drawBands(data,s){
+  const counts=BANDS.map(b=>data.filter(d=>d.hours>=b.min && d.hours<=b.max).length);
+  const layout=baseLayout();
+  layout.margin.b=90;
+  layout.xaxis={tickangle:-20};
+  layout.yaxis={title:'세대수',gridcolor:'#e9eef4'};
+  layout.uniformtext={mode:'show',minsize:11};
+  Plotly.react('bandChart',[{
+    x:BANDS.map(b=>b.label),y:counts,type:'bar',
+    marker:{color:BANDS.map(b=>b.color)},
+    text:counts.map(c=>`${c}세대<br>${pct(c/s.n)}`),
+    textposition:'outside',cliponaxis:false,
+    hovertemplate:'%{x}<br>%{y}세대<extra></extra>'
+  }],layout,PLOT_CONFIG);
+  const under20=counts[0]+counts[1], under40=under20+counts[2];
+  document.getElementById('bandExplain').innerHTML =
+    `20시간 이하가 <strong>${fmt.format(under20)}세대(${pct(under20/s.n)})</strong>, `+
+    `40시간 이하가 <strong>${fmt.format(under40)}세대(${pct(under40/s.n)})</strong>입니다. `+
+    `전체 흐름을 보기 위해 80시간 초과는 하나의 구간으로 묶었으며, 상세 구성은 오른쪽 확대 차트에서 확인할 수 있습니다.`;
+}
+
+function drawOverBands(data,s){
+  const over=data.filter(d=>d.hours>80);
+  const counts=OVER_BANDS.map(b=>over.filter(d=>d.hours>=b.min && d.hours<=b.max).length);
+  const total=over.length;
+  const maxCount=Math.max(1,...counts);
+  const layout=baseLayout();
+  layout.margin={l:105,r:75,t:35,b:45};
+  layout.xaxis={
+    title:'초과 세대수',
+    range:[0,maxCount*1.35],
+    dtick:1,
+    gridcolor:'#e9eef4',
+    rangemode:'tozero'
+  };
+  layout.yaxis={automargin:true,categoryorder:'array',categoryarray:OVER_BANDS.map(b=>b.label).reverse()};
+  layout.showlegend=false;
+  layout.shapes=OVER_BANDS.map((b,i)=>({
+    type:'line',xref:'paper',x0:0,x1:1,
+    y0:i-.5,y1:i-.5,
+    line:{color:'#f1f5f9',width:1}
+  }));
+  Plotly.react('overBandChart',[{
+    y:OVER_BANDS.map(b=>b.label),
+    x:counts,
+    type:'bar',
+    orientation:'h',
+    marker:{color:OVER_BANDS.map(b=>b.color)},
+    text:counts.map(c=> total ? `${c}세대 · ${pct(c/s.n)}<br>(초과세대 중 ${pct(c/total)})` : '0세대'),
+    textposition:'outside',
+    cliponaxis:false,
+    customdata:counts.map(c=> total ? c/total*100 : 0),
+    hovertemplate:'%{y}<br>%{x}세대<br>초과세대 중 %{customdata:.1f}%<extra></extra>'
+  }],layout,PLOT_CONFIG);
+
+  if(!total){
+    document.getElementById('overBandExplain').innerHTML='선택 조건에는 월 80시간 초과 세대가 없습니다.';
+    return;
+  }
+  const dominantIndex=counts.indexOf(Math.max(...counts));
+  const dominant=OVER_BANDS[dominantIndex];
+  document.getElementById('overBandExplain').innerHTML =
+    `월 80시간 초과 세대는 총 <strong>${fmt.format(total)}세대(${pct(total/s.n)})</strong>입니다. `+
+    `가장 많은 구간은 <strong>${dominant.label} ${counts[dominantIndex]}세대</strong>입니다. `+
+    `151시간 이상은 다시 세 구간으로 나누어, 단순 초과와 매우 긴 등록시간을 구분해 볼 수 있도록 했습니다.`;
+}
+
+function drawBox(data,s){
+  const buildings=[...new Set(data.map(d=>d.building))].sort();
+  const traces=buildings.map((b,i)=>({x:data.filter(d=>d.building===b).map(d=>d.hours),name:b,type:'box',orientation:'h',
+    boxpoints:'outliers',jitter:.35,pointpos:0,marker:{color:COLORS[i%COLORS.length],size:5},line:{color:COLORS[i%COLORS.length]},
+    hovertemplate:`${b}<br>%{x}시간<extra></extra>`}));
+  const layout=baseLayout(); layout.xaxis={title:'월 누적 사용시간',gridcolor:'#e9eef4'};
+  layout.margin.l=85; layout.margin.r=45; layout.showlegend=false;
+  layout.shapes=[{type:'line',x0:80,x1:80,y0:0,y1:1,yref:'paper',line:{color:'#dc2626',dash:'dash',width:2}}];
+  Plotly.react('boxChart',traces,layout,PLOT_CONFIG);
+  document.getElementById('boxExplain').innerHTML =
+   `전체 기준 Q1은 <strong>${s.q1.toFixed(1)}시간</strong>, 중앙값은 <strong>${s.median.toFixed(1)}시간</strong>, Q3는 <strong>${s.q3.toFixed(1)}시간</strong>입니다. `+
+   `IQR 방식의 상단 이상치 경계는 <strong>${s.upper.toFixed(1)}시간</strong>으로, 정책 기준 80시간보다 낮습니다. 통계적 이상치는 “점검할 값”이지 곧바로 규정 위반이나 오류를 의미하지 않습니다.`;
+}
+function drawViolin(data,s){
+  const buildings=[...new Set(data.map(d=>d.building))].sort();
+  const traces=buildings.map((b,i)=>({y:data.filter(d=>d.building===b).map(d=>d.hours),name:b,type:'violin',
+    box:{visible:true},meanline:{visible:true},points:'outliers',jitter:.25,scalemode:'width',
+    line:{color:COLORS[i%COLORS.length]},fillcolor:COLORS[i%COLORS.length],opacity:.55,
+    hovertemplate:`${b}<br>%{y}시간<extra></extra>`}));
+  const layout=baseLayout(); layout.yaxis={title:'월 누적 사용시간',gridcolor:'#e9eef4'};
+  layout.violinmode='group'; layout.showlegend=false;
+  layout.shapes=[{type:'line',x0:0,x1:1,xref:'paper',y0:80,y1:80,line:{color:'#dc2626',dash:'dash',width:2}}];
+  Plotly.react('violinChart',traces,layout,PLOT_CONFIG);
+  document.getElementById('violinExplain').innerHTML =
+    `폭이 넓은 부분은 세대가 많이 몰린 시간대입니다. 대부분의 동에서 낮은 시간대가 두껍고 위쪽으로 가느다란 꼬리가 형성되어 있어, 장시간 이용이 다수의 일반적 패턴이라기보다 일부 관측치에 집중된 구조임을 보여줍니다.`;
+}
+function buildingStats(data){
+  const buildings=[...new Set(data.map(d=>d.building))].sort();
+  return buildings.map(b=>{
+    const ds=data.filter(d=>d.building===b), s=stats(ds);
+    return {building:b,...s,rate:s.n?s.overN/s.n:0};
+  });
+}
+function drawBuildingSummary(data){
+  const bs=buildingStats(data), x=bs.map(v=>v.building);
+  const layout=baseLayout(); layout.barmode='group';
+  layout.yaxis={title:'시간',gridcolor:'#e9eef4'};
+  layout.yaxis2={title:'초과율',overlaying:'y',side:'right',ticksuffix:'%',range:[0,Math.max(15,...bs.map(v=>v.rate*100))*1.25],showgrid:false};
+  Plotly.react('buildingSummaryChart',[
+    {x,y:bs.map(v=>v.mean),name:'평균',type:'bar',marker:{color:'#3f83df'},hovertemplate:'%{x}<br>평균 %{y:.1f}시간<extra></extra>'},
+    {x,y:bs.map(v=>v.median),name:'중앙값',type:'bar',marker:{color:'#0f766e'},hovertemplate:'%{x}<br>중앙값 %{y:.1f}시간<extra></extra>'},
+    {x,y:bs.map(v=>v.rate*100),name:'80시간 초과율',type:'scatter',mode:'lines+markers+text',yaxis:'y2',
+     line:{color:'#dc2626',width:3},marker:{size:8},text:bs.map(v=>(v.rate*100).toFixed(1)+'%'),textposition:'top center',
+     hovertemplate:'%{x}<br>초과율 %{y:.1f}%<extra></extra>'}
+  ],layout,PLOT_CONFIG);
+  const high=[...bs].sort((a,b)=>b.rate-a.rate)[0];
+  document.getElementById('buildingExplain').innerHTML =
+    `평균은 극단값에 민감하므로 중앙값을 함께 보아야 합니다. 선택 데이터에서 초과율이 가장 높은 동은 <strong>${high.building}(${pct(high.rate)})</strong>이지만, 동별 이용 세대수 차이와 극단값 포함 여부를 함께 확인해야 합니다.`;
+}
+function drawBuildingBands(data){
+  const buildings=[...new Set(data.map(d=>d.building))].sort();
+  const traces=BANDS.map((band,i)=>({
+    x:buildings,
+    y:buildings.map(b=>{
+      const ds=data.filter(d=>d.building===b);
+      const c=ds.filter(d=>d.hours>=band.min&&d.hours<=band.max).length;
+      return ds.length?c/ds.length*100:0;
+    }),
+    name:band.label,type:'bar',marker:{color:band.color},
+    hovertemplate:'%{x}<br>'+band.label+' %{y:.1f}%<extra></extra>'
+  }));
+  const layout=baseLayout(); layout.barmode='stack'; layout.yaxis={title:'동별 구성비',ticksuffix:'%',range:[0,100],gridcolor:'#e9eef4'};
+  layout.legend={orientation:'h',y:-.23,font:{size:10}};
+  Plotly.react('buildingBandChart',traces,layout,PLOT_CONFIG);
+}
+function drawFee(data){
+  const layout=baseLayout(); layout.xaxis={title:'월 누적 사용시간',gridcolor:'#e9eef4'};
+  layout.yaxis={title:'예상 부과금액',tickformat:',d',ticksuffix:'원',gridcolor:'#e9eef4'};
+  layout.shapes=[{type:'line',x0:80,x1:80,y0:0,y1:1,yref:'paper',line:{color:'#dc2626',dash:'dash',width:2}}];
+  Plotly.react('feeChart',[{
+    x:data.map(d=>d.hours),y:data.map(d=>Math.max(0,d.hours-80)*3000),type:'scatter',mode:'markers',
+    text:data.map(displayLabel),customdata:data.map(d=>d.excess),
+    marker:{size:data.map(d=>d.hours>80?10:6),color:data.map(d=>d.hours>80?'#dc2626':'#7aa8df'),opacity:.75,line:{color:'white',width:.6}},
+    hovertemplate:'%{text}<br>사용 %{x}시간<br>초과 %{customdata}시간<br>부과 %{y:,}원<extra></extra>'
+  }],layout,PLOT_CONFIG);
+}
+function drawLorenz(data){
+  const values=data.map(d=>d.hours).sort((a,b)=>a-b), total=values.reduce((s,v)=>s+v,0);
+  let c=0; const x=[0],y=[0]; values.forEach((v,i)=>{c+=v;x.push((i+1)/values.length*100);y.push(c/total*100)});
+  const g=gini(values);
+  const layout=baseLayout(); layout.xaxis={title:'누적 세대 비율',range:[0,100],ticksuffix:'%',gridcolor:'#e9eef4'};
+  layout.yaxis={title:'누적 사용시간 비율',range:[0,100],ticksuffix:'%',gridcolor:'#e9eef4'};
+  Plotly.react('lorenzChart',[
+    {x:[0,100],y:[0,100],name:'완전 균등선',type:'scatter',mode:'lines',line:{color:'#94a3b8',dash:'dash'}},
+    {x,y,name:'실제 분포',type:'scatter',mode:'lines',fill:'tonexty',fillcolor:'rgba(37,99,235,.12)',line:{color:'#2563eb',width:3},
+     hovertemplate:'누적 세대 %{x:.1f}%<br>누적 시간 %{y:.1f}%<extra></extra>'}
+  ],layout,PLOT_CONFIG);
+  const sortedDesc=[...values].sort((a,b)=>b-a); const top10=sortedDesc.slice(0,Math.ceil(values.length*.1)).reduce((s,v)=>s+v,0)/total;
+  document.getElementById('lorenzExplain').innerHTML =
+    `지니계수는 <strong>${g.toFixed(3)}</strong>이며, 사용시간 상위 10% 세대가 총 사용시간의 약 <strong>${pct(top10)}</strong>를 차지합니다. 이는 전체 사용량이 낮은 이용 세대와 일부 고사용 세대로 뚜렷하게 나뉘는 구조를 보여줍니다.`;
+}
+function drawThreshold(data){
+  const thresholds=[]; for(let t=20;t<=160;t+=5) thresholds.push(t);
+  const counts=thresholds.map(t=>data.filter(d=>d.hours>t).length);
+  const excess=thresholds.map(t=>data.reduce((s,d)=>s+Math.max(0,d.hours-t),0));
+  const layout=baseLayout();
+  layout.xaxis={title:'가상 무료 제공시간',ticksuffix:'시간',gridcolor:'#e9eef4'};
+  layout.yaxis={title:'초과 세대수',gridcolor:'#e9eef4'};
+  layout.yaxis2={title:'총 초과시간',overlaying:'y',side:'right',showgrid:false};
+  layout.shapes=[{type:'line',x0:80,x1:80,y0:0,y1:1,yref:'paper',line:{color:'#dc2626',dash:'dash',width:2}}];
+  layout.annotations=[{x:80,y:1,yref:'paper',text:'현행 80시간',showarrow:false,yanchor:'bottom',font:{color:'#dc2626'}}];
+  Plotly.react('thresholdChart',[
+    {x:thresholds,y:counts,type:'scatter',mode:'lines+markers',name:'초과 세대수',line:{color:'#dc2626',width:3},hovertemplate:'기준 %{x}시간<br>%{y}세대 초과<extra></extra>'},
+    {x:thresholds,y:excess,type:'scatter',mode:'lines',name:'총 초과시간',yaxis:'y2',line:{color:'#2563eb',width:3},hovertemplate:'기준 %{x}시간<br>총 %{y:,}시간 초과<extra></extra>'}
+  ],layout,PLOT_CONFIG);
+}
+function updateSimulator(data){
+  const t=Number(document.getElementById('thresholdSlider').value);
+  const over=data.filter(d=>d.hours>t), excess=over.reduce((s,d)=>s+d.hours-t,0);
+  document.getElementById('thresholdValue').textContent=t+'시간';
+  document.getElementById('simCount').textContent=fmt.format(over.length)+'세대';
+  document.getElementById('simRate').textContent=pct(over.length/data.length);
+  document.getElementById('simHours').textContent=fmt.format(excess)+'시간';
+  document.getElementById('simFee').textContent=won(excess*3000);
+  const current=data.filter(d=>d.hours>80).length;
+  const diff=over.length-current;
+  document.getElementById('simExplain').innerHTML =
+    `기준을 <strong>${t}시간</strong>으로 가정하면 현행 80시간 대비 초과 세대가 <strong>${diff===0?'동일':Math.abs(diff)+'세대 '+(diff>0?'증가':'감소')}</strong>합니다. `+
+    `이는 요금수입 예측만이 아니라 일반 방문 편의와 장기주차 억제라는 두 목적 사이의 균형을 비교하기 위한 시뮬레이션입니다.`;
+}
+function renderTable(data,s){
+  const mode=document.getElementById('tableMode').value, sort=document.getElementById('tableSort').value;
+  const q=document.getElementById('tableSearch').value.trim().toLowerCase();
+  let arr=data.map(d=>({...d,isOutlier:d.hours>s.upper}));
+  if(mode==='over') arr=arr.filter(d=>d.hours>80);
+  if(mode==='outlier') arr=arr.filter(d=>d.isOutlier);
+  if(q) arr=arr.filter(d=>(d.label+' '+displayLabel(d)).toLowerCase().includes(q));
+  arr.sort((a,b)=>sort==='label'?a.label.localeCompare(b.label,'ko'):b[sort]-a[sort]);
+  document.getElementById('tableCount').textContent=`${fmt.format(arr.length)}건 표시`;
+  document.getElementById('detailBody').innerHTML=arr.map((d,i)=>{
+    const cls=d.hours>80?'<span class="tag over">80시간 초과</span>':d.isOutlier?'<span class="tag out">IQR 이상치</span>':'<span class="tag normal">일반구간</span>';
+    const privacy=document.getElementById('privacyMode').checked;
+    const b=d.building;
+    const u=privacy?`익명 ${String(d.id).padStart(3,'0')}`:d.unit;
+    return `<tr><td>${i+1}</td><td>${b}</td><td>${u}</td><td>${fmt.format(d.hours)}시간</td><td>${fmt.format(d.excess)}시간</td><td>${won(d.fee)}</td><td>${cls}</td></tr>`;
+  }).join('');
+  const outN=data.filter(d=>d.hours>s.upper).length;
+  document.getElementById('tableExplain').innerHTML =
+    `현재 필터의 IQR 상단 경계는 <strong>${s.upper.toFixed(1)}시간</strong>이며 이에 해당하는 통계적 이상치는 <strong>${outN}세대</strong>입니다. `+
+    `이 중 80시간 이하인 값도 있을 수 있으므로 이상치 여부와 정책 초과 여부를 분리해 검토해야 합니다.`;
+}
+function downloadCSV(data){
+  const privacy=document.getElementById('privacyMode').checked;
+  const header=['동','호','사용시간','초과시간','부과금액'];
+  const lines=[header.join(',')];
+  data.forEach(d=>lines.push([
+    d.building,
+    privacy?`익명 ${String(d.id).padStart(3,'0')}`:d.unit,
+    d.hours,d.excess,d.fee
+  ].map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')));
+  const blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='방문차량_필터데이터.csv';a.click();URL.revokeObjectURL(a.href);
+}
+function updateAll(){
+  const data=currentData(); if(!data.length) return;
+  const s=stats(data);
+  updateKPIs(data,s);
+  drawBands(data,s);
+  drawOverBands(data,s);
+  drawBox(data,s);
+  drawBuildingSummary(data);
+  updateSimulator(data);
+  renderTable(data,s);
+}
+function init(){
+  const buildings=[...new Set(RAW.map(d=>d.building))].sort();
+  document.getElementById('buildingFilter').innerHTML=['전체',...buildings].map(b=>`<option>${b}</option>`).join('');
+  ['buildingFilter','excludeExtreme','privacyMode'].forEach(id=>document.getElementById(id).addEventListener('change',updateAll));
+  ['tableMode','tableSort'].forEach(id=>document.getElementById(id).addEventListener('change',()=>renderTable(currentData(),stats(currentData()))));
+  document.getElementById('tableSearch').addEventListener('input',()=>renderTable(currentData(),stats(currentData())));
+  document.getElementById('thresholdSlider').addEventListener('input',()=>updateSimulator(currentData()));
+  document.getElementById('csvBtn').addEventListener('click',()=>downloadCSV(currentData()));
+
+  const includeDetailPrint=document.getElementById('includeDetailPrint');
+  const tableModeSelect=document.getElementById('tableMode');
+  let prePrintTableMode=null;
+
+  const syncPrintMode=()=>{
+    document.body.classList.toggle('hide-detail-on-print', !includeDetailPrint.checked);
+  };
+
+  const prepareDetailForPrint=()=>{
+    syncPrintMode();
+    if(includeDetailPrint.checked){
+      prePrintTableMode=tableModeSelect.value;
+      tableModeSelect.value='over';
+      renderTable(currentData(),stats(currentData()));
+    }
+  };
+
+  const restoreAfterPrint=()=>{
+    if(prePrintTableMode!==null){
+      tableModeSelect.value=prePrintTableMode;
+      renderTable(currentData(),stats(currentData()));
+      prePrintTableMode=null;
+    }
+  };
+
+  includeDetailPrint.addEventListener('change',syncPrintMode);
+  document.getElementById('printBtn').addEventListener('click',()=>{
+    prepareDetailForPrint();
+    setTimeout(()=>window.print(),80);
+  });
+  window.addEventListener('beforeprint',prepareDetailForPrint);
+  window.addEventListener('afterprint',restoreAfterPrint);
+  syncPrintMode();
+
+  updateAll();
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
