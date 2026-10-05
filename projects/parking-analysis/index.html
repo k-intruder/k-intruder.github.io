@@ -33,11 +33,35 @@
     .report-table a:hover { text-decoration: underline; }
     .special-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
     .privacy { margin-top: 40px; color: var(--muted); font-size: 0.85rem; }
+    .page-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .page-top .back { margin-bottom: 0; }
+    .print-date { display: none; }
+    @media print {
+      @page { size: A4 portrait; margin: 12mm 10mm; }
+      body { background: #fff; }
+      .shell { width: 100%; padding: 0; }
+      .page-top, .footer { display: none !important; }
+      .print-date { display: block; margin-top: 8px; color: var(--muted); font-size: 0.8rem; }
+      .profile h1 { font-size: 2rem; }
+      .section-head { margin-top: 28px; break-after: avoid; }
+      .kpi-row { grid-template-columns: repeat(5, 1fr); }
+      .kpi strong { font-size: 1.15rem; }
+      .chart-grid { grid-template-columns: 1fr; }
+      .chart { height: 260px; }
+      .kpi, .chart-card, .project-card { box-shadow: none; }
+      .table-scroll { overflow: visible; }
+      .report-table th, .report-table td { padding: 6px 8px; }
+      .report-table a { color: inherit; }
+      .card-open { display: none; }
+    }
   </style>
 </head>
 <body>
   <main class="shell">
-    <a class="back" href="../../">&larr; Portfolio</a>
+    <div class="page-top">
+      <a class="back" href="../../">&larr; Portfolio</a>
+      <button class="btn" type="button" data-print>인쇄 / PDF</button>
+    </div>
     <header class="profile">
       <p class="eyebrow">데이터 분석 · 매월 업데이트</p>
       <h1>방문차량 주차 분석</h1>
@@ -45,6 +69,7 @@
         아파트 방문차량 등록시간을 세대별로 집계해 월 80시간 무료 기준의 적정성을 검토합니다.
         2026년 7월부터 매월 리포트를 만들고, 명절처럼 패턴이 다른 기간은 특별판으로 분리해 분석합니다.
       </p>
+      <p class="print-date" id="printDate"></p>
     </header>
 
     <section aria-labelledby="latestHeading">
@@ -100,6 +125,7 @@
   </main>
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="./print.js"></script>
   <script>
     (function () {
       const fmt = new Intl.NumberFormat('ko-KR', {maximumFractionDigits: 1});
@@ -238,6 +264,19 @@
           if (monthly.length) {
             renderKpis(monthly);
             renderCharts(monthly, manifest.bands);
+            // Charts read theme colors when drawn: print them in light colors, then restore.
+            const root = document.documentElement;
+            let prevTheme = null;
+            ReportPrint.before.push(() => {
+              prevTheme = root.getAttribute('data-theme');
+              root.setAttribute('data-theme', 'light');
+              document.querySelector('#printDate').textContent = `출력일 ${new Date().toLocaleDateString('ko-KR')}`;
+              renderCharts(monthly, manifest.bands);
+            });
+            ReportPrint.after.push(() => {
+              if (prevTheme == null) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', prevTheme);
+              renderCharts(monthly, manifest.bands);
+            });
           }
           renderTables(monthly, specials);
         })
