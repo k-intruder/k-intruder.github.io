@@ -17,12 +17,12 @@
       "basis": "시스템 월별 집계",
       "kpi": {
         "households": 366,
-        "totalHours": 9353,
+        "totalHours": 9353.0,
         "mean": 25.55,
-        "median": 10,
+        "median": 10.0,
         "over80": 24,
         "overRate": 6.56,
-        "max": 738,
+        "max": 738.0,
         "bands": [
           190,
           56,
@@ -30,6 +30,10 @@
           28,
           11,
           24
+        ],
+        "near80": [
+          6,
+          5
         ]
       }
     },
@@ -42,12 +46,12 @@
       "basis": "시스템 월별 집계",
       "kpi": {
         "households": 416,
-        "totalHours": 7045,
+        "totalHours": 7045.0,
         "mean": 16.94,
         "median": 8.5,
         "over80": 5,
         "overRate": 1.2,
-        "max": 95,
+        "max": 95.0,
         "bands": [
           229,
           63,
@@ -55,6 +59,10 @@
           32,
           15,
           5
+        ],
+        "near80": [
+          8,
+          7
         ]
       }
     },
@@ -80,6 +88,10 @@
           26,
           5,
           4
+        ],
+        "near80": [
+          2,
+          3
         ]
       }
     },

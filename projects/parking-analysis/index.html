@@ -21,6 +21,7 @@
     .chart-card h3 { margin: 0; font-size: 1rem; }
     .chart-card p { margin: 2px 0 0; color: var(--muted); font-size: 0.85rem; }
     .chart { height: 300px; }
+    .chart-card p.chart-note { margin: 4px 0 8px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--ink); }
     .basis { margin: 16px 0 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--pending); border-radius: 8px; background: var(--panel); font-size: 0.9rem; }
     .basis ul { margin: 6px 0 0; padding-left: 18px; color: var(--muted); }
     .report-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
@@ -44,7 +45,7 @@
       .print-date { display: block; margin-top: 8px; color: var(--muted); font-size: 0.8rem; }
       .profile h1 { font-size: 2rem; }
       .section-head { margin-top: 28px; break-after: avoid; }
-      .kpi-row { grid-template-columns: repeat(5, 1fr); }
+      .kpi-row { grid-template-columns: repeat(3, 1fr); }
       .kpi strong { font-size: 1.15rem; }
       .chart-grid { grid-template-columns: 1fr; }
       .chart { height: 260px; }
@@ -91,6 +92,12 @@
           <div class="chart" id="centerChart"></div>
         </article>
         <article class="chart-card wide">
+          <h3>80시간 근접 세대</h3>
+          <p>월 이용시간이 60시간 초과 ~ 80시간 이하인 세대수 (막대), 80시간 초과 세대수 (점선)</p>
+          <div class="chart" id="nearChart"></div>
+          <p class="chart-note" id="nearNote"></p>
+        </article>
+        <article class="chart-card wide">
           <h3>이용시간 구간 비율</h3>
           <p>월별 이용 세대 중 각 구간이 차지하는 비율</p>
           <div class="chart" id="bandChart"></div>
@@ -107,7 +114,7 @@
       <div class="table-scroll">
         <table class="report-table">
           <thead>
-            <tr><th>월</th><th>이용 세대</th><th>총 이용시간</th><th>평균</th><th>중앙값</th><th>80h 초과</th><th>최대</th></tr>
+            <tr><th>월</th><th>이용 세대</th><th>총 이용시간</th><th>평균</th><th>중앙값</th><th>80h 근접</th><th>80h 초과</th><th>최대</th></tr>
           </thead>
           <tbody id="monthlyBody"></tbody>
         </table>
@@ -149,6 +156,9 @@
         return card;
       }
 
+      const nearTotal = (k) => (k.near80 ? k.near80.reduce((s, v) => s + v, 0) : null);
+      const nearRate = (k) => nearTotal(k) / k.households * 100;
+
       function renderKpis(monthly) {
         const latest = monthly[monthly.length - 1];
         const prev = monthly[monthly.length - 2];
@@ -159,6 +169,8 @@
           kpiCard('이용 세대', `${fmt.format(k.households)}세대`, d('households'), null),
           kpiCard('평균 이용시간', `${fmt.format(k.mean)}h`, d('mean'), true),
           kpiCard('중앙값', `${fmt.format(k.median)}h`, d('median'), true),
+          ...(k.near80 ? [kpiCard('80시간 근접', `${nearTotal(k)}세대 · ${fmt.format(nearRate(k))}%`,
+            p && p.near80 ? nearTotal(k) - nearTotal(p) : null, true)] : []),
           kpiCard('80시간 초과', `${k.over80}세대 · ${fmt.format(k.overRate)}%`, d('over80'), true),
           kpiCard('최대 이용시간', `${fmt.format(k.max)}h`, d('max'), true)
         );
@@ -185,17 +197,42 @@
             hovertemplate: '%{x}<br>%{y}세대<extra></extra>'},
           {x, y: monthly.map((r) => r.kpi.over80), type: 'scatter', mode: 'lines+markers+text', name: '80시간 초과', yaxis: 'y2',
             line: {color: warn, width: 3}, marker: {size: 8}, text: monthly.map((r) => `${r.kpi.over80}세대`),
-            textposition: 'top center', textfont: {color: warn}, hovertemplate: '%{x}<br>초과 %{y}세대<extra></extra>'}
+            textposition: 'top center', textfont: {color: warn}, cliponaxis: false, hovertemplate: '%{x}<br>초과 %{y}세대<extra></extra>'}
         ], {...base, yaxis2: {overlaying: 'y', side: 'right', rangemode: 'tozero', showgrid: false, zeroline: false}}, cfg);
 
         Plotly.newPlot('centerChart', [
           {x, y: monthly.map((r) => r.kpi.mean), type: 'scatter', mode: 'lines+markers+text', name: '평균',
-            line: {color: pending, width: 3}, text: monthly.map((r) => `${fmt.format(r.kpi.mean)}h`), textposition: 'top center',
+            line: {color: pending, width: 3}, text: monthly.map((r) => `${fmt.format(r.kpi.mean)}h`), textposition: 'top center', cliponaxis: false,
             hovertemplate: '%{x}<br>평균 %{y:.1f}시간<extra></extra>'},
           {x, y: monthly.map((r) => r.kpi.median), type: 'scatter', mode: 'lines+markers+text', name: '중앙값',
             line: {color: accent, width: 3}, text: monthly.map((r) => `${fmt.format(r.kpi.median)}h`), textposition: 'bottom center',
             hovertemplate: '%{x}<br>중앙값 %{y:.1f}시간<extra></extra>'}
         ], {...base, yaxis: {...base.yaxis, ticksuffix: 'h'}}, cfg);
+
+        const near = monthly.filter((r) => r.kpi.near80);
+        const nx = near.map((r) => r.title.replace(/^\d{4}년\s*/, ''));
+        Plotly.newPlot('nearChart', [
+          {x: nx, y: near.map((r) => r.kpi.near80[0]), type: 'bar', name: '60~70시간',
+            marker: {color: pending, opacity: 0.45}, hovertemplate: '%{x}<br>60~70시간 %{y}세대<extra></extra>'},
+          {x: nx, y: near.map((r) => r.kpi.near80[1]), type: 'bar', name: '70~80시간',
+            marker: {color: pending}, hovertemplate: '%{x}<br>70~80시간 %{y}세대<extra></extra>'},
+          {x: nx, y: near.map((r) => r.kpi.over80), type: 'scatter', mode: 'lines+markers', name: '80시간 초과',
+            line: {color: warn, width: 2, dash: 'dot'}, marker: {size: 7}, hovertemplate: '%{x}<br>80시간 초과 %{y}세대<extra></extra>'}
+        ], {...base, barmode: 'stack', legend: {...base.legend, traceorder: 'normal'}, yaxis: {...base.yaxis, title: {text: '세대수'}},
+          annotations: near.map((r, i) => ({
+            x: nx[i], y: nearTotal(r.kpi), yanchor: 'bottom', showarrow: false,
+            text: `<b>${nearTotal(r.kpi)}세대</b> (${fmt.format(nearRate(r.kpi))}%)`, font: {color: ink, size: 12}
+          }))}, cfg);
+        if (near.length) {
+          const last = near[near.length - 1], prev = near[near.length - 2];
+          const diff = prev ? nearTotal(last.kpi) - nearTotal(prev.kpi) : 0;
+          document.querySelector('#nearNote').textContent =
+            `${last.title} 근접 세대는 ${nearTotal(last.kpi)}세대(이용 세대의 ${fmt.format(nearRate(last.kpi))}%)` +
+            (!prev ? '입니다. '
+              : diff === 0 ? `로 ${prev.title.replace(/^\d{4}년\s*/, '')}과 같습니다. `
+              : `로 ${prev.title.replace(/^\d{4}년\s*/, '')}보다 ${Math.abs(diff)}세대 ${diff < 0 ? '줄었습니다' : '늘었습니다'}. `) +
+            '기준을 넘지는 않았지만 넘을 가능성이 있는 세대 규모를 보여줍니다.';
+        }
 
         const palette = [accent, pending, warn, muted, ink];
         Plotly.newPlot('bandChart', monthly.map((r, i) => {
@@ -218,7 +255,8 @@
           const k = r.kpi;
           tr.append(first, ...[
             `${fmt.format(k.households)}세대`, `${fmt.format(k.totalHours)}h`, `${fmt.format(k.mean)}h`,
-            `${fmt.format(k.median)}h`, `${k.over80}세대 (${fmt.format(k.overRate)}%)`, `${fmt.format(k.max)}h`
+            `${fmt.format(k.median)}h`, k.near80 ? `${nearTotal(k)}세대 (${fmt.format(nearRate(k))}%)` : '-',
+            `${k.over80}세대 (${fmt.format(k.overRate)}%)`, `${fmt.format(k.max)}h`
           ].map((v) => el('td', null, v)));
           return tr;
         }));
