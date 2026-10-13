@@ -12,6 +12,26 @@
   },
   "projects": [
     {
+      "id": "weekly",
+      "title": "주간 업무 대시보드",
+      "summary": "주간 업무 보고를 웹에서 편집·Commit하고 의사결정자는 읽기 전용으로 확인하는 대시보드입니다. Cloudflare Access로 접근을 막고 Pages Functions가 GitHub 저장소에 주차별 JSON으로 이력을 남깁니다.",
+      "period": "2026.10 – ",
+      "status": "진행 중",
+      "tags": [
+        "Cloudflare Pages",
+        "Cloudflare Access",
+        "GitHub API",
+        "대시보드"
+      ],
+      "highlights": [
+        "Access JWT 서명·AUD·만료를 서버에서 검증하고 편집자/조회자 역할 분리",
+        "GitHub 토큰은 서버 Secret에만 두고 SHA 비교로 동시 수정 충돌 차단",
+        "지난 주차 대비 변경사항 자동 비교 및 PDF 인쇄"
+      ],
+      "path": "projects/weekly/",
+      "visibility": "private"
+    },
+    {
       "id": "parking-analysis",
       "title": "방문차량 주차 분석",
       "summary": "아파트 방문차량 등록시간을 세대별로 집계해 월 80시간 무료 기준의 적정성을 검토하는 월간 대시보드입니다. 명절 기간은 특별판으로 분리해 분석합니다.",

@@ -4,3 +4,6 @@ leaflet_4326_preview_cog.tif
 BSG-131-20260411-033223-436461625-L3-ortho.rgb_detections_v2.geojson
 geoserver_wms_capabilities.xml
 geoserver_wmts_capabilities.xml
+
+# weekly: 실제 주간보고 데이터는 비공개 저장소에만 둔다 (데모는 projects/weekly/demo/)
+projects/weekly/data/

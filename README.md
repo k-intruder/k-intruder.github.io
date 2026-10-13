@@ -81,3 +81,9 @@ python tools/add_parking_report.py "<특별판.html>" 2027-seollal --title "2027
   ```
   월별 집계 파일(동/호/사용량)과 입·출차 원자료(방문예약만 합산) 형식을 자동으로 구분합니다. 집계값만 저장하고 세대 정보는 저장하지 않습니다.
 - 원본 xlsx나 익명 처리 전 HTML은 이 저장소에 넣지 마세요.
+
+## 주간 업무 대시보드 (`projects/weekly/`)
+
+- 원래 Cloudflare Pages + Access + Pages Functions용 앱입니다 (`projects/weekly/README.md`). 배포는 별도 비공개 저장소에서 합니다.
+- 이 사이트에서는 `projects/weekly/public/`이 `/projects/weekly/` 경로에서 열리면 자동으로 **데모 모드**가 되어 `projects/weekly/demo/reports.json` 샘플을 읽고, 저장은 탭 메모리에만 반영합니다.
+- 실제 보고 데이터 `projects/weekly/data/`는 `.gitignore`로 제외되어 있습니다. 이 저장소에 커밋하지 마세요.
