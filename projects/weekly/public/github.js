@@ -15,7 +15,7 @@ async function ghPut(name,value,sha,message){const body={message,content:b64enco
 let ghLogin='';
 // app.js의 api()와 같은 응답 형태(me / weeks / report)를 돌려줍니다.
 async function ghApi(path,opts={}){const [kind,date]=path.split('/');
- if(kind==='me'){const res=await ghRequest('');if(!res.ok){const e=Error(ghToken()?'이 토큰으로는 '+GH.owner+'/'+GH.repo+' 저장소에 접근할 수 없습니다.':'GitHub 토큰을 입력하세요.');e.needToken=true;throw e}const repo=await res.json();ghLogin='익명';if(ghToken()){const u=await ghRequest('/user',{root:true});if(u.ok)ghLogin=(await u.json()).login}return{email:ghLogin,role:repo.permissions?.push?'editor':'viewer'}}
+ if(kind==='me'){const res=await ghRequest('');if(!res.ok){const e=Error(!ghToken()?'GitHub 토큰을 입력하세요.':res.status===401?'GitHub가 토큰을 거부했습니다 (401). 토큰 값이 정확한지, 만료되지 않았는지 확인하세요.':res.status===404?GH.owner+'/'+GH.repo+' 저장소가 없거나 이 토큰의 Repository access에 포함되어 있지 않습니다 (404).':'저장소 확인 실패 ('+res.status+')');e.needToken=true;throw e}const repo=await res.json();ghLogin='익명';if(ghToken()){const u=await ghRequest('/user',{root:true});if(u.ok)ghLogin=(await u.json()).login}return{email:ghLogin,role:repo.permissions?.push?'editor':'viewer'}}
  if(kind==='weeks'){const f=await ghFile('index.json');return{weeks:f?.value.weeks||[],sha:f?.sha}}
  if(kind==='report'&&opts.method==='PUT'){const {report,sha:base}=JSON.parse(opts.body);const current=await ghFile(date+'.json');if((current?.sha||null)!==base)throw Error('충돌: 서버의 보고서가 변경되었습니다. 새로고침 후 다시 시도하세요.');
   const sha=await ghPut(date+'.json',report,current?.sha,`report: ${date} updated by ${ghLogin}`);const index=await ghFile('index.json'),list=index?.value.weeks||[];
