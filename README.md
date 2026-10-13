@@ -84,6 +84,8 @@ python tools/add_parking_report.py "<특별판.html>" 2027-seollal --title "2027
 
 ## 주간 업무 대시보드 (`projects/weekly/`)
 
-- 원래 Cloudflare Pages + Access + Pages Functions용 앱입니다 (`projects/weekly/README.md`). 배포는 별도 비공개 저장소에서 합니다.
-- 이 사이트에서는 `projects/weekly/public/`이 `/projects/weekly/` 경로에서 열리면 자동으로 **데모 모드**가 되어 `projects/weekly/demo/reports.json` 샘플을 읽고, 저장은 탭 메모리에만 반영합니다.
-- 실제 보고 데이터 `projects/weekly/data/`는 `.gitignore`로 제외되어 있습니다. 이 저장소에 커밋하지 마세요.
+- `/projects/weekly/` 경로에서 열리면 `public/github.js`가 브라우저에서 GitHub API로 비공개 저장소 `k-intruder/weekly-data`의 `data/`를 직접 읽고 Commit합니다 (저장소 위치는 `github.js`의 `GH`).
+- 화면의 `GitHub 토큰`에 fine-grained token을 넣습니다. 대상 저장소는 `weekly-data` 하나만, 편집자는 Contents: Read and write, 조회자는 Contents: Read-only. 토큰은 그 브라우저 localStorage에만 저장됩니다.
+- `+ 다음 주 보고 생성`은 지난 주 내용을 복사해 바로 Commit하고, 열려 있는 다른 화면은 15초 안에 자동 반영됩니다 (변경사항을 편집 중이면 경고만 표시).
+- 실제 보고 데이터 `projects/weekly/data/`는 `.gitignore`로 제외되어 있습니다. 이 공개 저장소에 커밋하지 마세요.
+- Cloudflare Pages + Access 배포 방식은 `projects/weekly/README.md`를 참고하세요 (같은 화면이 `/api`를 사용).
