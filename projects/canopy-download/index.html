@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Umbra Canopy 태스킹 산출물 로컬 다운로드 도구">
+  <title>Canopy 태스킹 데이터 다운로드</title>
+  <link rel="stylesheet" href="../../assets/portfolio.css">
+  <script src="../../assets/auth.js" data-guard="canopy-download"></script>
+</head>
+<body>
+  <main class="shell">
+    <a class="card-open" href="../../">&larr; Portfolio</a>
+    <header class="profile" style="margin-top: 28px">
+      <p class="eyebrow">SAR · STAC API V2 · PYTHON</p>
+      <h1>Canopy 태스킹 데이터 다운로드</h1>
+      <p class="profile-intro">전달 완료된 Umbra Canopy 산출물을 목록에서 확인하고, 개별 또는 전체 파일을 로컬로 저장하는 웹 도구입니다.</p>
+    </header>
+
+    <section>
+      <div class="section-head"><h2>기능</h2></div>
+      <ul>
+        <li>Canopy STAC API v2의 전달 완료 항목을 끝까지 조회</li>
+        <li>Task ID·파일명 검색, 상태 필터, 개별 저장 및 전체 일괄 저장</li>
+        <li>중단 후 재실행 시 기존 파일 건너뛰기, 파일별 결과를 CSV로 기록</li>
+        <li>Access token은 로컬 서버 메모리에만 보관</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>로컬 실행</h2></div>
+      <p>이 페이지는 프로젝트 소개입니다. 다운로드 앱은 Python 서버가 필요하므로 내 컴퓨터에서 실행합니다. GitHub Pages는 Python 서버를 실행하지 않습니다.</p>
+      <pre><code>git clone https://github.com/k-intruder/k-intruder.github.io.git
+cd k-intruder.github.io/projects/canopy-download/app
+python web_app.py</code></pre>
+      <p>브라우저에서 <code>http://127.0.0.1:8765/</code>를 열고 Canopy 임시 access token을 입력하세요. 데이터는 기본적으로 앱 폴더의 <code>downloads/</code>에 저장됩니다.</p>
+      <p><a class="card-open" href="https://github.com/k-intruder/k-intruder.github.io/tree/main/projects/canopy-download/app">소스 코드와 실행 안내 보기 →</a></p>
+    </section>
+  </main>
+</body>
+</html>
