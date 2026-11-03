@@ -96,6 +96,35 @@
       }
     },
     {
+      "slug": "2026-10",
+      "kpi": {
+        "households": 494,
+        "totalHours": 6892.5,
+        "mean": 13.95,
+        "median": 5.59,
+        "over80": 4,
+        "overRate": 0.81,
+        "max": 94.3,
+        "bands": [
+          302,
+          66,
+          72,
+          36,
+          14,
+          4
+        ],
+        "near80": [
+          8,
+          6
+        ]
+      },
+      "title": "2026년 10월",
+      "type": "monthly",
+      "file": "reports/2026-10.html",
+      "basis": "입·출차 원자료 (방문예약)",
+      "published": "2026-11-04"
+    },
+    {
       "slug": "2026-chuseok",
       "title": "2026 추석 특별판",
       "type": "special",

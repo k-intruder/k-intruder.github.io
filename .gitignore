@@ -7,3 +7,5 @@ geoserver_wmts_capabilities.xml
 
 # weekly: 실제 주간보고 데이터는 비공개 저장소에만 둔다 (GitHub API로 k-intruder/weekly-data에 저장)
 projects/weekly/data/
+
+__pycache__/

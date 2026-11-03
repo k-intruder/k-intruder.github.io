@@ -67,6 +67,24 @@ python tools/range_server.py 8000    # http://127.0.0.1:8000/ 에서 확인
 
 ## 방문차량 주차 분석: 매월 리포트 추가
 
+**입·출차 원자료(xlsx)만 있을 때 (10월~ 기본 방식)**: 대시보드 생성 → 익명 처리·가드·검사 → KPI 반영을 한 번에 합니다.
+
+```sh
+python tools/build_parking_month.py "<11월 입출차기록.xlsx>" 2026-11 --title "2026년 11월"
+python tools/build_parking_month.py "<2월 입출차기록.xlsx>" 2027-02 --title "2027년 2월" --exclude 2027-02-06:2027-02-09   # 명절 기간 제외
+```
+
+특정 날짜에 이례적인 방문이 있으면 `--focus-day`로 맨 아래에 별도 분석(시간대별 입차, 오전 06:00~11:59 · 오후 12:00~17:59 · 저녁 18:00~23:59 · 새벽 00:00~05:59, 세대별 방문 차량 대수)을 붙입니다.
+공개 페이지에는 동 + 익명 번호만 나오고, 동·호수 명단은 `--private-out`으로 **저장소 밖에만** 따로 씁니다 (저장소 안 경로는 거부).
+
+```sh
+python tools/build_parking_month.py "<10월 입출차기록.xlsx>" 2026-10 --title "2026년 10월" --focus-day 2026-10-27 --private-out "<G드라이브>/2026년_10월_..._내부용.html"
+```
+
+이전 월은 `reports.json`의 `kpi`로 비교 차트를 그립니다. 세대는 동 + 무작위 익명 번호로만 표시되고 호수·차량번호는 페이지에 쓰지 않습니다.
+
+**이미 만든 대시보드 HTML을 올릴 때**:
+
 ```sh
 python tools/add_parking_report.py "<대시보드.html>" 2026-10 --title "2026년 10월"
 python tools/add_parking_report.py "<특별판.html>" 2027-seollal --title "2027 설 특별판" --type special --period "2027.02.06 – 02.09"
