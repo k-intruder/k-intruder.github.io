@@ -12,6 +12,26 @@
   },
   "projects": [
     {
+      "id": "canopy-download",
+      "title": "Canopy 태스킹 데이터 다운로드",
+      "summary": "Umbra Canopy의 전달 완료 SAR 산출물을 조회하고 개별·일괄 저장하는 로컬 Python 웹 도구입니다. GitHub Pages에는 프로젝트 소개와 소스 코드를 제공합니다.",
+      "period": "2026.10 – ",
+      "status": "완료",
+      "tags": [
+        "Python",
+        "STAC API v2",
+        "SAR",
+        "로컬 웹 앱"
+      ],
+      "highlights": [
+        "Task ID·파일명 검색과 파일별 저장 상태 확인",
+        "개별·전체 일괄 저장 및 중단 후 재실행 지원",
+        "Access token은 로컬 서버 메모리에만 보관"
+      ],
+      "path": "projects/canopy-download/",
+      "visibility": "public"
+    },
+    {
       "id": "weekly",
       "title": "주간 업무 대시보드",
       "summary": "주간 업무 보고를 웹에서 편집·Commit하고 의사결정자는 읽기 전용으로 확인하는 대시보드입니다. Cloudflare Access로 접근을 막고 Pages Functions가 GitHub 저장소에 주차별 JSON으로 이력을 남깁니다.",
