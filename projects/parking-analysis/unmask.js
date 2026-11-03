@@ -83,6 +83,7 @@
       toggle.checked = !show;
       toggle.dispatchEvent(new Event('change', {bubbles: true}));
     }
+    document.dispatchEvent(new CustomEvent('unitmask:change', {detail: {revealed: show}}));
   }
 
   function buildControl() {

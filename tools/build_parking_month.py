@@ -219,7 +219,12 @@ def focus_day_section(entries, day, number, reveal_units, cells=None):
 </div>
 <div class="card wide" style="margin-top:16px"><h3>{escape(label)} 동·{unit_head}별 방문 차량</h3>
 <div class="notice" style="margin:8px 0 12px">{privacy}</div>
-<div class="tablewrap" style="max-height:none"><table><thead><tr><th>동</th><th>{unit_head}</th><th>방문 차량</th><th>입차 건수</th>{"".join(f"<th>{p}</th>" for p in pnames)}<th>첫 입차</th><th>체류시간 합계</th></tr></thead>
+<div class="controls sort-controls"><label>정렬 <select id="daySort">
+<option value="2:desc">방문 차량 많은 순</option><option value="0:asc">동·호수 순</option><option value="3:desc">입차 건수 많은 순</option>
+{"".join(f'<option value="{4 + i}:desc">{p} 입차 많은 순</option>' for i, p in enumerate(pnames))}
+<option value="{4 + len(pnames)}:asc">첫 입차 빠른 순</option><option value="{5 + len(pnames)}:desc">체류시간 긴 순</option></select></label>
+<span class="hint">표 제목을 눌러도 정렬됩니다 (한 번 더 누르면 반대 순서).</span></div>
+<div class="tablewrap" style="max-height:none"><table id="dayTable" class="sortable"><thead><tr><th>동</th><th>{unit_head}</th><th>방문 차량</th><th>입차 건수</th>{"".join(f"<th>{p}</th>" for p in pnames)}<th>첫 입차</th><th>체류시간 합계</th></tr></thead>
 <tbody>{table}</tbody><tfoot><tr><th colspan="2">합계 {len(rows)}세대</th><th>{total_vehicles}대</th><th>{len(reserved)}건</th>{"".join(f"<th>{total_period[p]}</th>" for p in pnames)}<th colspan="2"></th></tr></tfoot></table></div>
 <div class="hint" style="margin-top:8px">방문 차량은 같은 세대로 입차한 서로 다른 차량번호 수, 입차 건수와 시간대 칸은 재입차를 포함한 입차 기록 수입니다. 시간대는 입차 시각 기준({period_text})입니다. 현장입차 {len(same) - len(reserved)}건은 세대 정보가 없어 표에서 제외했습니다.</div>
 </div></div>
@@ -241,7 +246,35 @@ Plotly.newPlot('dayDistChart',[{{x:DAY.distLabels,y:DAY.dist,type:'bar',marker:{
  text:DAY.dist.map(v=>v+'세대'),textposition:'outside',cliponaxis:false,hovertemplate:'%{{x}} %{{y}}세대<extra></extra>'}}],
  {{...base,margin:{{l:50,r:15,t:25,b:40}},yaxis:yax('세대수')}},cfg);
 """
-    return html, js
+    return html, js + SORT_JS
+
+
+SORT_JS = r"""
+(function(){
+  const table=document.getElementById('dayTable'); if(!table) return;
+  const body=table.tBodies[0], heads=[...table.tHead.rows[0].cells], select=document.getElementById('daySort');
+  [...body.rows].forEach((tr,i)=>tr.dataset.order=i);
+  const num=(t)=>{t=(t||'').trim(); const m=t.match(/^(\d{1,2}):(\d{2})$/); if(m) return +m[1]*60+ +m[2];
+    const n=t.replace(/[^\d.]/g,''); return n?parseFloat(n):0;};
+  const key=(tr,col)=>{const c=tr.cells, b=num(c[0].textContent), u=num(c[1].textContent);
+    return col===0?[b,u]:col===1?[u,b]:[num(c[col].textContent)];};
+  let state={col:2,dir:'desc'};
+  function sort(col,dir){
+    state={col,dir}; const sign=dir==='asc'?1:-1;
+    const rows=[...body.rows].sort((a,b)=>{const ka=key(a,col), kb=key(b,col);
+      for(let i=0;i<ka.length;i++){ if(ka[i]!==kb[i]) return (ka[i]-kb[i])*sign; }
+      return a.dataset.order-b.dataset.order;});
+    rows.forEach(r=>body.append(r));
+    heads.forEach((h,i)=>{h.dataset.sort=i===col?dir:''; h.setAttribute('aria-sort',i===col?(dir==='asc'?'ascending':'descending'):'none');});
+    const v=col+':'+dir; if(select) select.value=[...select.options].some(o=>o.value===v)?v:'';
+  }
+  heads.forEach((h,i)=>{h.tabIndex=0; h.addEventListener('click',()=>sort(i,state.col===i&&state.dir==='desc'?'asc':state.col===i?'desc':(i<2||i===heads.length-2?'asc':'desc')));
+    h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();h.click();}});});
+  if(select) select.addEventListener('change',()=>{if(!select.value) return; const [c,d]=select.value.split(':'); sort(+c,d);});
+  document.addEventListener('unitmask:change',()=>sort(state.col,state.dir));
+  sort(2,'desc');
+})();
+"""
 
 
 def render(title, basis, months, current, buildings, focus, daily, extra, bands, special=("", "")):
@@ -310,6 +343,10 @@ def render(title, basis, months, current, buildings, focus, daily, extra, bands,
 table{{width:100%;border-collapse:collapse;font-size:13px}} th,td{{padding:10px;border-bottom:1px solid var(--line);text-align:center}} th{{background:#f8fafc;position:sticky;top:0}}
 tr.over td:nth-child(5){{color:#b45309;font-weight:700}} tr.near td:nth-child(5){{color:var(--muted)}}
 .tablewrap{{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:12px}}
+table.sortable th{{cursor:pointer;user-select:none;white-space:nowrap}} table.sortable th:hover{{background:#eef2f7}}
+table.sortable th[data-sort=asc]::after{{content:" ▲";font-size:10px;color:var(--navy)}} table.sortable th[data-sort=desc]::after{{content:" ▼";font-size:10px;color:var(--navy)}}
+.controls{{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:6px 0 10px;font-size:13px}} .controls select{{padding:5px 8px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}}
+@media print{{.sort-controls{{display:none}}}}
 .footer{{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.7}}
 @media(max-width:900px){{.kpis{{grid-template-columns:repeat(2,1fr)}}.grid{{grid-template-columns:1fr}}.card.wide{{grid-column:auto}}.hero{{padding:22px}}.hero h1{{font-size:24px}}}}
 @media print{{body{{background:#fff}}.wrap{{max-width:none;padding:10mm}}.card,.kpi{{box-shadow:none}}.card{{break-inside:avoid}}.tablewrap{{max-height:none;overflow:visible}}thead{{display:table-header-group}}tr{{break-inside:avoid}}}}
