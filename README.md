@@ -99,6 +99,15 @@ python tools/add_parking_report.py "<특별판.html>" 2027-seollal --title "2027
   ```
   월별 집계 파일(동/호/사용량)과 입·출차 원자료(방문예약만 합산) 형식을 자동으로 구분합니다. 집계값만 저장하고 세대 정보는 저장하지 않습니다.
 - 원본 xlsx나 익명 처리 전 HTML은 이 저장소에 넣지 마세요.
+- **호수 표시 (소유자만)**: 리포트는 기본이 익명입니다. 상단 `호수 ○익명 ○표시`에서 `표시`를 고르고 소유자 비밀번호를 넣으면 실제 호수가 보입니다.
+  - 실제 호수는 페이지 안에 **암호화된 상태로만** 들어갑니다 (`tools/unit_vault.py`, `unmask.js`). 숨김 처리만 하면 공개 저장소에서 원본을 그대로 받을 수 있어서 이렇게 합니다.
+  - 처음 한 번, 일반 터미널(PowerShell)에서 키를 만들고 `data/unit_key.json`을 커밋합니다. 비밀번호를 묻습니다 (포트폴리오 로그인 비밀번호와 동일).
+    ```sh
+    pip install cryptography
+    python tools/unit_vault.py setup
+    ```
+  - 키가 있으면 `add_parking_report.py`·`build_parking_month.py`가 자동으로 암호화된 호수를 넣습니다 (빌드할 때 비밀번호는 필요 없음).
+  - 소유자 비밀번호를 바꾸면 `set_owner_password.py` 후 `unit_vault.py setup`을 다시 실행하세요 (현재·새 비밀번호를 묻고 기존 페이지는 그대로 동작).
 
 ## 주간 업무 대시보드 (`projects/weekly/`)
 

@@ -14,6 +14,8 @@ What it does
   4. Refuses to write if anything that looks like a 동·호수 or plate number remains
      (override with --allow-leaks after checking manually).
   5. Adds/updates the entry in reports.json (existing "kpi" values are kept).
+  6. If data/unit_key.json exists (tools/unit_vault.py setup), the original 호수 are kept only
+     as an encrypted vault; unmask.js reveals them in the browser after the owner password.
 """
 from html import escape
 from pathlib import Path
@@ -22,6 +24,9 @@ import json
 import random
 import re
 import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import unit_vault  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT = ROOT / "projects" / "parking-analysis"
@@ -49,7 +54,7 @@ NAV = """
 """
 
 
-def anonymize_records(records, stats):
+def anonymize_records(records, stats, mapping=None):
     has_unit = any(isinstance(r, dict) and "unit" in r for r in records)
     ids = list(range(1, len(records) + 1))
     random.shuffle(ids)
@@ -61,6 +66,8 @@ def anonymize_records(records, stats):
             stats["removed_keys"] += 1
         if has_unit:
             anon = f"익명 {new_id:03d}"
+            if mapping is not None:
+                mapping[anon] = {"unit": record.get("unit"), "label": record.get("label")}
             if "id" in record:
                 record["id"] = new_id
             record["unit"] = anon
@@ -73,7 +80,7 @@ def anonymize_records(records, stats):
     return records
 
 
-def anonymize_arrays(html, stats):
+def anonymize_arrays(html, stats, vault=None):
     decoder = json.JSONDecoder()
     out, pos = [], 0
     for match in ARRAY_START.finditer(html):
@@ -87,7 +94,11 @@ def anonymize_arrays(html, stats):
         if not (isinstance(value, list) and value and all(isinstance(v, dict) for v in value)):
             continue
         out.append(html[pos:start])
-        out.append(json.dumps(anonymize_records(value, stats), ensure_ascii=False, separators=(", ", ": ")))
+        name = match.group(0).split("=")[0].strip()
+        mapping = {} if vault is not None else None
+        out.append(json.dumps(anonymize_records(value, stats, mapping), ensure_ascii=False, separators=(", ", ": ")))
+        if mapping:
+            vault.setdefault(name, {}).update(mapping)
         pos = end
         stats["arrays"] += 1
     out.append(html[pos:])
@@ -130,7 +141,8 @@ def main():
     html = args.source.read_text(encoding="utf-8")
     stats = {"arrays": 0, "anonymized": 0, "removed_keys": 0}
 
-    html = anonymize_arrays(html, stats)
+    arrays = {}
+    html = anonymize_arrays(html, stats, arrays)
     html, plotly_count = INLINE_PLOTLY.subn(
         lambda m: f'<script src="https://cdn.plot.ly/plotly-{m.group(1)}.min.js"></script>', html)
 
@@ -138,6 +150,16 @@ def main():
     nav = NAV.replace("{title}", escape(args.title))
     html = re.sub(r"<head[^>]*>", lambda m: m.group(0) + guard, html, count=1)
     html = re.sub(r"<body[^>]*>", lambda m: m.group(0) + nav, html, count=1)
+
+    if arrays and unit_vault.available():
+        toggle = re.search(r'<input[^>]*id="(privacy[\w-]*)"', html)
+        tag = unit_vault.vault_tag({"arrays": arrays}, toggle.group(1) if toggle else None)
+        html = html.replace("</body>", tag + "\n</body>", 1)
+    elif arrays:
+        print("  note: data/unit_key.json 없음 → 호수 표시 기능 없이 익명만 저장합니다 (python tools/unit_vault.py setup).")
+    if 'id="unitVault"' in html:
+        html = html.replace('<script src="../print.js"></script>',
+                            '<script src="../print.js"></script>\n<script src="../unmask.js" defer></script>', 1)
 
     leaks = find_leaks(html)
     if leaks and not args.allow_leaks:

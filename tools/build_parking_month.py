@@ -23,6 +23,9 @@ import subprocess
 import sys
 import tempfile
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import unit_vault  # noqa: E402
+
 import openpyxl
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -77,7 +80,8 @@ def load_log(path, excludes):
         stats["visits"] += 1
 
     records = [{"building": f"{b}동", "hours": round(s["minutes"] / 60, 2), "visits": s["visits"]}
-               for (b, _unit), s in households.items() if s["minutes"] > 0]
+               | {"realUnit": unit}
+               for (b, unit), s in households.items() if s["minutes"] > 0]
     return records, daily, {"open": open_visits, "excluded": excluded, "entries": entries}
 
 
@@ -110,7 +114,7 @@ def delta(cur, prev, unit="", digits=1, lower_is_good=True):
             f'{abs(diff):,.{digits}f}{unit}</span>')
 
 
-def focus_day_section(entries, day, number, reveal_units):
+def focus_day_section(entries, day, number, reveal_units, cells=None):
     """Extra section for one unusual day: hourly pattern and vehicles per 동·호.
 
     reveal_units=False (public page) shows 동 + random 익명 번호 only.
@@ -147,6 +151,8 @@ def focus_day_section(entries, day, number, reveal_units):
     if not reveal_units:
         ids = random.sample(range(1, len(rows) + 1), len(rows))
         for r, new_id in zip(rows, ids):
+            if cells is not None:
+                cells[f"익명 {new_id:02d}"] = f'{r["unit"]}호'
             r["unit"] = f"익명 {new_id:02d}"
 
     total_vehicles = sum(r["vehicles"] for r in rows)
@@ -179,17 +185,18 @@ def focus_day_section(entries, day, number, reveal_units):
     card_html = "".join(f'<div class="kpi"><div class="l">{escape(l)}</div><div class="v">{escape(v)}</div>'
                         f'<div class="s">{escape(t)}</div></div>' for l, v, t in cards)
     period_cells = lambda c: "".join(f"<td>{c[p] or ''}</td>" for p in pnames)  # noqa: E731
+    unit_attr = lambda r: "" if reveal_units else ' data-unit="' + escape(r["unit"]) + '"'  # noqa: E731
     table = "".join(
-        f'<tr><td>{escape(r["building"])}동</td><td>{escape(r["unit"] + "호" if r["unit"].isdigit() else r["unit"])}</td>'
+        f'<tr><td>{escape(r["building"])}동</td><td{unit_attr(r)}>{escape(r["unit"] + "호" if r["unit"].isdigit() else r["unit"])}</td>'
         f'<td><b>{r["vehicles"]}대</b></td><td>{r["entries"]}건</td>{period_cells(r["period"])}'
         f'<td>{r["first"]:%H:%M}</td><td>{r["hours"]:.1f}시간</td></tr>'
         for r in rows)
     total_period = Counter()
     for r in rows:
         total_period.update(r["period"])
-    unit_head = "호수" if reveal_units else "세대"
+    unit_head = "호수" if reveal_units else '<span data-reveal-text="호수">세대</span>'
     privacy = ("<b>내부용:</b> 동·호수가 그대로 표시된 자료입니다. 공개 저장소나 단체방에 올리지 마세요."
-               if reveal_units else "공개용 페이지라 호수 대신 무작위 익명 번호로 표시합니다. 동·호수 명단은 내부용 자료로 따로 관리합니다.")
+               if reveal_units else "기본은 무작위 익명 번호로 표시합니다. 상단 <b>호수 · 표시</b>를 고르고 소유자 비밀번호를 입력하면 실제 호수가 보입니다.")
     period_rows = "".join(
         f"<tr><td><b>{p}</b> ({period_range(s, e)})</td><td>{day_period[p]}건</td><td>{data['periodReserved'][i]}건</td>"
         f"<td>{other_period[p] / n_other:.1f}건</td>"
@@ -263,7 +270,7 @@ def render(title, basis, months, current, buildings, focus, daily, extra, bands,
 
     over_rows = "".join(
         f'<tr class="{"over" if r["hours"] > LIMIT else "near"}"><td>{escape(r["building"])}</td>'
-        f'<td>{escape(r["unit"])}</td><td>{r["hours"]:.1f}시간</td><td>{r["visits"]}회</td>'
+        f'<td data-unit="{escape(r["unit"])}">{escape(r["unit"])}</td><td>{r["hours"]:.1f}시간</td><td>{r["visits"]}회</td>'
         f'<td>{"초과 " + format(r["hours"] - LIMIT, ".1f") + "시간" if r["hours"] > LIMIT else "잔여 " + format(LIMIT - r["hours"], ".1f") + "시간"}</td></tr>'
         for r in focus) or '<tr><td colspan="5">해당 세대가 없습니다.</td></tr>'
 
@@ -342,7 +349,7 @@ tr.over td:nth-child(5){{color:#b45309;font-weight:700}} tr.near td:nth-child(5)
 <div class="card wide"><h3>동별 평균 · 중앙값 · 80시간 초과율</h3><div id="buildingChart" class="chart"></div></div></div>
 
 <div class="section"><h2>6. {escape(label)} 80시간 초과 · 근접 세대</h2><p>개인정보 보호를 위해 호수 대신 무작위 익명 번호로 표시합니다.</p>
-<div class="card wide"><div class="tablewrap"><table><thead><tr><th>동</th><th>세대</th><th>이용시간</th><th>방문 횟수</th><th>80시간 대비</th></tr></thead>
+<div class="card wide"><div class="tablewrap"><table><thead><tr><th>동</th><th data-reveal-text="호수">세대</th><th>이용시간</th><th>방문 횟수</th><th>80시간 대비</th></tr></thead>
 <tbody>{over_rows}</tbody></table></div></div></div>
 
 {special[0]}
@@ -431,14 +438,22 @@ def main():
         ", " + ", ".join(e.replace("-", ".")[5:].replace(":", "~") for e in args.exclude) + " 제외" if args.exclude else "") + ")"
 
     ids = random.sample(range(1, len(records) + 1), len(records))
+    cells = {}
     for record, new_id in zip(records, ids):
         record["unit"] = f"익명 {new_id:03d}"
+        cells[record["unit"]] = f'{record.pop("realUnit")}호'
+
     focus = sorted((r for r in records if r["hours"] > 60), key=lambda r: -r["hours"])
 
     common = (args.title, basis, months, current, building_stats(records), focus, daily, extra, manifest["bands"])
     number = 7
-    html = render(*common, special=focus_day_section(extra["entries"], args.focus_day, number, False)
+    html = render(*common, special=focus_day_section(extra["entries"], args.focus_day, number, False, cells)
                   if args.focus_day else ("", ""))
+    if unit_vault.available():
+        used = {k: v for k, v in cells.items() if f'data-unit="{k}"' in html}
+        html = html.replace("</body>", unit_vault.vault_tag({"cells": used}) + "\n</body>", 1)
+    else:
+        print("note: data/unit_key.json 없음 → 호수 표시 기능 없이 익명만 저장합니다 (python tools/unit_vault.py setup).")
     if args.private_out:
         if not args.focus_day:
             sys.exit("--private-out needs --focus-day")
